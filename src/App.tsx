@@ -53,13 +53,20 @@ function LoginDialog({
   onDismiss: () => void;
 }) {
   return (
-    <Modal aria-label={"Login Form"} onHide={onDismiss} show={isOpen} backdrop={"static"} centered>
-      <Modal.Body>Login Here</Modal.Body>
-      <Modal.Footer>
-        <Button variant={"primary"} onClick={onDismiss}>
-          Close
+    <Modal
+      aria-label={"Login Form"}
+      onHide={onDismiss}
+      show={isOpen}
+      backdrop={"static"}
+      centered
+    >
+      <Modal.Header>
+        <Button variant={"danger"} onClick={onDismiss}>
+          x
         </Button>
-      </Modal.Footer>
+      </Modal.Header>
+      <Modal.Body>Login Here</Modal.Body>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 }
@@ -72,13 +79,20 @@ function RegisterDialog({
   onDismiss: () => void;
 }) {
   return (
-    <Modal aria-label={"Register Form"} onHide={onDismiss} show={isOpen} backdrop={"static"} centered>
-      <Modal.Body>Register Here</Modal.Body>
-      <Modal.Footer>
-        <Button variant={"primary"} onClick={onDismiss}>
+    <Modal
+      aria-label={"Register Form"}
+      onHide={onDismiss}
+      show={isOpen}
+      backdrop={"static"}
+      centered
+    >
+      <Modal.Header>
+        <Button variant={"danger"} onClick={onDismiss}>
           Close
         </Button>
-      </Modal.Footer>
+      </Modal.Header>
+      <Modal.Body>Register Here</Modal.Body>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 }
