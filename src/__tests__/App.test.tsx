@@ -1,4 +1,8 @@
-import { render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import App from "../App";
 import * as React from "react";
 import userEvent from "@testing-library/user-event";
@@ -17,8 +21,12 @@ test("Opens Login modal on click over login", async () => {
 
   const loginBtn = screen.getByRole("button", { name: /Login/i });
 
-  expect(screen.queryByRole('dialog', {name: /Register Form/i})).not.toBeInTheDocument();
-  expect(screen.queryByRole('dialog', {name: /login form/i})).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("dialog", { name: /Register Form/i })
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("dialog", { name: /login form/i })
+  ).not.toBeInTheDocument();
 
   expect(
     screen.queryByRole("button", { name: /close/i })
@@ -27,8 +35,10 @@ test("Opens Login modal on click over login", async () => {
   await userEvent.click(loginBtn);
 
   const closeBtn = screen.getByRole("button", { name: /close/i });
-  const loginModelText = screen.getByRole('dialog', {name: /login form/i});
-  const registerModelText = screen.queryByRole('dialog', {name: /Register Form/i});
+  const loginModelText = screen.getByRole("dialog", { name: /login form/i });
+  const registerModelText = screen.queryByRole("dialog", {
+    name: /Register Form/i,
+  });
 
   expect(loginModelText).toBeInTheDocument();
   expect(registerModelText).not.toBeInTheDocument();
@@ -36,19 +46,22 @@ test("Opens Login modal on click over login", async () => {
 
   await userEvent.click(closeBtn);
 
-  await waitForElementToBeRemoved(loginModelText)
+  await waitForElementToBeRemoved(loginModelText);
   expect(registerModelText).not.toBeInTheDocument();
   expect(closeBtn).not.toBeInTheDocument();
 });
-
 
 test("Opens register modal on click over register", async () => {
   render(<App />);
 
   const registerBtn = screen.getByRole("button", { name: /register/i });
 
-  expect(screen.queryByRole('dialog', {name: /Register Form/i})).not.toBeInTheDocument();
-  expect(screen.queryByRole('dialog', {name: /login form/i})).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("dialog", { name: /Register Form/i })
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("dialog", { name: /login form/i })
+  ).not.toBeInTheDocument();
 
   expect(
     screen.queryByRole("button", { name: /close/i })
@@ -57,16 +70,54 @@ test("Opens register modal on click over register", async () => {
   await userEvent.click(registerBtn);
 
   const closeBtn = screen.getByRole("button", { name: /close/i });
-  const loginModelText = screen.queryByRole('dialog', {name: /login form/i});
-  const registerModelText = screen.getByRole('dialog', {name: /Register Form/i});
+  const loginModelText = screen.queryByRole("dialog", { name: /login form/i });
+  const registerModelText = screen.getByRole("dialog", {
+    name: /Register Form/i,
+  });
 
   expect(loginModelText).not.toBeInTheDocument();
   expect(registerModelText).toBeInTheDocument();
-  expect(closeBtn).toBeInTheDocument()
+  expect(closeBtn).toBeInTheDocument();
 
   await userEvent.click(closeBtn);
 
-  await waitForElementToBeRemoved(registerModelText)
+  await waitForElementToBeRemoved(registerModelText);
   expect(registerModelText).not.toBeInTheDocument();
   expect(closeBtn).not.toBeInTheDocument();
+});
+
+test("renders a form for login containing password, username, a submit button", async () => {
+  render(<App />);
+
+  const loginBtn = screen.getByRole("button", { name: /login/i });
+
+  await userEvent.click(loginBtn);
+
+  expect(
+    screen.getByRole("textbox", { name: /username/i })
+  ).toBeInTheDocument();
+  expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+  expect(screen.getByText(/username/i)).toBeInTheDocument();
+  expect(screen.getByText(/password/i)).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: /submit form/i })
+  ).toHaveTextContent(/login/i);
+});
+
+test("renders a form for register containing password, username, a submit button", async () => {
+  render(<App />);
+
+  const registerBtn = screen.getByRole("button", { name: /register/i });
+
+  await userEvent.click(registerBtn);
+
+  expect(
+    screen.getByRole("textbox", { name: /username/i })
+  ).toBeInTheDocument();
+  expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+  expect(screen.getByText(/username/i)).toBeInTheDocument();
+  expect(screen.getByText(/password/i)).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: /submit form/i })
+  ).toHaveTextContent(/register/i);
 });
