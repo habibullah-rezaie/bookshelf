@@ -1,7 +1,12 @@
 import React from "react";
+import { Button, Modal } from "react-bootstrap";
 import "./App.css";
 import Logo from "./components/logo";
-import { Button, Modal } from "react-bootstrap";
+
+type AuthData = {
+  username: string;
+  password: string;
+};
 
 function App() {
   const [openModal, setOpenModal] = React.useState<
@@ -9,36 +14,49 @@ function App() {
   >("none");
 
   function handleLoginOpen() {
-    setOpenModal('login')
+    setOpenModal("login");
   }
 
   function handleRegisterOpen() {
-    setOpenModal('register')
-
+    setOpenModal("register");
   }
 
   function handleClose() {
-    setOpenModal('none')
+    setOpenModal("none");
   }
 
-  const isLoginOpen = openModal === 'login'
-  const isRegisterOpen = openModal === 'register'
+  function handleLogin({ username, password }: AuthData) {
+    console.log("Login", { username, password });
+  }
+
+  function handleRegister({ username, password }: AuthData) {
+    console.log("Register", { username, password });
+  }
+
+  const isLoginOpen = openModal === "login";
+  const isRegisterOpen = openModal === "register";
   return (
     <>
       <Logo />
       <h1>Bookshelf</h1>
       <div>
-        <Button onClick={handleLoginOpen} variant={"primary"}>Login</Button>
-        <Button onClick={handleRegisterOpen} variant={"secondary"}>Register</Button>
+        <Button onClick={handleLoginOpen} variant={"primary"}>
+          Login
+        </Button>
+        <Button onClick={handleRegisterOpen} variant={"secondary"}>
+          Register
+        </Button>
       </div>
       <div>
         <LoginDialog
           isOpen={isLoginOpen}
           onDismiss={handleClose}
+          handleLogin={handleLogin}
         />
         <RegisterDialog
           isOpen={isRegisterOpen}
           onDismiss={handleClose}
+          handleRegister={handleRegister}
         />
       </div>
     </>
@@ -48,9 +66,11 @@ function App() {
 function LoginDialog({
   isOpen,
   onDismiss,
+  handleLogin,
 }: {
   isOpen: boolean;
   onDismiss: () => void;
+  handleLogin: ({ username, password }: AuthData) => void;
 }) {
   return (
     <Modal
@@ -62,10 +82,13 @@ function LoginDialog({
     >
       <Modal.Header>
         <Button variant={"danger"} onClick={onDismiss}>
-          x
+          Close
         </Button>
+        <h3>Login</h3>
       </Modal.Header>
-      <Modal.Body>Login Here</Modal.Body>
+      <Modal.Body>
+        <LoginForm onSubmit={handleLogin} actionText="Login" />
+      </Modal.Body>
       <Modal.Footer></Modal.Footer>
     </Modal>
   );
@@ -74,9 +97,11 @@ function LoginDialog({
 function RegisterDialog({
   isOpen,
   onDismiss,
+  handleRegister,
 }: {
   isOpen: boolean;
   onDismiss: () => void;
+  handleRegister: ({ username, password }: AuthData) => void;
 }) {
   return (
     <Modal
@@ -90,10 +115,51 @@ function RegisterDialog({
         <Button variant={"danger"} onClick={onDismiss}>
           Close
         </Button>
+        <h3>Register</h3>
       </Modal.Header>
-      <Modal.Body>Register Here</Modal.Body>
+      <Modal.Body>
+        <LoginForm onSubmit={handleRegister} actionText="Register" />
+      </Modal.Body>
       <Modal.Footer></Modal.Footer>
     </Modal>
+  );
+}
+
+function LoginForm({
+  onSubmit,
+  actionText,
+}: {
+  onSubmit: ({ username, password }: AuthData) => void;
+  actionText: string;
+}) {
+  // This is impossible to type the function thoroughly,
+  // can get values out of `EventTarget`
+  function handleSubmit(e: any) {
+    e.preventDefault();
+
+    const { password: passwordInput, username: usernameInput } =
+      e.target.elements;
+
+    onSubmit({
+      password: passwordInput.value,
+      username: usernameInput.value,
+    });
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="username">Username</label>
+        <input type="text" id="username" />
+      </div>
+      <div>
+        <label htmlFor="password">Password</label>
+        <input type="password" id="password" />
+      </div>
+      <Button type="submit" variant={"primary"} aria-label={"Submit Form"}>
+        {actionText}
+      </Button>
+    </form>
   );
 }
 
