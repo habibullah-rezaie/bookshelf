@@ -17,8 +17,8 @@ test("Opens Login modal on click over login", async () => {
 
   const loginBtn = screen.getByRole("button", { name: /Login/i });
 
-  expect(screen.queryByText(/register here/i)).not.toBeInTheDocument();
-  expect(screen.queryByText(/login here/i)).not.toBeInTheDocument();
+  expect(screen.queryByRole('dialog', {name: /Register Form/i})).not.toBeInTheDocument();
+  expect(screen.queryByRole('dialog', {name: /login form/i})).not.toBeInTheDocument();
 
   expect(
     screen.queryByRole("button", { name: /close/i })
@@ -27,8 +27,8 @@ test("Opens Login modal on click over login", async () => {
   await userEvent.click(loginBtn);
 
   const closeBtn = screen.getByRole("button", { name: /close/i });
-  const loginModelText = screen.getByText(/login here/i);
-  const registerModelText = screen.queryByText(/register here/i);
+  const loginModelText = screen.getByRole('dialog', {name: /login form/i});
+  const registerModelText = screen.queryByRole('dialog', {name: /Register Form/i});
 
   expect(loginModelText).toBeInTheDocument();
   expect(registerModelText).not.toBeInTheDocument();
@@ -47,8 +47,8 @@ test("Opens register modal on click over register", async () => {
 
   const registerBtn = screen.getByRole("button", { name: /register/i });
 
-  expect(screen.queryByText(/register here/i)).not.toBeInTheDocument();
-  expect(screen.queryByText(/login here/i)).not.toBeInTheDocument();
+  expect(screen.queryByRole('dialog', {name: /Register Form/i})).not.toBeInTheDocument();
+  expect(screen.queryByRole('dialog', {name: /login form/i})).not.toBeInTheDocument();
 
   expect(
     screen.queryByRole("button", { name: /close/i })
@@ -57,12 +57,12 @@ test("Opens register modal on click over register", async () => {
   await userEvent.click(registerBtn);
 
   const closeBtn = screen.getByRole("button", { name: /close/i });
-  const loginModelText = screen.queryByText(/login here/i);
-  const registerModelText = screen.getByText(/register here/i);
+  const loginModelText = screen.queryByRole('dialog', {name: /login form/i});
+  const registerModelText = screen.getByRole('dialog', {name: /Register Form/i});
 
   expect(loginModelText).not.toBeInTheDocument();
   expect(registerModelText).toBeInTheDocument();
-  expect(closeBtn).toBeInTheDocument();
+  expect(closeBtn).toBeInTheDocument()
 
   await userEvent.click(closeBtn);
 
