@@ -28,8 +28,8 @@ function App() {
       <Logo />
       <h1>Bookshelf</h1>
       <div>
-        <button onClick={handleLoginOpen}>Login</button>
-        <button onClick={handleRegisterOpen}>Register</button>
+        <Button onClick={handleLoginOpen} variant={"primary"}>Login</Button>
+        <Button onClick={handleRegisterOpen} variant={"secondary"}>Register</Button>
       </div>
       <div>
         <LoginDialog
