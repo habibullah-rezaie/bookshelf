@@ -53,7 +53,7 @@ function LoginDialog({
   onDismiss: () => void;
 }) {
   return (
-    <Modal onHide={onDismiss} show={isOpen} backdrop={"static"} centered>
+    <Modal aria-label={"Login Form"} onHide={onDismiss} show={isOpen} backdrop={"static"} centered>
       <Modal.Body>Login Here</Modal.Body>
       <Modal.Footer>
         <Button variant={"primary"} onClick={onDismiss}>
@@ -72,7 +72,7 @@ function RegisterDialog({
   onDismiss: () => void;
 }) {
   return (
-    <Modal onHide={onDismiss} show={isOpen} backdrop={"static"} centered>
+    <Modal aria-label={"Register Form"} onHide={onDismiss} show={isOpen} backdrop={"static"} centered>
       <Modal.Body>Register Here</Modal.Body>
       <Modal.Footer>
         <Button variant={"primary"} onClick={onDismiss}>
