@@ -1,6 +1,8 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
-type ContainerProps = React.PropsWithChildren<{ className?: string }>;
+type ContainerProps = React.PropsWithChildren<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+>;
 export function Container({ children, className }: ContainerProps) {
   return <div className={`w-full h-full ${className}`}>{children}</div>;
 }
