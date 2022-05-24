@@ -185,19 +185,63 @@ function LoginForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input type="text" id="username" />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" />
+    <Form onSubmit={handleSubmit}>
+      <FormGroup>
+        <label htmlFor="username" className="sr-only ">
+          Username
+        </label>
+        <div className="grid grid-flow-col gap-0 bg-gray20 p-1 rounded-md items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-gray80"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+            />
+          </svg>
+          <input
+            className={`bg-gray20 p-1`}
+            type="text"
+            id="username"
+            placeholder="username"
+          />
+        </div>
+      </FormGroup>
+      <div className={`grid grid-flow-col gap-3`}>
+        <label htmlFor="password" className="sr-only ">
+          Password
+        </label>
+        <div className="grid grid-flow-col gap-0 bg-gray20 p-1 rounded-md items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-gray80"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <input
+            className={`bg-gray20 p-1`}
+            type="password"
+            id="password"
+            placeholder="******"
+          />
+        </div>
       </div>
       <Button type="submit" variant={"primary"} aria-label={"Submit Form"}>
         {actionText}
       </Button>
-    </form>
+    </Form>
   );
 }
 
