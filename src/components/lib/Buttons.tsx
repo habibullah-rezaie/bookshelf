@@ -1,5 +1,4 @@
-import React, { HTMLAttributes } from "react";
-
+import * as React from "react";
 type ButtonVariants = "primary" | "secondary" | "danger";
 
 interface CustomButtonProps {
@@ -33,5 +32,35 @@ export function Button({
     >
       {children}
     </button>
+  );
+}
+
+export function CloseButton({
+  className,
+  ...props
+}: Omit<ButtonProps, "children">) {
+  return (
+    <Button
+      aria-label="close"
+      variant="danger"
+      className="px-0 py-0 hover:ring-1 ring-offset-0 ring-gray80"
+      {...props}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-5 h-5"
+        viewBox="0 0 512 512"
+      >
+        <title>Close</title>
+        <path
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="32"
+          d="M368 368L144 144M368 144L144 368"
+        />
+      </svg>
+    </Button>
   );
 }
