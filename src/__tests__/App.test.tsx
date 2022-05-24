@@ -8,9 +8,15 @@ import * as React from "react";
 import App from "../App";
 
 describe("App component", () => {
-  it("renders a starting page containing logo, and login and register buttons", () => {
-    render(<App />);
+  let root: HTMLElement;
+  beforeEach(() => {
+    root = document.createElement("div");
+    root.id = "root";
+    document.body.appendChild(root);
+  });
 
+  it("renders a starting page containing logo, and login and register buttons", () => {
+    render(<App />, { container: root });
     screen.getByTitle("Bookshelf");
     screen.getByRole("heading", { name: /Bookshelf/i });
     screen.getByRole("button", { name: /Login/i });
@@ -18,7 +24,7 @@ describe("App component", () => {
   });
 
   it("Opens Login modal on click over login", async () => {
-    render(<App />);
+    render(<App />, { container: root });
 
     const loginBtn = screen.getByRole("button", { name: /Login/i });
 
@@ -28,7 +34,6 @@ describe("App component", () => {
     expect(
       screen.queryByRole("dialog", { name: /login form/i })
     ).not.toBeInTheDocument();
-
     expect(
       screen.queryByRole("button", { name: /close/i })
     ).not.toBeInTheDocument();
@@ -53,7 +58,7 @@ describe("App component", () => {
   });
 
   it("Opens register modal on click over register", async () => {
-    render(<App />);
+    render(<App />, { container: root });
 
     const registerBtn = screen.getByRole("button", { name: /register/i });
 
@@ -63,7 +68,6 @@ describe("App component", () => {
     expect(
       screen.queryByRole("dialog", { name: /login form/i })
     ).not.toBeInTheDocument();
-
     expect(
       screen.queryByRole("button", { name: /close/i })
     ).not.toBeInTheDocument();
@@ -90,7 +94,7 @@ describe("App component", () => {
   });
 
   it("renders a form for login containing password, username, a submit button", async () => {
-    render(<App />);
+    render(<App />, { container: root });
 
     const loginBtn = screen.getByRole("button", { name: /login/i });
 
@@ -108,7 +112,7 @@ describe("App component", () => {
   });
 
   it("renders a registeration form containing password, username, a submit button", async () => {
-    render(<App />);
+    render(<App />, { container: root });
 
     const registerBtn = screen.getByRole("button", { name: /register/i });
 
