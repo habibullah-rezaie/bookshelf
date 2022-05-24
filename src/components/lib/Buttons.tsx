@@ -1,5 +1,5 @@
 import * as React from "react";
-type ButtonVariants = "primary" | "secondary" | "danger";
+type ButtonVariants = "primary" | "secondary" | "danger" | "danger-outline";
 
 interface CustomButtonProps {
   variant?: ButtonVariants;
@@ -21,8 +21,8 @@ export function Button({
 }: ButtonProps) {
   const variantStyles = {
     primary: `text-baseColor bg-indigo ring-indigoDarken10`,
-    secondary: `text-gray80 ring-gray20 bg-gray`,
     danger: ``,
+    secondary: `text-slate-800 ring-slate-600 bg-gray`,
   };
 
   return (
@@ -42,8 +42,8 @@ export function CloseButton({
   return (
     <Button
       aria-label="close"
-      variant="danger"
-      className="px-0 py-0 hover:ring-1 ring-offset-0 ring-gray80"
+      variant="danger-outline"
+      className="px-0 py-0 hover:ring-1 ring-offset-0"
       {...props}
     >
       <svg
