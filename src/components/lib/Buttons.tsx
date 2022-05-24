@@ -18,6 +18,7 @@ export function Button({
   variant = "primary",
   children,
   className = "",
+  ...props
 }: ButtonProps) {
   const variantStyles = {
     primary: `text-baseColor hover:ring-indigo bg-indigo`,
@@ -28,6 +29,7 @@ export function Button({
   return (
     <button
       className={`px-5 py-2 rounded-sm hover:ring-3 ${variantStyles[variant]} ${className}`}
+      {...props}
     >
       {children}
     </button>
