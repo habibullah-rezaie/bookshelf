@@ -1,13 +1,8 @@
-import * as React from 'react'
+import * as React from "react";
 
-const Logo = ({width = '48', height = '48'}) => {
+const Logo = () => {
   return (
-    <svg
-      width={`${width}px`}
-      height={`${height}px`}
-      viewBox={`0 0 48 48`}
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox={`0 0 48 48`} xmlns="http://www.w3.org/2000/svg">
       <title>Bookshelf</title>
       <g>
         <path
@@ -48,6 +43,6 @@ const Logo = ({width = '48', height = '48'}) => {
         />
       </g>
     </svg>
-  )
-}
-export default Logo
+  );
+};
+export default Logo;
