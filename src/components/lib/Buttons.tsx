@@ -3,7 +3,7 @@ import React, { HTMLAttributes } from "react";
 type ButtonVariants = "primary" | "secondary" | "danger";
 
 interface CustomButtonProps {
-  variant: ButtonVariants;
+  variant?: ButtonVariants;
 }
 
 type ButtonProps = React.PropsWithChildren<
