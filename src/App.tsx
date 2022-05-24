@@ -2,6 +2,8 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { Button } from "./components/lib/Buttons";
 import { Container } from "./components/lib/Layout";
+import { Button, CloseButton } from "./components/lib/Buttons";
+import { Container, Stack } from "./components/lib/Layout";
 import Logo from "./components/logo";
 
 type AuthData = {
@@ -38,22 +40,32 @@ function App() {
   const isRegisterOpen = openModal === "register";
   return (
     <Container className="flex justify-center items-center text-textColor">
-      <section className="grid gap-2">
-        <div className="flex flex-col justify-center items-center ">
-          <span className="w-20 h-20">
-            <Logo />
-          </span>
-          <h1 className="text-4xl">Bookshelf</h1>
-        </div>
-        <div className="grid grid-flow-col gap-2">
-          <Button onClick={handleLoginOpen} variant={"primary"}>
-            Login
-          </Button>
-          <Button onClick={handleRegisterOpen} variant={"secondary"}>
-            Register
-          </Button>
-        </div>
-      </section>
+      <div className="w-min-max">
+        <Stack direction="vertical">
+          <div className="flex flex-col justify-center items-center ">
+            <span className="w-20 h-20 md:w-28 md:h-28">
+              <Logo />
+            </span>
+            <h1 className="text-4xl lg:text-5xl">Bookshelf</h1>
+          </div>
+          <Stack gap={3}>
+            <Button
+              onClick={handleLoginOpen}
+              variant={"primary"}
+              className={`md:px-7 md:py4 lg:px-9`}
+            >
+              Login
+            </Button>
+            <Button
+              onClick={handleRegisterOpen}
+              variant={"secondary"}
+              className={`md:px-7 md:py4 lg:px-9`}
+            >
+              Register
+            </Button>
+          </Stack>
+        </Stack>
+      </div>
       <div>
         <LoginDialog
           isOpen={isLoginOpen}
