@@ -17,7 +17,7 @@ type ButtonProps = React.PropsWithChildren<
 export function Button({
   variant = "primary",
   children,
-  className,
+  className = "",
 }: ButtonProps) {
   const variantStyles = {
     primary: `text-baseColor hover:ring-indigo bg-indigo`,
