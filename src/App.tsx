@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Col, Modal, Row, Stack } from "react-bootstrap";
-import Container from "./components/lib/Container";
+import { Modal } from "react-bootstrap";
+import { Button } from "./components/lib/Buttons";
+import { Container } from "./components/lib/Layout";
 import Logo from "./components/logo";
 
 type AuthData = {
@@ -36,27 +37,23 @@ function App() {
   const isLoginOpen = openModal === "login";
   const isRegisterOpen = openModal === "register";
   return (
-    <Container>
-      <Row className="">
-        <Col className="">
-          <Row>
+    <Container className="flex justify-center items-center text-textColor">
+      <section className="grid gap-2">
+        <div className="flex flex-col justify-center items-center ">
+          <span className="w-20 h-20">
             <Logo />
-            <h1 className="text-center">Bookshelf</h1>
-          </Row>
-          <Stack
-            className="justify-content-center"
-            direction="horizontal"
-            gap={2}
-          >
-            <Button onClick={handleLoginOpen} variant={"primary"}>
-              Login
-            </Button>
-            <Button onClick={handleRegisterOpen} variant={"secondary"}>
-              Register
-            </Button>
-          </Stack>
-        </Col>
-      </Row>
+          </span>
+          <h1 className="text-4xl">Bookshelf</h1>
+        </div>
+        <div className="grid grid-flow-col gap-2">
+          <Button onClick={handleLoginOpen} variant={"primary"}>
+            Login
+          </Button>
+          <Button onClick={handleRegisterOpen} variant={"secondary"}>
+            Register
+          </Button>
+        </div>
+      </section>
       <div>
         <LoginDialog
           isOpen={isLoginOpen}
