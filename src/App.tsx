@@ -1,8 +1,7 @@
 import React from "react";
-import { Modal } from "react-bootstrap";
-import { Button } from "./components/lib/Buttons";
-import { Container } from "./components/lib/Layout";
+import Modal from "react-modal";
 import { Button, CloseButton } from "./components/lib/Buttons";
+import { Form, FormGroup } from "./components/lib/Forms";
 import { Container, Stack } from "./components/lib/Layout";
 import Logo from "./components/logo";
 
@@ -16,6 +15,7 @@ function App() {
     "login" | "register" | "none"
   >("none");
 
+  Modal.setAppElement("#root");
   function handleLoginOpen() {
     setOpenModal("login");
   }
@@ -82,6 +82,8 @@ function App() {
   );
 }
 
+// FEATURE: Add footer for register
+// FEATURE: Add footer for forgot password
 function LoginDialog({
   isOpen,
   onDismiss,
@@ -92,26 +94,17 @@ function LoginDialog({
   handleLogin: ({ username, password }: AuthData) => void;
 }) {
   return (
-    <Modal
-      aria-label={"Login Form"}
-      onHide={onDismiss}
-      show={isOpen}
-      backdrop={"static"}
-      centered
-    >
-      <Modal.Header>
-        <h3>Login</h3>
-        <Button variant={"danger"} onClick={onDismiss}>
-          Close
-        </Button>
-      </Modal.Header>
-      <Modal.Body>
-        <LoginForm onSubmit={handleLogin} actionText="Login" />
-      </Modal.Body>
-    </Modal>
+    <AuthModal
+      modalTitle="Login"
+      isOpen={isOpen}
+      onClose={onDismiss}
+      handleAction={handleLogin}
+    />
   );
 }
 
+// FEATURE: Add footer for login
+// FEATURE: Add confirm password
 function RegisterDialog({
   isOpen,
   onDismiss,
@@ -122,22 +115,50 @@ function RegisterDialog({
   handleRegister: ({ username, password }: AuthData) => void;
 }) {
   return (
+    <AuthModal
+      modalTitle="Register"
+      isOpen={isOpen}
+      onClose={onDismiss}
+      handleAction={handleRegister}
+    />
+  );
+}
+
+function AuthModal({
+  isOpen,
+  onClose,
+  modalTitle: ModalTitle,
+  handleAction,
+  modalFooter,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  handleAction: ({ username, password }: AuthData) => void;
+  modalTitle: string;
+  modalFooter?: JSX.Element;
+}) {
+  return (
     <Modal
-      aria-label={"Register Form"}
-      onHide={onDismiss}
-      show={isOpen}
-      backdrop={"static"}
-      centered
+      className={`text-sm md:text-base mx-1 md:m-auto bg-baseColor h-max py-4 px-5 rounded-md shadow-2xl overflow-auto`}
+      overlayClassName={`fixed inset-0 flex items-center justify-center`}
+      contentLabel={`${ModalTitle} Form`}
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      role={"dialog"}
+      aria={{
+        modal: "true",
+      }}
+      shouldCloseOnEsc={true}
+      shouldCloseOnOverlayClick={true}
     >
-      <Modal.Header>
-        <h3>Register</h3>
-        <Button variant={"danger"} onClick={onDismiss}>
-          Close
-        </Button>
-      </Modal.Header>
-      <Modal.Body>
-        <LoginForm onSubmit={handleRegister} actionText="Register" />
-      </Modal.Body>
+      <Stack className="justify-between items-center pb-3">
+        <h3 className="text-xl font-bold">{ModalTitle}</h3>
+        <CloseButton onClick={onClose} />
+      </Stack>
+      <div>
+        <LoginForm onSubmit={handleAction} actionText={ModalTitle} />
+      </div>
+      {modalFooter && modalFooter}
     </Modal>
   );
 }
