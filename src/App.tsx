@@ -81,10 +81,10 @@ function LoginDialog({
       centered
     >
       <Modal.Header>
+        <h3>Login</h3>
         <Button variant={"danger"} onClick={onDismiss}>
           Close
         </Button>
-        <h3>Login</h3>
       </Modal.Header>
       <Modal.Body>
         <LoginForm onSubmit={handleLogin} actionText="Login" />
@@ -112,10 +112,10 @@ function RegisterDialog({
       centered
     >
       <Modal.Header>
+        <h3>Register</h3>
         <Button variant={"danger"} onClick={onDismiss}>
           Close
         </Button>
-        <h3>Register</h3>
       </Modal.Header>
       <Modal.Body>
         <LoginForm onSubmit={handleRegister} actionText="Register" />
