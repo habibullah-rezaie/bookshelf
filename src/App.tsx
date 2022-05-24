@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
-import "./App.css";
+import { Button, Col, Modal, Row, Stack } from "react-bootstrap";
+import Container from "./components/lib/Container";
 import Logo from "./components/logo";
 
 type AuthData = {
@@ -36,17 +36,27 @@ function App() {
   const isLoginOpen = openModal === "login";
   const isRegisterOpen = openModal === "register";
   return (
-    <>
-      <Logo />
-      <h1>Bookshelf</h1>
-      <div>
-        <Button onClick={handleLoginOpen} variant={"primary"}>
-          Login
-        </Button>
-        <Button onClick={handleRegisterOpen} variant={"secondary"}>
-          Register
-        </Button>
-      </div>
+    <Container>
+      <Row className="">
+        <Col className="">
+          <Row>
+            <Logo />
+            <h1 className="text-center">Bookshelf</h1>
+          </Row>
+          <Stack
+            className="justify-content-center"
+            direction="horizontal"
+            gap={2}
+          >
+            <Button onClick={handleLoginOpen} variant={"primary"}>
+              Login
+            </Button>
+            <Button onClick={handleRegisterOpen} variant={"secondary"}>
+              Register
+            </Button>
+          </Stack>
+        </Col>
+      </Row>
       <div>
         <LoginDialog
           isOpen={isLoginOpen}
@@ -59,7 +69,7 @@ function App() {
           handleRegister={handleRegister}
         />
       </div>
-    </>
+    </Container>
   );
 }
 
@@ -89,7 +99,6 @@ function LoginDialog({
       <Modal.Body>
         <LoginForm onSubmit={handleLogin} actionText="Login" />
       </Modal.Body>
-      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 }
@@ -120,7 +129,6 @@ function RegisterDialog({
       <Modal.Body>
         <LoginForm onSubmit={handleRegister} actionText="Register" />
       </Modal.Body>
-      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 }
