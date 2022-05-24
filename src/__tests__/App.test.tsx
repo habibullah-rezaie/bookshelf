@@ -1,8 +1,4 @@
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import * as React from "react";
 import App from "../App";
@@ -52,7 +48,7 @@ describe("App component", () => {
 
     await userEvent.click(closeBtn);
 
-    await waitForElementToBeRemoved(loginModelText);
+    expect(loginModelText).not.toBeInTheDocument();
     expect(registerModelText).not.toBeInTheDocument();
     expect(closeBtn).not.toBeInTheDocument();
   });
@@ -88,7 +84,7 @@ describe("App component", () => {
 
     await userEvent.click(closeBtn);
 
-    await waitForElementToBeRemoved(registerModelText);
+    expect(loginModelText).not.toBeInTheDocument();
     expect(registerModelText).not.toBeInTheDocument();
     expect(closeBtn).not.toBeInTheDocument();
   });
