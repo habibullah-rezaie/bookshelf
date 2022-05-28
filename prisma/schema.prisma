@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model userbook {
+  id        String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userid    String        @db.Uuid
+  bookid    String        @db.VarChar(12)
+  state     readingstate? @default(SHOULD_READ)
+  startdate DateTime?     @db.Date
+  enddate   DateTime?     @db.Date
+  notes     String?
+  rating    Decimal?      @db.Decimal(2, 1)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@unique([userid, bookid])
+}
+
+model userfavoritebook {
+  userid    String   @db.Uuid
+  bookid    String   @db.VarChar(12)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userid, bookid])
+}
+
+model userreaction {
+  userid       String        @db.Uuid
+  reviewid     String        @db.Uuid
+  reactionkind reactionkinds
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  userreview   userreview    @relation(fields: [reviewid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "userreaction_fkey_reviewid")
+
+  @@id([userid, reviewid])
+}
+
+model userreview {
+  id               String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userid           String         @db.Uuid
+  bookid           String         @db.VarChar(12)
+  repliedto        String?        @db.Uuid
+  content          String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  userreview       userreview?    @relation("userreviewTouserreview_repliedto", fields: [repliedto], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "userreview_fk_repliedto")
+  userreaction     userreaction[]
+  other_userreview userreview[]   @relation("userreviewTouserreview_repliedto")
+
+  @@unique([userid, bookid, repliedto])
+}
+
+enum reactionkinds {
+  UPVOTE
+  DOWNVOTE
+}
+
+enum readingstate {
+  READING
+  HAVE_READ
+  SHOULD_READ
+}
