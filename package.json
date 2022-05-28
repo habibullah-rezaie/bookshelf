@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@prisma/client": "^3.14.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
@@ -47,6 +48,8 @@
     "autoprefixer": "^10.4.7",
     "cypress": "^9.6.1",
     "postcss": "^8.4.14",
-    "tailwindcss": "^3.0.24"
+    "prisma": "^3.14.0",
+    "tailwindcss": "^3.0.24",
+    "ts-node": "^10.8.0"
   }
 }
