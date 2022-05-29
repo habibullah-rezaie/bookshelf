@@ -28,7 +28,7 @@ export function Button({
 
   return (
     <button
-      className={`px-5 py-2 rounded-sm hover:ring-2 ring-offset-1 ring-opacity-50 ${variantStyles[variant]} ${className}`}
+      className={`px-5 py-2 rounded-sm hover:ring-2 ring-offset-1 ring-opacity-50 transition-all duration-200 ${variantStyles[variant]} ${className}`}
       {...props}
     >
       {children}
