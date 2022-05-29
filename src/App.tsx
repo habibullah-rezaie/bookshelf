@@ -1,6 +1,6 @@
 import React from "react";
 import DiscoverBooksScreen from "screens/DiscoverBooksScreen";
-import LoginRegisterScreen from "screens/LoginScreen";
+import LoginRegisterScreen from "screens/LoginRegisterScreen";
 
 function App() {
   const user = null;
