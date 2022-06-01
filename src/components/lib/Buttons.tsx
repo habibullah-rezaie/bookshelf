@@ -21,9 +21,9 @@ export function Button({
 }: ButtonProps) {
   const variantStyles = {
     primary: `text-baseColor bg-indigo ring-indigoDarken10`,
-    secondary: `text-white ring-slate-600 bg-gray80`,
     danger: `text-gray80 ring-red-500 bg-red-500 hover:bg-red-600`,
     "danger-outline": `bg-white text-red-500 border-1 border-red-500 hover:bg-red-500 ring-red-500 hover:text-white`,
+    secondary: `text-white ring-gray-300 bg-gray-400`,
   };
 
   return (
