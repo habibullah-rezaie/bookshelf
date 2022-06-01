@@ -21,14 +21,24 @@ export function Button({
 }: ButtonProps) {
   const variantStyles = {
     primary: `text-baseColor bg-indigo ring-indigoDarken10`,
-    "danger-outline": `bg-white text-red-500 border-1 border-red-500 hover:bg-red-500 ring-red-500 hover:text-white`,
     secondary: `text-white ring-gray-300 bg-gray-400`,
     danger: `text-darkGray ring-red-400 bg-red-500 hover:bg-red-600`,
+    "danger-outline": `bg-white text-red-500 border-1 border-red-500 hover:bg-red-500 ring-red-300 hover:text-white`,
+    "secondary-outline":
+      "bg-transparent text-gray-400 border-1 border-gray-400 ring-gray-300 hover:bg-gray-400 hover:text-white",
+    "primary-outline": ``,
+    plain: "hover:ring-0",
   };
 
   return (
     <button
-      className={`px-5 py-2 rounded-sm hover:ring-2 ring-offset-1 ring-opacity-50 transition-all duration-200 ${variantStyles[variant]} ${className}`}
+      className={`outline-none focus:outline-none rounded-sm transition-all duration-200 ${
+        variant !== "plain" && `hover:ring-4 ring-opacity-50 px-5 py-2`
+      } ${variantStyles[variant]} ${
+        variant.includes("outline")
+          ? "hover:font-semibold border bg-transparent"
+          : ""
+      } ${className}`}
       {...props}
     >
       {children}
