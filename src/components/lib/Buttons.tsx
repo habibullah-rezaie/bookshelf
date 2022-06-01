@@ -54,7 +54,7 @@ export function CloseButton({
     <Button
       aria-label="close"
       variant="danger-outline"
-      className="px-0 py-0 hover:ring-1 ring-offset-0"
+      className="hover:ring-1 ring-offset-0 px-0 pt-0 pb-0 border-none"
       {...props}
     >
       <svg
