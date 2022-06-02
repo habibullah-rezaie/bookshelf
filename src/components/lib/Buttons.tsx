@@ -76,3 +76,18 @@ export function CloseButton({
     </Button>
   );
 }
+
+export function OutlineButton({
+  children,
+  variant = "primary",
+  className = "",
+  ...props
+}: ButtonProps & {
+  variant?: "primary" | "secondary" | "danger";
+}) {
+  return (
+    <Button className={`${className}`} variant={`${variant}-outline`}>
+      {children}
+    </Button>
+  );
+}
