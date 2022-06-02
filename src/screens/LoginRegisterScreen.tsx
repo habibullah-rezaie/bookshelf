@@ -179,10 +179,10 @@ function LoginForm({
         <label htmlFor="username" className="sr-only ">
           Username
         </label>
-        <div className="grid grid-flow-col gap-0 bg-gray20 p-1 rounded-md items-center">
+        <div className="grid grid-flow-col gap-0 bg-lightGray p-1 rounded-md items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray80"
+            className="h-5 w-5 text-darkGray"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -201,10 +201,10 @@ function LoginForm({
         <label htmlFor="password" className="sr-only ">
           Password
         </label>
-        <div className="grid grid-flow-col gap-0 bg-gray20 p-1 rounded-md items-center">
+        <div className="grid grid-flow-col gap-0 bg-lightGray p-1 rounded-md items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray80"
+            className="h-5 w-5 text-darkGray"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
