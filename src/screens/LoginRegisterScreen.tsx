@@ -1,8 +1,8 @@
 import React from "react";
-import Modal from "react-modal";
 import { Button, CloseButton } from "components/lib/Buttons";
 import { Form, FormGroup } from "components/lib/Forms";
 import { Container, Stack } from "components/lib/Layout";
+import useModal from "components/lib/Modal";
 import Logo from "components/logo";
 
 type AuthData = {
@@ -15,7 +15,7 @@ function LoginRegisterScreen() {
     "login" | "register" | "none"
   >("none");
 
-  Modal.setAppElement("#root");
+  // setModalAppElement("#root");
   function handleLoginOpen() {
     setOpenModal("login");
   }
@@ -127,38 +127,27 @@ function RegisterDialog({
 function AuthModal({
   isOpen,
   onClose,
-  modalTitle: ModalTitle,
+  modalTitle,
   handleAction,
-  modalFooter,
+  ModalFooter,
 }: {
   isOpen: boolean;
   onClose: () => void;
   handleAction: ({ username, password }: AuthData) => void;
   modalTitle: string;
-  modalFooter?: JSX.Element;
+  ModalFooter?: JSX.Element;
 }) {
+  const Modal = useModal("#root");
+
   return (
     <Modal
-      className={`text-sm md:text-base mx-1 md:m-auto bg-baseColor h-max py-4 px-5 rounded-md shadow-2xl overflow-auto`}
-      overlayClassName={`fixed inset-0 flex items-center justify-center`}
-      contentLabel={`${ModalTitle} Form`}
+      contentLabel={`${modalTitle} Form`}
       isOpen={isOpen}
-      onRequestClose={onClose}
-      role={"dialog"}
-      aria={{
-        modal: "true",
-      }}
-      shouldCloseOnEsc={true}
-      shouldCloseOnOverlayClick={true}
+      onClose={onClose}
+      modalFooter={ModalFooter}
+      modalTitle={modalTitle}
     >
-      <Stack className="justify-between items-center pb-3">
-        <h3 className="text-xl font-bold">{ModalTitle}</h3>
-        <CloseButton onClick={onClose} />
-      </Stack>
-      <div>
-        <LoginForm onSubmit={handleAction} actionText={ModalTitle} />
-      </div>
-      {modalFooter && modalFooter}
+      <LoginForm onSubmit={handleAction} actionText={modalTitle} />
     </Modal>
   );
 }
