@@ -8,18 +8,24 @@ type CustomButtonProps = {};
 
 type ButtonProps = React.PropsWithChildren<
   CustomButtonProps &
-    React.DetailedHTMLProps<
-      React.ButtonHTMLAttributes<HTMLButtonElement>,
-      HTMLButtonElement
+    Omit<
+      React.DetailedHTMLProps<
+        React.ButtonHTMLAttributes<HTMLButtonElement>,
+        HTMLButtonElement
+      >,
+      "ref"
     >
 >;
 
-export function Button({
-  variant = "primary",
-  children,
-  className = "",
-  ...props
-}: ButtonProps & { variant?: ButtonVariant }) {
+export const Button = React.forwardRef(function Button(
+  {
+    variant = "primary",
+    children,
+    className = "",
+    ...props
+  }: ButtonProps & { variant?: ButtonVariant },
+  ref: React.ForwardedRef<HTMLButtonElement> | undefined
+) {
   const variantStyles = {
     primary: `text-baseColor bg-indigo ring-indigoDarken10`,
     secondary: `text-white ring-gray-300 bg-gray-400`,
@@ -33,6 +39,7 @@ export function Button({
 
   return (
     <button
+      ref={ref}
       className={`outline-none focus:outline-none rounded-sm transition-all duration-200 ${
         variant !== "plain" && `hover:ring-4 ring-opacity-50 px-5 py-2`
       } ${variantStyles[variant]} ${
@@ -45,17 +52,18 @@ export function Button({
       {children}
     </button>
   );
-}
+});
 
-export function CloseButton({
-  className,
-  ...props
-}: Omit<ButtonProps, "children">) {
+export const CloseButton = React.forwardRef(function CloseButton(
+  { className, ...props }: Omit<ButtonProps, "children">,
+  ref: React.ForwardedRef<HTMLButtonElement>
+) {
   return (
     <Button
+      ref={ref}
+      className="hover:ring-1 ring-offset-0 px-0 pt-0 pb-0 border-none"
       aria-label="close"
       variant="danger-outline"
-      className="hover:ring-1 ring-offset-0 px-0 pt-0 pb-0 border-none"
       {...props}
     >
       <svg
@@ -75,19 +83,22 @@ export function CloseButton({
       </svg>
     </Button>
   );
-}
+});
 
-export function OutlineButton({
-  children,
-  variant = "primary",
-  className = "",
-  ...props
-}: ButtonProps & {
-  variant?: "primary" | "secondary" | "danger";
-}) {
+export const OutlineButton = React.forwardRef(function OutlineButton(
+  {
+    children,
+    variant = "primary",
+    className = "",
+    ...props
+  }: ButtonProps & {
+    variant?: "primary" | "secondary" | "danger";
+  },
+  ref: React.ForwardedRef<HTMLButtonElement>
+) {
   return (
-    <Button className={`${className}`} variant={`${variant}-outline`}>
+    <Button ref={ref} className={`${className}`} variant={`${variant}-outline`}>
       {children}
     </Button>
   );
-}
+});
