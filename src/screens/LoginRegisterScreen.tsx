@@ -1,9 +1,9 @@
-import React from "react";
-import { Button, CloseButton } from "components/lib/Buttons";
-import { Form, FormGroup } from "components/lib/Forms";
+import { Button } from "components/lib/Buttons";
+import { Form, FormGroup, Input } from "components/lib/Forms";
 import { Container, Stack } from "components/lib/Layout";
 import useModal from "components/lib/Modal";
 import Logo from "components/logo";
+import React from "react";
 
 type AuthData = {
   username: string;
@@ -194,12 +194,7 @@ function LoginForm({
               d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
             />
           </svg>
-          <input
-            className={`bg-gray20 p-1`}
-            type="text"
-            id="username"
-            placeholder="username"
-          />
+          <Input type="text" id="username" placeholder="username" />
         </div>
       </FormGroup>
       <div className={`grid grid-flow-col gap-3`}>
@@ -219,12 +214,7 @@ function LoginForm({
               clipRule="evenodd"
             />
           </svg>
-          <input
-            className={`bg-gray20 p-1`}
-            type="password"
-            id="password"
-            placeholder="password"
-          />
+          <Input type="password" id="password" placeholder="password" />
         </div>
       </div>
       <Button type="submit" variant={"primary"} aria-label={"Submit Form"}>
