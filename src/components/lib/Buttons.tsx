@@ -1,9 +1,10 @@
 import * as React from "react";
-type ButtonVariants = "primary" | "secondary" | "danger" | "danger-outline";
+type ButtonPrimaryVariant = "primary" | "secondary" | "danger" | "plain";
+type ButtonVariant =
+  | ButtonPrimaryVariant
+  | ("primary-outline" | "danger-outline" | "secondary-outline");
 
-interface CustomButtonProps {
-  variant?: ButtonVariants;
-}
+type CustomButtonProps = {};
 
 type ButtonProps = React.PropsWithChildren<
   CustomButtonProps &
@@ -18,7 +19,7 @@ export function Button({
   children,
   className = "",
   ...props
-}: ButtonProps) {
+}: ButtonProps & { variant?: ButtonVariant }) {
   const variantStyles = {
     primary: `text-baseColor bg-indigo ring-indigoDarken10`,
     secondary: `text-white ring-gray-300 bg-gray-400`,
