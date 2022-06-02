@@ -50,4 +50,11 @@ interface ModalProps
   modalFooter?: JSX.Element;
   contentLabel: string;
 }
+
+export default function useModal(appRoot: string) {
+  ReactModal.setAppElement(appRoot);
+
+  return Modal;
+}
+
 export type ModalComponent = (props: ModalProps) => JSX.Element;
