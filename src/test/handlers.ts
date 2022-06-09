@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import searchJson from "test/data/searchResults.json"; // Two queries that is made available offline
 
-const booksAPI = "https://www.googleapis.com/books/v1";
+const booksAPI = process.env.REACT_APP_BOOK_API;
 
 const handlers = [
   rest.get(`${booksAPI}/volumes`, (req, res, ctx) => {
