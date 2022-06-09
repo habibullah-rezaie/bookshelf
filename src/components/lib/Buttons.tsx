@@ -27,7 +27,7 @@ export const Button = React.forwardRef(function Button(
   ref: React.ForwardedRef<HTMLButtonElement> | undefined
 ) {
   const variantStyles = {
-    primary: `text-baseColor bg-indigo ring-indigoDarken10`,
+    primary: `text-white bg-indigo ring-indigoLighten80 hover:bg-indigoDarken10 `,
     secondary: `text-white ring-gray-300 bg-gray-400`,
     danger: `text-darkGray ring-red-400 bg-red-500 hover:bg-red-600`,
     "danger-outline": `bg-white text-red-500 border-1 border-red-500 hover:bg-red-500 ring-red-300 hover:text-white`,
