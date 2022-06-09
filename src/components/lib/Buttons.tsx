@@ -102,3 +102,21 @@ export const OutlineButton = React.forwardRef(function OutlineButton(
     </Button>
   );
 });
+
+export const CircleButton = React.forwardRef(
+  (
+    { children, className = "", ...props }: ButtonProps,
+    ref?: React.ForwardedRef<HTMLButtonElement>
+  ) => {
+    return (
+      <Button
+        ref={ref}
+        variant={"plain"}
+        className={`rounded-full ${className}`}
+        {...props}
+      >
+        {children}
+      </Button>
+    );
+  }
+);
