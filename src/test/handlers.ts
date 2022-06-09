@@ -13,7 +13,7 @@ const handlers = [
 
     let searchResult: any = null;
     let queryMatch = searchQuery?.match(
-      /^(.*)\+(inauthor|inpublisher|intitle|isbn|subject):(.*)$/
+      /^(.*) (inauthor|inpublisher|intitle|isbn|subject):(.*)$/
     );
     if (queryMatch) {
       const queryText: any = queryMatch[1];
