@@ -3,7 +3,7 @@ import { Form, Input } from "components/lib/Forms";
 import { Stack } from "components/lib/Layout";
 import React, { FormEvent, useEffect, useState } from "react";
 import { FaFilter, FaSearch, FaSpinner } from "react-icons/fa";
-import { SearchFilters } from "types/DiscoverBooksScreenTypes";
+import { SearchFilters, SearchResult } from "types/DiscoverBooksScreenTypes";
 const FiltersModal = React.lazy(
   () =>
     import(
@@ -11,10 +11,14 @@ const FiltersModal = React.lazy(
     )
 );
 
-function useSearchWithFilters() {
   const [status, setStatus] = React.useState<
     "PENDING" | "IDLE" | "RESOLVED" | "REJECTED"
   >("IDLE");
+function useSearchWithFilters({
+  onSuccess,
+}: {
+  onSuccess(result: SearchResult): void;
+}) {
 
   const [query, setQuery] = useState("");
   const [filters, setFilters] = React.useState<SearchFilters>({});
@@ -31,7 +35,7 @@ function useSearchWithFilters() {
       searchBook(query, filters).then(
         (result) => {
           setStatus("RESOLVED");
-          // setBooks(result?.items);
+          onSuccess(result);
         },
         (error) => {
           setStatus("REJECTED");
@@ -39,7 +43,7 @@ function useSearchWithFilters() {
         }
       );
     },
-    [filters, query]
+    [filters, onSuccess, query]
   );
 
   const filtersRef = React.useRef(filters);
@@ -64,10 +68,16 @@ function useSearchWithFilters() {
   };
 }
 
-function SearchBooks({ setBooks }: { setBooks(books: any[]): void }) {
+function SearchBooks({
+  setResult,
+}: {
+  setResult(result: SearchResult): void;
+}) {
   const [filterModalOpen, setFilterModalOpen] = React.useState(false);
   const { search, query, setQuery, setFilters, status, setFiltersSubmitted } =
-    useSearchWithFilters();
+    useSearchWithFilters({
+      onSuccess: setResult,
+    });
 
   function closeFiltersModal() {
     setFilterModalOpen(false);
