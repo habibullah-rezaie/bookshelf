@@ -1,3 +1,5 @@
+import { Book } from "./types";
+
 export type BookLanguage = { English: string; alpha2: string };
 export type SearchFilters = {
   author?: string;
@@ -10,3 +12,5 @@ export type SearchFilters = {
 };
 
 export type setFilters = React.Dispatch<React.SetStateAction<SearchFilters>>;
+
+export type SearchResult = { totalItems: number; items: Book[] };
