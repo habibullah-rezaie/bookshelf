@@ -4,11 +4,11 @@ import "./Rating.css";
 
 function Rating({
   id,
-  rating,
+  rating = 0,
   setRating,
 }: {
   id: string;
-  rating: number;
+  rating?: number;
   setRating: (rating: number) => void;
 }) {
   const inputName = `rating-${id}`;

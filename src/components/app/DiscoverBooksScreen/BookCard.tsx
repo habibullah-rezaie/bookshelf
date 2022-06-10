@@ -26,9 +26,9 @@ Book's Title kdsjflksjfdlkafdl;kfjal;dkflakdjf`,
         <div className="w-20 ">
           <img src="book.jpeg" alt="a book" className="w-full" />
         </div>
-        <div className="text-center">
-          <h3 className="text-sm text-indigo" title={title}>
-            {title.substring(0, 20) + "..."}
+        <div className="flex flex-col space-y-1 items-center text-center">
+          <h3 className="text-sm text-indigo  w-[80%]" title={title}>
+            {title.substring(0, 40) + `${title.length > 40 ? "..." : ""}`}
           </h3>
           <p className="text-indigoLighten80 text-[.6rem]">Habibullah Rezaie</p>
           <div className="flex justify-center">
