@@ -4,6 +4,7 @@ import { Stack } from "components/lib/Layout";
 import React, { FormEvent, useEffect, useState } from "react";
 import { FaFilter, FaSearch, FaSpinner } from "react-icons/fa";
 import { SearchFilters, SearchResult } from "types/DiscoverBooksScreenTypes";
+import { BaseComponentStatuses } from "types/types";
 const FiltersModal = React.lazy(
   () =>
     import(
@@ -11,18 +12,27 @@ const FiltersModal = React.lazy(
     )
 );
 
-  const [status, setStatus] = React.useState<
-    "PENDING" | "IDLE" | "RESOLVED" | "REJECTED"
-  >("IDLE");
 function useSearchWithFilters({
+  setExternalStatus,
   onSuccess,
 }: {
+  setExternalStatus<T extends BaseComponentStatuses>(status: T): void;
   onSuccess(result: SearchResult): void;
 }) {
+  const [status, setInnerStatus] =
+    React.useState<BaseComponentStatuses>("IDLE");
 
   const [query, setQuery] = useState("");
   const [filters, setFilters] = React.useState<SearchFilters>({});
   const [filtersSubmitted, setFiltersSubmitted] = React.useState(false);
+
+  const setStatus = React.useCallback(
+    function (status: BaseComponentStatuses) {
+      setInnerStatus(status);
+      setExternalStatus(status);
+    },
+    [setExternalStatus]
+  );
 
   // TODO: Search on filters submit button
   // however don't search on every filters change, meaning that if you change the filters, but you don't
@@ -43,7 +53,7 @@ function useSearchWithFilters({
         }
       );
     },
-    [filters, onSuccess, query]
+    [filters, onSuccess, query, setStatus]
   );
 
   const filtersRef = React.useRef(filters);
@@ -70,12 +80,15 @@ function useSearchWithFilters({
 
 function SearchBooks({
   setResult,
+  setStatus,
 }: {
   setResult(result: SearchResult): void;
+  setStatus<T extends BaseComponentStatuses>(status: T): void;
 }) {
   const [filterModalOpen, setFilterModalOpen] = React.useState(false);
   const { search, query, setQuery, setFilters, status, setFiltersSubmitted } =
     useSearchWithFilters({
+      setExternalStatus: setStatus,
       onSuccess: setResult,
     });
 
