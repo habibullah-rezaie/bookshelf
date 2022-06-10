@@ -1,14 +1,15 @@
 import BookCard from "components/app/DiscoverBooksScreen/BookCard";
 import SearchBooks from "components/app/DiscoverBooksScreen/SearchBooks";
-import SearchSkeletonLoader from "components/app/DiscoverBooksScreen/SearchSkeletonLoader";
+import BookCardSkeletonLoader from "components/app/DiscoverBooksScreen/BookCardSkeletonLoader";
 import Header from "components/lib/Header";
 import { Container, Stack } from "components/lib/Layout";
 import Logo from "components/logo";
 import * as React from "react";
+import { SearchResult } from "types/DiscoverBooksScreenTypes";
 import { BaseComponentStatuses, Book } from "types/types";
 
 function DiscoverBooksScreen() {
-  const [books, setBooks] = React.useState<Book[]>([]);
+  const [result, setResult] = React.useState<SearchResult | null>(null);
   const [status, setStatus] = React.useState<BaseComponentStatuses>("IDLE");
 
   // TODO: Add pagination
@@ -33,15 +34,23 @@ function DiscoverBooksScreen() {
           >
             <Stack direction="vertical" gap={6} className="max-w-full">
               <h2 className="text-center">Discover Books Here</h2>
-              <SearchBooks setBooks={setBooks} setStatus={setStatus} />
+              <SearchBooks setResult={setResult} setStatus={setStatus} />
               <ul className="mt-2 flex flex-col justify-center space-y-3">
                 {status === "PENDING" && (
                   <>
-                    <SearchSkeletonLoader />
-                    <SearchSkeletonLoader />
+                    <BookCardSkeletonLoader />
+                    <BookCardSkeletonLoader />
                   </>
                 )}
-                {status === "RESOLVED" && <></>}
+                {status === "RESOLVED" && (
+                  <>
+                    {result?.items?.length && result.items.length > 0
+                      ? result.items.map((book, i) => {
+                          return <BookCard key={book.id} book={book} />;
+                        })
+                      : "Opps! nothing found :("}
+                  </>
+                )}
               </ul>
               {status === "IDLE" && (
                 <div>
