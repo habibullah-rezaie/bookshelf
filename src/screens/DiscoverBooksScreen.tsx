@@ -1,13 +1,15 @@
 import BookCard from "components/app/DiscoverBooksScreen/BookCard";
 import SearchBooks from "components/app/DiscoverBooksScreen/SearchBooks";
+import SearchSkeletonLoader from "components/app/DiscoverBooksScreen/SearchSkeletonLoader";
 import Header from "components/lib/Header";
 import { Container, Stack } from "components/lib/Layout";
 import Logo from "components/logo";
 import * as React from "react";
-import { Book } from "types/types";
+import { BaseComponentStatuses, Book } from "types/types";
 
 function DiscoverBooksScreen() {
   const [books, setBooks] = React.useState<Book[]>([]);
+  const [status, setStatus] = React.useState<BaseComponentStatuses>("IDLE");
 
   // TODO: Add pagination
   // TODO: Add result count
@@ -31,19 +33,28 @@ function DiscoverBooksScreen() {
           >
             <Stack direction="vertical" gap={6} className="max-w-full">
               <h2 className="text-center">Discover Books Here</h2>
-              <SearchBooks setBooks={setBooks} />
+              <SearchBooks setBooks={setBooks} setStatus={setStatus} />
               <ul className="mt-2 flex flex-col justify-center space-y-3">
-                <BookCard id="habibullah" />
+                {status === "PENDING" && (
+                  <>
+                    <SearchSkeletonLoader />
+                    <SearchSkeletonLoader />
+                  </>
+                )}
+                {status === "RESOLVED" && <></>}
               </ul>
+              {status === "IDLE" && (
+                <div>
+                  <a href="#searchForBooks">Search</a> for books, results appear
+                  here!
+                </div>
+              )}
               {/* {books.length > 0 ? (
                 <ul className="mt-2 flex flex-col justify-center space-y-3">
                   <BookCard id="habibullah" />
                 </ul>
               ) : (
-                <div>
-                  <a href="#searchForBooks">Search</a> for books for results to
-                  appear here!
-                </div>
+                
               )} */}
             </Stack>
           </main>
