@@ -5,14 +5,7 @@ import * as React from "react";
 import { FaHeart, FaMinus, FaRegHeart } from "react-icons/fa";
 import { Book } from "types/types";
 
-function BookCard({
-  id,
-  title = `My Sample Book's Title kdsjflksjf dlkafdl;kfj al;d kflakdjf My Sample
-Book's Title kdsjflksjfdlkafdl;kfjal;dkflakdjf`,
-}: {
-  id: string;
-  title?: string;
-}) {
+function BookCard({ book }: { book: Book }) {
   const [isFavorite, setIsFavorite] = React.useState(false);
   const [readingStatus, setReadingStatus] = React.useState<
     ReadingStatuses | "none"
@@ -20,21 +13,34 @@ Book's Title kdsjflksjfdlkafdl;kfjal;dkflakdjf`,
 
   const toggleIsFavorite = () =>
     setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+
+  const title = book.volumeInfo.title;
+  const img =
+    book.volumeInfo.imageLinks?.smallThumbnail ||
+    book.volumeInfo.imageLinks?.thumbnail ||
+    "book.jpeg";
+
+  // TODO: say author1 and author2 or author1, and 2 others
+  const author = book.volumeInfo.authors[1];
+  const rating = book.volumeInfo.averageRating;
+  const pageCount = book.volumeInfo.pageCount;
+  const publishedYear = book.volumeInfo.publishedDate.split("-")[0];
+  const description = book.volumeInfo.description || "No description.";
   return (
     <section className="relative max-w-fit text-xxs md:text-base pr-2 pb-4 rounded-md flex flex-col overflow-hidden shadow-sm hover:shadow-md border-[1px] outline-none focus:outline-none  text-black">
       <div className="w-full flex flex-col justify-center items-center">
         <div className="w-20 ">
-          <img src="book.jpeg" alt="a book" className="w-full" />
+          <img src={img} alt={`${title}'s cover`} className="w-full" />
         </div>
         <div className="flex flex-col space-y-1 items-center text-center">
           <h3 className="text-sm text-indigo  w-[80%]" title={title}>
             {title.substring(0, 40) + `${title.length > 40 ? "..." : ""}`}
           </h3>
-          <p className="text-indigoLighten80 text-[.6rem]">Habibullah Rezaie</p>
+          <p className="text-indigoLighten80 text-[.6rem]">{author}</p>
           <div className="flex justify-center">
             <Rating
-              id={id}
-              rating={3}
+              id={book.id}
+              rating={rating}
               setRating={(rating: number) => console.log("rated ", rating)}
             />
           </div>
@@ -43,20 +49,20 @@ Book's Title kdsjflksjfdlkafdl;kfjal;dkflakdjf`,
       <div className="px-1">
         <div className="flex justify-center my-3">
           <div className="flex flex-col px-3 border-r-[1px] border-indigoLighten80">
-            <p>192</p> <p className="text-indigoLighten80">Pages</p>
+            <p>{pageCount}</p> <p className="text-indigoLighten80">Pages</p>
           </div>
           <div className="flex flex-col px-3 border-r-[1px] border-indigoLighten80">
-            <p>2022</p> <p className="text-indigoLighten80">Release</p>
+            <p>{publishedYear}</p>{" "}
+            <p className="text-indigoLighten80">Release</p>
           </div>
-          <div className="flex flex-col px-3 ">
-            <p>101k</p> <p className="text-indigoLighten80">Reading</p>
-          </div>
+          {rating > 0 && (
+            <div className="flex flex-col px-3 ">
+              <p>{rating}</p> <p className="text-indigoLighten80">Star</p>
+            </div>
+          )}
         </div>
         <p className="relative h-10 mb-5 overflow-y-hidden after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gray-50 after:bg-opacity-50">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed nam
-          eligendi iusto aliquid eaque dolorum? Dicta aliquam aspernatur
-          architecto. Minima, corporis saepe. Possimus, dolor? Accusantium quos
-          sint minima quasi quam.
+          {description}
         </p>
         <div className="absolute left-0 z-10 bg-transparent w-full bottom-1 py-4 grid gap-3 justify-center grid-flow-col ">
           {readingStatus === "none" ? (
