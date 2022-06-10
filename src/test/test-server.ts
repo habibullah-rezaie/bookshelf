@@ -3,6 +3,4 @@ import handlers from "./handlers";
 
 export const server = setupServer(...handlers);
 
-server.listen({
-  onUnhandledRequest: "warn",
-});
+server.listen({ onUnhandledRequest: "bypass" });

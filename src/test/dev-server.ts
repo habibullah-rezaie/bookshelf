@@ -5,5 +5,5 @@ export const worker = setupWorker(...handlers);
 
 worker.start({
   quiet: true,
-  onUnhandledRequest: "warn",
+  onUnhandledRequest: "bypass",
 });
