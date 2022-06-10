@@ -1,9 +1,9 @@
 import { readingstate as ReadingStatuses } from "@prisma/client";
-import { Button, CircleButton } from "components/lib/Buttons";
+import { Button } from "components/lib/Buttons";
 import Rating from "components/lib/Rating";
 import * as React from "react";
-import { BsFillBookmarkCheckFill } from "react-icons/bs";
-import { FaBook, FaCheck, FaHeart, FaMinus, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaMinus, FaRegHeart } from "react-icons/fa";
+import { Book } from "types/types";
 
 function BookCard({
   id,
