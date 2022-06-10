@@ -35,3 +35,9 @@ export type Book = {
     accessViewAllowed: string; //TODO: update this, this is an enum
   };
 };
+
+export type BaseComponentStatuses =
+  | "PENDING"
+  | "IDLE"
+  | "RESOLVED"
+  | "REJECTED";
