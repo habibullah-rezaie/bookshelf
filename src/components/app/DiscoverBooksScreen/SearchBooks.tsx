@@ -34,11 +34,6 @@ function useSearchWithFilters({
     [setExternalStatus]
   );
 
-  // TODO: Search on filters submit button
-  // however don't search on every filters change, meaning that if you change the filters, but you don't
-  // click the filter button a search is not triggered. On the other hand, if you click the search button,
-  // an immediate search is happening
-
   const search = React.useCallback(
     function search() {
       setStatus("PENDING");
@@ -57,7 +52,6 @@ function useSearchWithFilters({
   );
 
   const filtersRef = React.useRef(filters);
-  //TODO: research on filter change
   useEffect(() => {
     if (filtersSubmitted && !isDeepStrictEqual(filtersRef.current, filters)) {
       filtersRef.current = filters;
