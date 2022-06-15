@@ -8,7 +8,7 @@ function BooksList({
   result,
   status,
 }: {
-  result: SearchResult | null;
+  result?: SearchResult;
   status: BaseComponentStatuses;
 }) {
   return (
