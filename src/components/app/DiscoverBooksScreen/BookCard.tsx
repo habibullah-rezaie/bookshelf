@@ -51,7 +51,11 @@ function BookCard({ book }: { book: Book }) {
           <div className="flex flex-col px-3 border-r-[1px] border-indigoLighten80">
             <p>{pageCount}</p> <p className="text-indigoLighten80">Pages</p>
           </div>
-          <div className="flex flex-col px-3 border-r-[1px] border-indigoLighten80">
+          <div
+            className={`${
+              rating > 0 && `border-r-[1px]`
+            } flex flex-col px-3  border-indigoLighten80`}
+          >
             <p>{publishedYear}</p>{" "}
             <p className="text-indigoLighten80">Release</p>
           </div>
