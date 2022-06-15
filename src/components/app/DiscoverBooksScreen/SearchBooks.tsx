@@ -74,17 +74,22 @@ function useSearchWithFilters({
 }
 
 function SearchBooks({
-  setResult,
-  setStatus,
+  status,
+  setResolved,
+  setPending,
+  setRejected,
 }: {
-  setResult(result: SearchResult): void;
-  setStatus<T extends BaseComponentStatuses>(status: T): void;
+  status: BaseComponentStatuses;
+  setResolved(result: SearchResult): void;
+  setRejected: (error: any) => void;
+  setPending: () => void;
 }) {
   const [filterModalOpen, setFilterModalOpen] = React.useState(false);
-  const { search, query, setQuery, setFilters, status, setFiltersSubmitted } =
+  const { search, query, setQuery, setFilters, setFiltersSubmitted } =
     useSearchWithFilters({
-      setExternalStatus: setStatus,
-      onSuccess: setResult,
+      setRejected,
+      setResolved,
+      setPending,
     });
 
   function closeFiltersModal() {
