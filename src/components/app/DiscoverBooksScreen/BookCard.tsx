@@ -27,7 +27,7 @@ function BookCard({ book }: { book: Book }) {
   const publishedYear = book.volumeInfo.publishedDate.split("-")[0];
   const description = book.volumeInfo.description || "No description.";
   return (
-    <section className="relative max-w-fit text-xxs md:text-base pr-2 pb-4 rounded-md flex flex-col overflow-hidden shadow-sm hover:shadow-md border-[1px] outline-none focus:outline-none  text-black">
+    <section className="relative max-w-full text-xxs md:text-base pr-2 pb-4 rounded-md flex flex-col overflow-hidden shadow-sm hover:shadow-md border-[1px] outline-none focus:outline-none  text-black">
       <div className="w-full flex flex-col justify-center items-center">
         <div className="w-20 ">
           <img src={img} alt={`${title}'s cover`} className="w-full" />
