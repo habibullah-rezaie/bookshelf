@@ -1,6 +1,6 @@
 import React from "react";
 
-function SearchSkeletonLoader() {
+function BookCardSkeletonLoader() {
   return (
     <div className="animate-pulse w-full text-xxs md:text-base pr-2 pb-4 rounded-md flex flex-col overflow-hidden shadow-sm hover:shadow-md border-[1px] outline-none focus:outline-none  text-black">
       <div className="w-full flex flex-col justify-center items-center">
@@ -19,4 +19,4 @@ function SearchSkeletonLoader() {
   );
 }
 
-export default SearchSkeletonLoader;
+export default BookCardSkeletonLoader;
