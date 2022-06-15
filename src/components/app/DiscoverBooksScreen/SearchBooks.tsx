@@ -14,42 +14,31 @@ const FiltersModal = React.lazy(
 );
 
 function useSearchWithFilters({
-  setExternalStatus,
-  onSuccess,
+  setResolved,
+  setRejected,
+  setPending,
 }: {
-  setExternalStatus<T extends BaseComponentStatuses>(status: T): void;
-  onSuccess(result: SearchResult): void;
+  setResolved(result: SearchResult): void;
+  setRejected: (error: any) => void;
+  setPending: () => void;
 }) {
-  const [status, setInnerStatus] =
-    React.useState<BaseComponentStatuses>("IDLE");
-
   const [query, setQuery] = useState("");
   const [filters, setFilters] = React.useState<SearchFilters>({});
   const [filtersSubmitted, setFiltersSubmitted] = React.useState(false);
 
-  const setStatus = React.useCallback(
-    function (status: BaseComponentStatuses) {
-      setInnerStatus(status);
-      setExternalStatus(status);
-    },
-    [setExternalStatus]
-  );
-
   const search = React.useCallback(
     function search() {
-      setStatus("PENDING");
+      setPending();
       searchBook(query, filters).then(
         (result) => {
-          setStatus("RESOLVED");
-          onSuccess(result);
+          setResolved(result);
         },
         (error) => {
-          setStatus("REJECTED");
-          throw error;
+          setRejected(error);
         }
       );
     },
-    [filters, onSuccess, query, setStatus]
+    [filters, query, setPending, setRejected, setResolved]
   );
 
   const filtersRef = React.useRef(filters);
@@ -67,8 +56,6 @@ function useSearchWithFilters({
     setQuery,
     filters,
     setFilters,
-    status,
-    setStatus,
     setFiltersSubmitted,
   };
 }
