@@ -24,7 +24,8 @@ function BookCard({ book }: { book: Book }) {
   const author = book.volumeInfo.authors?.[0] || "";
   const rating = book.volumeInfo.averageRating;
   const pageCount = book.volumeInfo.pageCount;
-  const publishedYear = book.volumeInfo.publishedDate.split("-")[0];
+  const publishedYear =
+    book.volumeInfo.publishedDate?.split("-")[0] || "Not sure when";
   const description = book.volumeInfo.description || "No description.";
   return (
     <section className="relative max-w-full text-xxs md:text-base pr-2 pb-4 rounded-md flex flex-col overflow-hidden shadow-sm hover:shadow-md border-[1px] outline-none focus:outline-none  text-black">
