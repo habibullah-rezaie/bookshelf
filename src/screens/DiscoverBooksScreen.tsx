@@ -7,9 +7,67 @@ import * as React from "react";
 import { SearchResult } from "types/DiscoverBooksScreenTypes";
 import { BaseComponentStatuses } from "types/types";
 
+type dicoverBooksReducerAction = {
+  type: "RESOLVE" | "REJECT" | "SET_PENDING";
+  payload?: {
+    error?: Error;
+    data?: SearchResult;
+  };
+};
+
+type DiscoverBooksState = {
+  status: BaseComponentStatuses;
+  error?: Error;
+  data?: SearchResult;
+};
+
+function discoverBooksReducer(
+  state: DiscoverBooksState,
+  action: dicoverBooksReducerAction
+): DiscoverBooksState {
+  switch (action.type) {
+    case "SET_PENDING": {
+      return { status: "PENDING", data: undefined, error: undefined };
+    }
+    case "RESOLVE": {
+      return {
+        status: "RESOLVED",
+        data: action.payload?.data,
+        error: undefined,
+      };
+    }
+    case "REJECT": {
+      return {
+        status: "REJECTED",
+        error: action.payload?.error,
+        data: undefined,
+      };
+    }
+    default:
+      return state;
+  }
+}
+
+const discoverBooksDefaultState: DiscoverBooksState = {
+  status: "IDLE",
+};
 function DiscoverBooksScreen() {
-  const [result, setResult] = React.useState<SearchResult | null>(null);
-  const [status, setStatus] = React.useState<BaseComponentStatuses>("IDLE");
+  const [state, dispatch] = React.useReducer<typeof discoverBooksReducer>(
+    discoverBooksReducer,
+    discoverBooksDefaultState
+  );
+
+  const setResolved = React.useCallback((data: SearchResult) => {
+    dispatch({ type: "RESOLVE", payload: { data } });
+  }, []);
+
+  const setRejected = React.useCallback((error: Error) => {
+    dispatch({ type: "REJECT", payload: { error } });
+  }, []);
+
+  const setPending = React.useCallback(() => {
+    dispatch({ type: "SET_PENDING" });
+  }, []);
 
   // TODO: Add pagination
   // TODO: Add result count
