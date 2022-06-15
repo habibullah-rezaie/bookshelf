@@ -21,7 +21,7 @@ function BookCard({ book }: { book: Book }) {
     "book.jpeg";
 
   // TODO: say author1 and author2 or author1, and 2 others
-  const author = book.volumeInfo.authors[1];
+  const author = book.volumeInfo.authors?.[0] || "";
   const rating = book.volumeInfo.averageRating;
   const pageCount = book.volumeInfo.pageCount;
   const publishedYear = book.volumeInfo.publishedDate.split("-")[0];
