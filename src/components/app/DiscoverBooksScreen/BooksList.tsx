@@ -19,8 +19,8 @@ function BooksList({
           {result?.items?.length && result.items.length > 0
             ? result.items.map((book, i) => {
                 return (
-                  <li>
-                    <BookCard key={book.id} book={book} />
+                  <li key={book.id}>
+                    <BookCard book={book} />
                   </li>
                 );
               })
