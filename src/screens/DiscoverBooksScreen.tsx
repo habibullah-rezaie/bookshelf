@@ -91,8 +91,13 @@ function DiscoverBooksScreen() {
           >
             <Stack direction="vertical" gap={6} className="max-w-full">
               <h2 className="text-center">Discover Books Here</h2>
-              <SearchBooks setResult={setResult} setStatus={setStatus} />
-              <BooksList result={result} status={status} />
+              <SearchBooks
+                status={state.status}
+                setPending={setPending}
+                setRejected={setRejected}
+                setResolved={setResolved}
+              />
+              <BooksList result={state.data} status={state.status} />
             </Stack>
           </main>
         </Stack>
