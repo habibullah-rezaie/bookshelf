@@ -1,4 +1,4 @@
-import { readingstate as ReadingStatuses } from "@prisma/client";
+import { user_book_status as ReadingStatuses } from "@prisma/client";
 import { Button } from "components/lib/Buttons";
 import Rating from "components/lib/Rating";
 import * as React from "react";
