@@ -65,5 +65,4 @@ enum reactionkinds {
 enum user_book_status {
   READING
   HAVE_READ
-  SHOULD_READ
 }
