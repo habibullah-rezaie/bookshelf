@@ -4,65 +4,42 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("LOCAL_DATABASE_URL")
 }
 
-model userbook {
-  id        String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userid    String        @db.Uuid
-  bookid    String        @db.VarChar(12)
-  state     readingstate? @default(SHOULD_READ)
-  startdate DateTime?     @db.Date
-  enddate   DateTime?     @db.Date
-  notes     String?
-  rating    Decimal?      @db.Decimal(2, 1)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-
-  @@unique([userid, bookid])
+model BestsellerBook {
+  bookId    String   @id(map: "bestseller_pkey") @db.VarChar(12)
+  title     String
+  authors   String[] @db.VarChar(256)
+  imageURLs String[]
 }
 
-model userfavoritebook {
-  userid    String   @db.Uuid
-  bookid    String   @db.VarChar(12)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@id([userid, bookid])
+model MostPopularBook {
+  id       String @id(map: "most_popular_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title    String
+  author   String @db.VarChar(256)
+  imageURL String
 }
 
-model userreaction {
-  userid       String        @db.Uuid
-  reviewid     String        @db.Uuid
-  reactionkind reactionkinds
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  userreview   userreview    @relation(fields: [reviewid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "userreaction_fkey_reviewid")
+model UserBook {
+  userId    String         @db.Uuid
+  bookId    String         @db.VarChar(12)
+  status    UserBookStatus @default(READING)
+  createdAt DateTime       @default(now())
+  updated   DateTime       @updatedAt
+  rating    Float          @default(0)
 
-  @@id([userid, reviewid])
+  @@id([userId, bookId])
 }
 
-model userreview {
-  id               String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userid           String         @db.Uuid
-  bookid           String         @db.VarChar(12)
-  repliedto        String?        @db.Uuid
-  content          String
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  userreview       userreview?    @relation("userreviewTouserreview_repliedto", fields: [repliedto], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "userreview_fk_repliedto")
-  userreaction     userreaction[]
-  other_userreview userreview[]   @relation("userreviewTouserreview_repliedto")
-
-  @@unique([userid, bookid, repliedto])
+model UserNote {
+  id         String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id    String @db.Uuid
+  book_id    String @db.VarChar(12)
+  contentURL String
 }
 
-enum reactionkinds {
-  UPVOTE
-  DOWNVOTE
-}
-
-enum user_book_status {
+enum UserBookStatus {
   READING
   HAVE_READ
 }
