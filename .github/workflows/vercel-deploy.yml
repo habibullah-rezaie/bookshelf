@@ -13,8 +13,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.13.2"
-      - uses: npm install
-      - uses: npm build
+      - run: npm install
+      - run: npm run build
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
