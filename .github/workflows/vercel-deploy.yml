@@ -1,0 +1,24 @@
+name: vercel-deploy
+on: 
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  
+
+jobs:
+  deploy-to-vercel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      with:
+        node-version: '16.13.2'
+      - uses: npm install
+      - uses: npm build
+      - uses: amondnet/vercel-action@v20 
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID}}  #Required
+          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
+
