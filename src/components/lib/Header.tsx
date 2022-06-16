@@ -1,6 +1,6 @@
 import React from "react";
-import { FaBars, FaCross, FaTimes } from "react-icons/fa";
-import { Button, OutlineButton } from "./Buttons";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { Button } from "./Buttons";
 import { Stack } from "./Layout";
 
 // FEATURE: Generalize header more
@@ -67,7 +67,7 @@ function Header({
         {/* TODO: Make this working */}
         <div className="rounded-[50%] z-10 h-8 w-8 overflow-hidden shadow-sm border bg-white border-logoGray border-opacity-40 hover:ring-4 ring-logoDarkGray ring-opacity-30 transition-all duration-150">
           <img
-            src="profile.jpg"
+            src={userProfileIMG}
             alt={userName}
             className="max-h-full -z-10 m-auto"
             title={`${userName}'s Profile`}
