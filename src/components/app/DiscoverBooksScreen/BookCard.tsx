@@ -1,4 +1,4 @@
-import { user_book_status as ReadingStatuses } from "@prisma/client";
+import { UserBookStatus } from "@prisma/client";
 import { Button } from "components/lib/Buttons";
 import Rating from "components/lib/Rating";
 import * as React from "react";
@@ -8,7 +8,7 @@ import { Book } from "types/types";
 function BookCard({ book }: { book: Book }) {
   const [isFavorite, setIsFavorite] = React.useState(false);
   const [readingStatus, setReadingStatus] = React.useState<
-    ReadingStatuses | "none"
+    UserBookStatus | "none"
   >("none");
 
   const toggleIsFavorite = () =>
