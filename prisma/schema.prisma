@@ -62,7 +62,7 @@ enum reactionkinds {
   DOWNVOTE
 }
 
-enum readingstate {
+enum user_book_status {
   READING
   HAVE_READ
   SHOULD_READ
