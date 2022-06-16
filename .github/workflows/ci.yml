@@ -1,0 +1,15 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Upload to Deno Deploy
+    uses: denoland/deployctl@v1
+    with:
+      project: bookshelf
+      entrypoint: index.html
+      root: build
