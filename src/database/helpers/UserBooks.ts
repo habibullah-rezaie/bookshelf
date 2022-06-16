@@ -1,49 +1,38 @@
 import db from "../db";
 
-export function addBookToShouldRead(userid: string, bookid: string) {
-  return db.userbook.create({ data: { userid, bookid } });
-}
+const userBook = db.userBook;
 
-export function changeBookToReading(userid: string, bookid: string) {
-  return db.userbook.update({
-    where: { userid_bookid: { bookid, userid } },
-    data: { state: "READING", startdate: new Date() },
+export function startReadingBook(userId: string, bookId: string) {
+  return userBook.create({
+    data: { status: "READING", userId, bookId },
   });
 }
 
-export function finishBookReading(userid: string, bookid: string) {
-  return db.userbook.update({
-    where: { userid_bookid: { bookid, userid } },
-    data: { state: "HAVE_READ", enddate: new Date() },
+export function finishReadingBook(userId: string, bookId: string) {
+  return userBook.update({
+    where: { userId_bookId: { bookId, userId } },
+    data: { status: "HAVE_READ" },
   });
 }
 
-export function removeBookFromUserBooks(userid: string, bookid: string) {
-  return db.userbook.delete({
+export function cancelReadingBooks(userId: string, bookId: string) {
+  return userBook.delete({
     select: null,
-    where: { userid_bookid: { bookid, userid } },
+    where: { userId_bookId: { bookId, userId } },
   });
 }
 
-export function removeBookFromReadingBooks(userid: string, bookid: string) {
-  return db.userbook.update({
+export function cancelFinishingBook(userId: string, bookId: string) {
+  return userBook.update({
     select: null,
-    where: { userid_bookid: { bookid, userid } },
-    data: { state: "SHOULD_READ", startdate: null },
+    where: { userId_bookId: { bookId, userId } },
+    data: { status: "READING" },
   });
 }
 
-export function removeBookFromHaveReadBooks(userid: string, bookid: string) {
-  return db.userbook.update({
-    select: null,
-    where: { userid_bookid: { bookid, userid } },
-    data: { state: "READING", enddate: null },
-  });
-}
-
-export function getUserAllBooks(userid: string) {
-  return db.userbook.findMany({
-    where: { userid },
-    select: { bookid: true, state: true, rating: true },
+export function getUserAllBooks(userId: string) {
+  return userBook.findMany({
+    where: { userId },
+    select: { bookId: true, status: true, rating: true },
   });
 }
