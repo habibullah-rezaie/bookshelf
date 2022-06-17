@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "16.13.2"
       - run: npm install
-      - run: npx vercel pull --token ${VERCEL_TOKEN} --yes
+      - run: npx vercel pull --yes --token ${VERCEL_TOKEN}
 
       - run: npx vercel  --token ${VERCEL_TOKEN} build
       - name: Deploy main to Vercel
