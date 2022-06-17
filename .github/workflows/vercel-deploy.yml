@@ -9,6 +9,10 @@ jobs:
   deploy-main:
     runs-on: ubuntu-latest
     name: Deploy main
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.ORG_ID }} #Required
+      VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }} #Required
 
     steps:
       - uses: actions/checkout@v3
@@ -16,13 +20,8 @@ jobs:
         with:
           node-version: "16.13.2"
       - run: npm install
-      - run: npx vercel pull --yes
-      - run: npx vercel build
+      - run: npx vercel --token ${VERCEL_TOKEN} pull --yes
+
+      - run: npx vercel  --token ${VERCEL_TOKEN} build
       - name: Deploy main to Vercel
         run: npx vercel --token ${VERCEL_TOKEN} --prod --prebuilt
-
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.ORG_ID }} #Required
-          VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }} #Required
-
