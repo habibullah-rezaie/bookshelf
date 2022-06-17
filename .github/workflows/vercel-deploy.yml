@@ -18,7 +18,11 @@ jobs:
 
       - name: Deploy main to Vercel
         run: echo ${VERCEL_TOKEN}
-        run: npx vercel --token ${VERCEL_TOKEN} --prod --prebuilt
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.ORG_ID }} #Required
+          VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }} #Required
+      - run: npx vercel --token ${VERCEL_TOKEN} --prod --prebuilt
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.ORG_ID }} #Required
