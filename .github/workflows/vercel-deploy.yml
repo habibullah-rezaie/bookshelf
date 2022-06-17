@@ -17,6 +17,7 @@ jobs:
           node-version: "16.13.2"
 
       - name: Deploy main to Vercel
+        run: echo ${VERCEL_TOKEN}
         run: npx vercel --token ${VERCEL_TOKEN} --prod --prebuilt
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
