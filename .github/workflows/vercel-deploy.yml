@@ -6,18 +6,22 @@ on:
     branches: [main]
 
 jobs:
-  deploy-to-vercel:
+  deploy-main:
     runs-on: ubuntu-latest
+    name: Deploy main
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: "16.13.2"
       - run: npm install
-      - run: npm run build
-      - uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID}} #Required
-          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
+      - run: npx vercel build
+      - name: Deploy main to Vercel
+        run: npx vercel --token ${VERCEL_TOKEN} --prod --prebuilt
+
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.ORG_ID }} #Required
+          VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }} #Required
 
