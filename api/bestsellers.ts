@@ -1,8 +1,9 @@
 import { BestsellerBook } from "@prisma/client";
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import { fetchBestSellers } from "./_util/fetchers";
+import { fetchBestSellers } from "./_util/bestsellers";
 import { BriefBook } from "types/types";
 import db from "../database/db";
+import { checkForBestsellerUpdates } from "./_util/bestsellers";
 
 export default async function handler(
   req: VercelRequest,
