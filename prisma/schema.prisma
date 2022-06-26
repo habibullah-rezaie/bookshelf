@@ -12,16 +12,20 @@ model BestsellerBook {
   title         String
   author        String?        @db.VarChar(256)
   bookImage     String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   primaryISBN10 String         @db.VarChar(10)
   primaryISBN13 String         @db.VarChar(13)
   type          BestsellerType
 }
 
 model MostPopularBook {
-  id       String @id(map: "most_popular_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title    String
-  author   String @db.VarChar(256)
-  imageURL String
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title     String
+  author    String   @db.VarChar(256)
+  imageURL  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model UserBook {
@@ -36,9 +40,11 @@ model UserBook {
 }
 
 model UserNote {
-  id         String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  user_id    String @db.Uuid
-  book_id    String @db.VarChar(12)
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId     String   @db.Uuid
+  bookId     String   @db.VarChar(12)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   contentURL String
 }
 
