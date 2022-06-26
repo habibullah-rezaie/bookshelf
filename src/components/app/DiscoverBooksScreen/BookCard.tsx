@@ -1,9 +1,9 @@
 import { UserBookStatus } from "@prisma/client";
-import { Button } from "components/lib/Buttons";
-import Rating from "components/lib/Rating";
+import { Button } from "src/components/lib/Buttons";
+import Rating from "src/components/lib/Rating";
 import * as React from "react";
 import { FaHeart, FaMinus, FaRegHeart } from "react-icons/fa";
-import { Book } from "types/types";
+import { Book } from "src/types/types";
 
 function BookCard({ book }: { book: Book }) {
   const [isFavorite, setIsFavorite] = React.useState(false);

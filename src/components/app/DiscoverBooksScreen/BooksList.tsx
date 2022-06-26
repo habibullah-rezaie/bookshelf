@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchResult } from "types/DiscoverBooksScreenTypes";
-import { BaseComponentStatuses } from "types/types";
 import BookCard from "./BookCard";
+import { BaseComponentStatuses, Book } from "src/types/types";
 import SerachBookLoader from "./SearchBookLoader";
 
 function BooksList({

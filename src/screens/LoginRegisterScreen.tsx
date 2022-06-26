@@ -1,8 +1,8 @@
-import { Button } from "components/lib/Buttons";
-import { Form, FormGroup, Input } from "components/lib/Forms";
-import { Container, Stack } from "components/lib/Layout";
-import useModal from "components/lib/Modal";
-import Logo from "components/logo";
+import { Button } from "src/components/lib/Buttons";
+import { Form, FormGroup, Input } from "src/components/lib/Forms";
+import { Container, Stack } from "src/components/lib/Layout";
+import useModal from "src/components/lib/Modal";
+import Logo from "src/components/logo";
 import React from "react";
 
 type AuthData = {

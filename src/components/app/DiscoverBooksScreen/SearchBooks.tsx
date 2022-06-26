@@ -1,15 +1,18 @@
-import { Button } from "components/lib/Buttons";
-import { Form, Input } from "components/lib/Forms";
-import { Stack } from "components/lib/Layout";
+import { Button } from "src/components/lib/Buttons";
+import { Form, Input } from "src/components/lib/Forms";
+import { Stack } from "src/components/lib/Layout";
 import React, { FormEvent, useEffect, useState } from "react";
 import { FaFilter, FaSearch, FaSpinner } from "react-icons/fa";
-import { SearchFilters, SearchResult } from "types/DiscoverBooksScreenTypes";
-import { BaseComponentStatuses } from "types/types";
-import { isDeepStrictEqual } from "utils/utils";
+import {
+  SearchFilters,
+  SearchResult,
+} from "src/types/DiscoverBooksScreenTypes";
+import { BaseComponentStatuses } from "src/types/types";
+import { isDeepStrictEqual } from "src/utils/utils";
 const FiltersModal = React.lazy(
   () =>
     import(
-      /* webpackPrefetch: true */ "components/app/DiscoverBooksScreen/FiltersModal"
+      /* webpackPrefetch: true */ "src/components/app/DiscoverBooksScreen/FiltersModal"
     )
 );
 
