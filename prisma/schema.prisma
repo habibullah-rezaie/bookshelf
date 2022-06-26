@@ -8,10 +8,13 @@ datasource db {
 }
 
 model BestsellerBook {
-  bookId    String   @id(map: "bestseller_pkey") @db.VarChar(12)
-  title     String
-  authors   String[] @db.VarChar(256)
-  imageURLs String[]
+  id            String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title         String
+  author        String?        @db.VarChar(256)
+  bookImage     String?
+  primaryISBN10 String         @db.VarChar(10)
+  primaryISBN13 String         @db.VarChar(13)
+  type          BestsellerType
 }
 
 model MostPopularBook {
@@ -42,4 +45,9 @@ model UserNote {
 enum UserBookStatus {
   READING
   HAVE_READ
+}
+
+enum BestsellerType {
+  FICTION
+  NON_FICTION
 }
