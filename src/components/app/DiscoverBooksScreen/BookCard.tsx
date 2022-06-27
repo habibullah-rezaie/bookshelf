@@ -21,7 +21,7 @@ function BookCard({ book }: { book: Book }) {
     "book.jpeg";
 
   // TODO: say author1 and author2 or author1, and 2 others
-  const author = book.volumeInfo.authors?.[0] || "";
+  const author = getAuthorsSummary(book.volumeInfo.authors);
   const rating = book.volumeInfo.averageRating;
   const pageCount = book.volumeInfo.pageCount;
   const publishedYear =
@@ -35,7 +35,7 @@ function BookCard({ book }: { book: Book }) {
         </div>
         <div className="flex flex-col space-y-1 items-center text-center">
           <h3 className="text-sm text-indigo  w-[80%]" title={title}>
-            {title.substring(0, 40) + `${title.length > 40 ? "..." : ""}`}
+            {trimTextWithElepsis(title, 35)}
           </h3>
           <p className="text-indigoLighten80 text-[.6rem]">{author}</p>
           <div className="flex justify-center">
