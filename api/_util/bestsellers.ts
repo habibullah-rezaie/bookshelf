@@ -1,7 +1,7 @@
 import { BestsellerBook } from "@prisma/client";
-import db from "database/db";
 import { BriefBook, BestsellerType } from "types/types";
 import axios from "axios";
+import db from "../../database/db";
 
 export async function checkForBestsellerUpdates() {
   const bestsellerBook = await db.bestsellerBook.findFirst({
