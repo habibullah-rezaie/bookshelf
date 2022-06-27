@@ -5,10 +5,10 @@ import { BaseComponentStatuses, Book } from "src/types/types";
 import SerachBookLoader from "./SearchBookLoader";
 
 function BooksList({
-  result,
+  books,
   status,
 }: {
-  result?: SearchResult;
+  books: Book[];
   status: BaseComponentStatuses;
 }) {
   return (
@@ -16,8 +16,6 @@ function BooksList({
       {status === "PENDING" && <SerachBookLoader />}
       {status === "RESOLVED" && (
         <>
-          {result?.items?.length && result.items.length > 0
-            ? result.items.map((book, i) => {
                 return (
                   <li key={book.id}>
                     <BookCard book={book} />
