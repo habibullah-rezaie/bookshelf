@@ -3,9 +3,11 @@ import { Button } from "src/components/lib/Buttons";
 import Rating from "src/components/lib/Rating";
 import * as React from "react";
 import { FaHeart, FaMinus, FaRegHeart } from "react-icons/fa";
-import { Book } from "src/types/types";
+import { Book, BriefBook } from "src/types/types";
+import { getAuthorsSummary } from "src/utils/book";
+import { trimTextWithElepsis } from "src/utils/utils";
 
-function BookCard({ book }: { book: Book }) {
+function DetailedBookCard({ book }: { book: Book }) {
   const [isFavorite, setIsFavorite] = React.useState(false);
   const [readingStatus, setReadingStatus] = React.useState<
     UserBookStatus | "none"
@@ -120,4 +122,18 @@ function BookCard({ book }: { book: Book }) {
   );
 }
 
-export default BookCard;
+export function BriefBookCard({ book }: { book: BriefBook }) {
+  const { title, bookImage, author } = book;
+
+  return (
+    <section>
+      <div>
+        <img src={bookImage || "book.jpeg"} alt={`${title}'s cover`} />
+      </div>
+      <h1>{trimTextWithElepsis(title, 30)}</h1>
+      <div>{author}</div>
+    </section>
+  );
+}
+
+export default DetailedBookCard;
