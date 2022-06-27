@@ -1,6 +1,6 @@
 import { BestsellerBook } from "@prisma/client";
-import { BriefBook, BestsellerType } from "types/types";
 import axios from "axios";
+import { BestsellerType } from "types/types";
 import db from "../../database/db";
 
 export async function checkForBestsellerUpdates() {
@@ -66,7 +66,7 @@ export async function triggerUpdate() {
           book_image,
           primary_isbn10,
           primary_isbn13,
-        }: BriefBook): Omit<
+        }: NYTimesBook): Omit<
           BestsellerBook,
           "id" | "createdAt" | "updatedAt"
         > => ({
@@ -87,7 +87,7 @@ export async function triggerUpdate() {
           book_image,
           primary_isbn10,
           primary_isbn13,
-        }: BriefBook): Omit<
+        }: NYTimesBook): Omit<
           BestsellerBook,
           "id" | "createdAt" | "updatedAt"
         > => ({
@@ -102,6 +102,14 @@ export async function triggerUpdate() {
     ],
   });
 }
+
+type NYTimesBook = {
+  book_image: string;
+  title: string;
+  author: string;
+  primary_isbn10: string;
+  primary_isbn13: string;
+};
 
 export function fetchBestSellers(type: BestsellerType) {
   const NYTimesAPIKey = process.env.REACT_APP_NYTIMES_API_KEY;
@@ -125,7 +133,7 @@ export function fetchBestSellers(type: BestsellerType) {
         throw error;
       }
     )
-    .then((data: { status: string; results: { books: BriefBook[] } }) => {
+    .then((data: { status: string; results: { books: NYTimesBook[] } }) => {
       if (data.status === "OK") {
         return data.results.books;
       } else {
