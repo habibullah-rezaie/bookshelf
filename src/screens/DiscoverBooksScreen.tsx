@@ -1,4 +1,4 @@
-import BooksList from "components/app/DiscoverBooksScreen/BooksList";
+import DetailedBooksList from "src/components/app/DiscoverBooksScreen/BooksList";
 import SearchBooks from "src/components/app/DiscoverBooksScreen/SearchBooks";
 import Header from "src/components/lib/Header";
 import { Container, Stack } from "src/components/lib/Layout";
@@ -97,7 +97,10 @@ function DiscoverBooksScreen() {
                 setRejected={setRejected}
                 setResolved={setResolved}
               />
-              <BooksList result={state.data} status={state.status} />
+              <DetailedBooksList
+                books={state.data?.items || []}
+                status={state.status}
+              />
             </Stack>
           </main>
         </Stack>
