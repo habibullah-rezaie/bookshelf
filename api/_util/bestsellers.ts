@@ -1,6 +1,5 @@
-import { BestsellerBook } from "@prisma/client";
+import { BestsellerBook, BestsellerType } from "@prisma/client";
 import axios from "axios";
-import { BestsellerType } from "types/types";
 import db from "../../database/db";
 
 export async function checkForBestsellerUpdates() {
