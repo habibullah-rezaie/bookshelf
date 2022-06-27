@@ -1,9 +1,9 @@
 export type BestsellerType = "FICTION" | "NON_FICTION";
 
 export type BriefBook = {
-  book_image: string;
+  bookImage: string | null;
   title: string;
-  author: string;
-  primary_isbn10: string;
-  primary_isbn13: string;
+  author: string | null;
+  primaryISBN10: string;
+  primaryISBN13: string;
 };
