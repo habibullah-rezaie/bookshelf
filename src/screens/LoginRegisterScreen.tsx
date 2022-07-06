@@ -1,9 +1,10 @@
+import * as React from "react";
+import { FaSpinner } from "react-icons/fa";
 import { Button } from "src/components/lib/Buttons";
 import { Form, FormGroup, Input } from "src/components/lib/Forms";
 import { Container, Stack } from "src/components/lib/Layout";
 import useModal from "src/components/lib/Modal";
 import Logo from "src/components/logo";
-import React from "react";
 
 type AuthData = {
   username: string;
@@ -14,6 +15,7 @@ function LoginRegisterScreen() {
   const [openModal, setOpenModal] = React.useState<
     "login" | "register" | "none"
   >("none");
+  const [loginRegisterLoading, setLoginRegisterLoading] = React.useState(false);
 
   // setModalAppElement("#root");
   function handleLoginOpen() {
@@ -26,6 +28,9 @@ function LoginRegisterScreen() {
 
   function handleClose() {
     setOpenModal("none");
+    if (!loginRegisterLoading) {
+      setOpenModal("none");
+    }
   }
 
   function handleLogin({ username, password }: AuthData) {
@@ -71,11 +76,13 @@ function LoginRegisterScreen() {
           isOpen={isLoginOpen}
           onDismiss={handleClose}
           handleLogin={handleLogin}
+          loadingState={loginRegisterLoading}
         />
         <RegisterDialog
           isOpen={isRegisterOpen}
           onDismiss={handleClose}
           handleRegister={handleRegister}
+          loadingState={loginRegisterLoading}
         />
       </div>
     </Container>
@@ -88,10 +95,12 @@ function LoginDialog({
   isOpen,
   onDismiss,
   handleLogin,
+  loadingState,
 }: {
   isOpen: boolean;
   onDismiss: () => void;
   handleLogin: ({ username, password }: AuthData) => void;
+  loadingState: boolean;
 }) {
   return (
     <AuthModal
@@ -99,6 +108,9 @@ function LoginDialog({
       isOpen={isOpen}
       onClose={onDismiss}
       handleAction={handleLogin}
+      authActionText={
+        loadingState ? <FaSpinner className="animate-spin" /> : "Login"
+      }
     />
   );
 }
@@ -109,10 +121,12 @@ function RegisterDialog({
   isOpen,
   onDismiss,
   handleRegister,
+  loadingState,
 }: {
   isOpen: boolean;
   onDismiss: () => void;
   handleRegister: ({ username, password }: AuthData) => void;
+  loadingState: boolean;
 }) {
   return (
     <AuthModal
@@ -120,6 +134,9 @@ function RegisterDialog({
       isOpen={isOpen}
       onClose={onDismiss}
       handleAction={handleRegister}
+      authActionText={
+        loadingState ? <FaSpinner className="animate-spin" /> : "Register"
+      }
     />
   );
 }
@@ -129,12 +146,14 @@ function AuthModal({
   onClose,
   modalTitle,
   handleAction,
+  authActionText,
   ModalFooter,
 }: {
   isOpen: boolean;
   onClose: () => void;
   handleAction: ({ username, password }: AuthData) => void;
   modalTitle: string;
+  authActionText: string | JSX.Element;
   ModalFooter?: JSX.Element;
 }) {
   const Modal = useModal("#root");
@@ -147,7 +166,7 @@ function AuthModal({
       modalFooter={ModalFooter}
       modalTitle={modalTitle}
     >
-      <LoginForm onSubmit={handleAction} actionText={modalTitle} />
+      <LoginForm onSubmit={handleAction} actionText={authActionText} />
     </Modal>
   );
 }
@@ -157,7 +176,7 @@ function LoginForm({
   actionText,
 }: {
   onSubmit: ({ username, password }: AuthData) => void;
-  actionText: string;
+  actionText: string | JSX.Element;
 }) {
   // This is impossible to type the function thoroughly,
   // can get values out of `EventTarget`
