@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FaSpinner } from "react-icons/fa";
+import supabaseClient from "src/client/supabase-client";
 import { Button } from "src/components/lib/Buttons";
 import { Form, FormGroup, Input } from "src/components/lib/Forms";
 import { Container, Stack } from "src/components/lib/Layout";
@@ -27,18 +28,41 @@ function LoginRegisterScreen() {
   }
 
   function handleClose() {
-    setOpenModal("none");
     if (!loginRegisterLoading) {
       setOpenModal("none");
     }
   }
 
   function handleLogin({ username, password }: AuthData) {
-    console.log("Login", { username, password });
+    setLoginRegisterLoading(true);
+    supabaseClient?.auth
+      .signIn({ email: username, password })
+      .then(({ error }) => {
+        setLoginRegisterLoading(false);
+
+        if (error) {
+          setError(error.message);
+          return;
+        }
+        // refresh The Page
+        window.location.assign(window.location.toString());
+      })
+      .catch((error: any) => {});
   }
 
   function handleRegister({ username, password }: AuthData) {
-    console.log("Register", { username, password });
+    setLoginRegisterLoading(true);
+
+    supabaseClient?.auth
+      .signUp({ email: username, password })
+      .then(({ error }) => {
+        setLoginRegisterLoading(false);
+
+        if (error) {
+          setError(error.message);
+          return;
+        }
+      });
   }
 
   const isLoginOpen = openModal === "login";
