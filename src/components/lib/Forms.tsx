@@ -42,8 +42,8 @@ export const Input = React.forwardRef(function Input(
   return (
     <input
       ref={ref}
-      className={`bg-white p-1 outline-hidden outline-0 focus:outline-0 focus:outline-hidden rounded-md ${
-        ring ? `ring-2 ring-opacity-40 ring-lightGray focus:ring-4` : ""
+      className={`bg-white p-1 outline-hidden outline-0 focus:outline-0 focus:outline-hidden rounded-sm ${
+        ring ? `ring-1 ring-opacity-60 ring-baseGray focus:ring-2` : ""
       } ${className}`}
       {...props}
     />
