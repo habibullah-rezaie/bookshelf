@@ -7,3 +7,7 @@
 #root {
   height: 100vh;
 }
+
+a {
+  @apply text-[#1C88FD];
+}
