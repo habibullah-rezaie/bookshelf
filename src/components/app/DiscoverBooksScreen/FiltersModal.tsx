@@ -1,8 +1,8 @@
 import { Switch } from "@headlessui/react";
-import { Button } from "components/lib/Buttons";
-import { Form, Input } from "components/lib/Forms";
-import { Stack } from "components/lib/Layout";
-import useModal from "components/lib/Modal";
+import { Button } from "src/components/lib/Buttons";
+import { Form, Input } from "src/components/lib/Forms";
+import { Stack } from "src/components/lib/Layout";
+import useModal from "src/components/lib/Modal";
 import * as React from "react";
 import { BiCategory } from "react-icons/bi";
 import { FaBarcode, FaHome } from "react-icons/fa";
@@ -10,7 +10,7 @@ import { IoMdPerson } from "react-icons/io";
 import {
   BookLanguage,
   setFilters as FilterSetter,
-} from "types/DiscoverBooksScreenTypes";
+} from "src/types/DiscoverBooksScreenTypes";
 import FilterByLangComboBox from "./FilterByLangComboBox";
 
 function FiltersModal({

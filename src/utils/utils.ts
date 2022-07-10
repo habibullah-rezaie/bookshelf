@@ -25,3 +25,7 @@ export function isDeepStrictEqual(
 
   return true;
 }
+
+export function trimTextWithElepsis(title: string, length: number): String {
+  return title.substring(0, length) + `${title.length > length ? "..." : ""}`;
+}

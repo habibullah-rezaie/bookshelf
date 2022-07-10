@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import searchJson from "test/data/searchResults.json"; // Two queries that is made available offline
+import searchJson from "src/test/data/searchResults.json"; // Two queries that is made available offline
 
 const booksAPI = process.env.REACT_APP_BOOK_API;
 
@@ -12,41 +12,37 @@ const handlers = [
     const language = req.url.searchParams.get("langRestrict");
 
     let searchResult: any = null;
-    let queryMatch = searchQuery?.match(
-      /^(.*) (inauthor|inpublisher|intitle|isbn|subject):(.*)$/
-    );
-    if (queryMatch) {
-      const queryText: any = queryMatch[1];
 
-      if (queryText === "islam") {
-        searchResult = handleIslamSearch(queryMatch);
-      } else if (queryText === "though") {
-        searchResult = handleThoughSearch(
-          queryMatch,
-          download,
-          orderBy,
-          language
-        );
-      } else {
-        throw new Error(
-          "Only search for islam or though, this is a test server!"
-        );
-      }
+    if (searchQuery?.startsWith("islam")) {
+      searchResult = handleIslamSearch(searchQuery);
+    } else if (searchQuery?.startsWith("though")) {
+      searchResult = handleThoughSearch(
+        searchQuery,
+        download,
+        orderBy,
+        language
+      );
+    } else {
+      throw new Error(
+        "Only search for islam or though, this is a test server!"
+      );
     }
-    console.log(searchQuery, download);
     return res(ctx.status(200), ctx.json(searchResult));
   }),
 ];
 
 export default handlers;
 function handleThoughSearch(
-  queryMatch: RegExpMatchArray,
+  searchQuery: string,
   download: string | null,
   orderBy: string | null,
   langRestrict: string | null
 ) {
-  const queryFilterType = queryMatch[2];
-  const queryFilterText = queryMatch[3];
+  const queryMatch = searchQuery?.match(
+    /^.*(?<queryType>inauthor|inpublisher|intitle|isbn|subject):(?<queryFilterValue>.*)?$/
+  );
+  const queryFilterType = queryMatch?.groups?.queryType;
+  const queryFilterText = queryMatch?.groups?.queryFilterValue;
 
   if (queryFilterType) {
     switch (queryFilterType) {
@@ -93,9 +89,12 @@ function handleThoughSearch(
   }
 }
 
-function handleIslamSearch(queryMatch: RegExpMatchArray) {
-  const queryFilterType = queryMatch[2];
-  const queryFilterText = queryMatch[3];
+function handleIslamSearch(searchQuery: string) {
+  const queryMatch = searchQuery?.match(
+    /^.*(?<queryType>inauthor|inpublisher|intitle|isbn|subject):(?<queryFilterValue>.*)?$/
+  );
+  const queryFilterType = queryMatch?.groups?.queryType;
+  const queryFilterText = queryMatch?.groups?.queryFilterValue;
 
   switch (queryFilterType) {
     case "subject": {

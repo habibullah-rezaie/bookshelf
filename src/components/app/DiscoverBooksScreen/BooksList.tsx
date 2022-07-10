@@ -1,26 +1,27 @@
 import React from "react";
-import { SearchResult } from "types/DiscoverBooksScreenTypes";
-import { BaseComponentStatuses } from "types/types";
-import BookCard from "./BookCard";
+import { BaseComponentStatuses, Book, BriefBook } from "src/types/types";
+import DetailedBookCard, { BriefBookCard } from "./BookCard";
 import SerachBookLoader from "./SearchBookLoader";
 
-function BooksList({
-  result,
+function DetailedBooksList({
+  books,
   status,
+  className = "",
 }: {
-  result?: SearchResult;
+  books: Book[];
   status: BaseComponentStatuses;
+  className?: string;
 }) {
   return (
     <ul className="mt-2 flex flex-col justify-center space-y-3">
       {status === "PENDING" && <SerachBookLoader />}
       {status === "RESOLVED" && (
         <>
-          {result?.items?.length && result.items.length > 0
-            ? result.items.map((book, i) => {
+          {books?.length && books?.length > 0
+            ? books.map((book, i) => {
                 return (
                   <li key={book.id}>
-                    <BookCard book={book} />
+                    <DetailedBookCard book={book} />
                   </li>
                 );
               })
@@ -36,4 +37,29 @@ function BooksList({
   );
 }
 
-export default BooksList;
+export function BriefBooksList({
+  books,
+  className = "",
+}: {
+  books: BriefBook[];
+  className?: string;
+}) {
+  console.log(books);
+  return (
+    <ul className={`mt-2 flex flex-col justify-center space-y-3 ${className}`}>
+      <>
+        {books.length > 0
+          ? books.map((book) => {
+              return (
+                <li key={`${book.bookImage}`}>
+                  <BriefBookCard book={book} />
+                </li>
+              );
+            })
+          : `We're all caught up now.`}
+      </>
+    </ul>
+  );
+}
+
+export default DetailedBooksList;

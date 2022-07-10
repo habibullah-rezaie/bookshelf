@@ -1,9 +1,9 @@
 import { Combobox } from "@headlessui/react";
-import { Button } from "components/lib/Buttons";
+import { Button } from "src/components/lib/Buttons";
 import { matchSorter } from "match-sorter";
 import React from "react";
 import { FaAngleUp, FaAngleDown, FaCheck } from "react-icons/fa";
-import { BookLanguage } from "types/DiscoverBooksScreenTypes";
+import { BookLanguage } from "src/types/DiscoverBooksScreenTypes";
 import languageCodes from "./language-codes.json";
 
 // TODO Omptimize filters loading, selecting ...

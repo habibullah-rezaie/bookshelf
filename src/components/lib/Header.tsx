@@ -1,6 +1,8 @@
 import React from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Button } from "./Buttons";
+import { Link } from "react-router-dom";
+import { useAuth } from "src/context/auth";
+import { Button, ButtonWithSpinner } from "./Buttons";
 import { Stack } from "./Layout";
 
 // FEATURE: Generalize header more
@@ -57,9 +59,7 @@ function Header({
                 <a href="#books-reading">Books Reading</a>
               </li>
               <li className="hover:scale-105 hover:translate-y-[1px] transition-all duration-150 py-2 rounded-sm hover:text-logoOrange">
-                <Button variant="plain" className="">
-                  Logout
-                </Button>
+                <LogoutOrSigninBtn />
               </li>
             </Stack>
           </ul>
@@ -92,4 +92,34 @@ function Header({
   );
 }
 
+function LogoutOrSigninBtn() {
+  const { signOut, user } = useAuth();
+  const [logoutLoading, setLogoutLoading] = React.useState(false);
+  return (
+    <>
+      {user ? (
+        <ButtonWithSpinner
+          variant="plain"
+          loadingState={logoutLoading}
+          className={`text-inherit`}
+          onClick={async function () {
+            try {
+              setLogoutLoading(true);
+              await signOut();
+            } catch (err) {
+              throw err;
+            }
+            setLogoutLoading(false);
+          }}
+        >
+          Sign Out
+        </ButtonWithSpinner>
+      ) : (
+        <Button variant="plain">
+          <Link to={"/auth"}>Sign In</Link>
+        </Button>
+      )}
+    </>
+  );
+}
 export default Header;
