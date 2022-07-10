@@ -10,10 +10,10 @@ function AuthFormFooter({
   pageType: "signin" | "signup";
 }) {
   return (
-    <div className="w-full relative pb-7">
+    <div className="w-full relative pb-10 mt-9">
       <SubmitBtn buttonText="Sign In" submitBtnLoading={submitBtnLoading} />
-      <div className="text-xs w-full absolute bottom-2">
-        <div className="flex justify-between">
+      <div className="text-xs w-full absolute bottom-3">
+        <div className="flex justify-center">
           <div>
             <Link to={pageType === "signin" ? "/auth/signup" : "/auth/signin"}>
               {pageType === "signin"
@@ -21,7 +21,6 @@ function AuthFormFooter({
                 : "Already have an account?"}
             </Link>
           </div>
-          <div></div>
         </div>
       </div>
     </div>
