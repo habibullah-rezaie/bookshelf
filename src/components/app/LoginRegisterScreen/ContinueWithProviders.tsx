@@ -15,7 +15,8 @@ function ContinueWithProviders({ signIn }: { signIn: SignIn }) {
     console.log(provider);
     setProviderLoading(provider);
 
-    signIn({ provider })
+    const redirectTo = window.location.hostname;
+    signIn({ provider }, { redirectTo })
       .then(() => {
         setProviderLoading("");
       })

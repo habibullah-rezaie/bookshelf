@@ -9,7 +9,17 @@ import { useNavigate } from "react-router-dom";
 import supabaseClient from "src/client/supabase-client";
 import { BaseComponentStatuses } from "src/types/types";
 
-export type SignIn = (credentials: UserCredentials) => Promise<void>;
+type SignInOptions = {
+  redirectTo?: string | undefined;
+  shouldCreateUser?: boolean | undefined;
+  scopes?: string | undefined;
+  captchaToken?: string | undefined;
+  queryParams?: { [key: string]: string } | undefined;
+};
+export type SignIn = (
+  { email, password, provider }: UserCredentials,
+  options?: SignInOptions
+) => Promise<void>;
 export type SignUp = (
   credentials: UserCredentials,
   options?: {
@@ -62,19 +72,21 @@ export default function AuthProvider({
     return () => subscription?.data?.unsubscribe();
   }, [navigate]);
 
-  const signIn = React.useCallback(async function ({
-    email,
-    password,
-    provider,
-  }: UserCredentials) {
+  const signIn = React.useCallback(async function (
+    { email, password, provider }: UserCredentials,
+    options?: SignInOptions
+  ) {
     setStatus("PENDING");
 
     if (supabaseClient) {
-      const { error } = await supabaseClient.auth.signIn({
-        email,
-        password,
-        provider,
-      });
+      const { error } = await supabaseClient.auth.signIn(
+        {
+          email,
+          password,
+          provider,
+        },
+        { ...options }
+      );
 
       if (error) {
         setStatus("REJECTED");
