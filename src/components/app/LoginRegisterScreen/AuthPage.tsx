@@ -22,7 +22,7 @@ function AuthPage({
         direction="vertical"
         className="justify-center max-w-[280px] mx-auto text-baseBlack"
       >
-        <h2 className="text-2xl mb-6">
+        <h2 className="text-2xl font-poppins font-semibold mb-6 ">
           {pageType === "signin" ? "Sign In" : "Sign Up"}
         </h2>
         <Stack direction="vertical" className="gap-6">
