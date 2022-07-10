@@ -8,12 +8,11 @@ export default async function handler(
 ) {
   console.log("1. Checking for updates");
   // Check if update needed
-  let updateNeeded: boolean;
+  let updateNeeded: boolean = false;
   try {
     updateNeeded = await checkForBestsellerUpdates();
   } catch (e) {
-    console.log(e);
-    return resp.status(500).send("Something went wrong!");
+    handleError(e, resp);
   }
 
   console.log("Update needed:", updateNeeded);
@@ -22,8 +21,7 @@ export default async function handler(
       console.log("Updating...");
       await triggerUpdate();
     } catch (e) {
-      console.log(e);
-      resp.status(500).send("Something went wrong!");
+      return handleError(e, resp);
     }
   }
 
@@ -33,4 +31,12 @@ export default async function handler(
 
 async function responsedWithListofBestsellers(resp: VercelResponse) {
   return resp.status(200).json(await db.bestsellerBook.findMany());
+}
+
+function handleError(e: unknown, resp: VercelResponse) {
+  console.log(e);
+  if (process.env.NODE_ENV === "production") {
+    resp.status(500).send("Something went wrong!");
+  }
+  return resp.status(500).json(e);
 }
