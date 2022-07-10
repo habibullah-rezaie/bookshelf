@@ -10,7 +10,7 @@ function SubmitBtn({
 }) {
   return (
     <ButtonWithSpinner
-      className="w-full bg-baseBlack hover:bg-darkerBlack hover:ring-baseBlack hover:ring-opacity-50 text-white"
+      className="w-full bg-baseBlack hover:bg-darkerBlack hover:ring-baseBlack hover:ring-opacity-50 text-white font-meduim"
       type="submit"
       variant={"primary"}
       aria-label={"Submit Form"}
