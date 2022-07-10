@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ButtonWithSpinner } from "src/components/lib/Buttons";
 import { Form, Input } from "src/components/lib/Forms";
 import { Stack } from "src/components/lib/Layout";
+import SubmitBtn from "./SubmitBtn";
 
 type SignUpFormData = {
   email: string;
@@ -119,15 +120,7 @@ function SignUpForm({
       </Stack>
 
       <div className="w-full relative pb-7">
-        <ButtonWithSpinner
-          className="w-full bg-baseBlack hover:bg-darkerBlack hover:ring-baseBlack hover:ring-opacity-50 text-white"
-          type="submit"
-          variant={"primary"}
-          aria-label={"Submit Form"}
-          loadingState={signUpBtnLoading}
-        >
-          Sign Up
-        </ButtonWithSpinner>
+        <SubmitBtn buttonText="Sign Up" submitBtnLoading={signUpBtnLoading} />
         <div className="text-xs w-full absolute bottom-2">
           <div className="flex justify-between">
             <div>
