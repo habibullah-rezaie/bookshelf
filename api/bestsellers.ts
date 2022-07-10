@@ -36,7 +36,7 @@ async function responsedWithListofBestsellers(resp: VercelResponse) {
 function handleError(e: unknown, resp: VercelResponse) {
   console.log(e);
   if (process.env.NODE_ENV === "production") {
-    resp.status(500).send("Something went wrong!");
+    return resp.status(500).send("Something went wrong!");
   }
   return resp.status(500).json(e);
 }
