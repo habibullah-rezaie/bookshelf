@@ -31,9 +31,9 @@ function AuthPage({
             favorite books, take notes, and share your thoughts on them.
           </p>
           <ContinueWithProviders signIn={signIn} />
-          <div className="w-full relative border-b-baseGray border-b-[.5px] text-baseGray min-h-[1rem] mb-3">
-            <p className="absolute bg-white top-[49.9%] left-[50%] px-1 -translate-x-[50%]">
-              Or
+          <div className="w-full relative border-b-baseGray border-b-[.5px] text-baseGray text-sm min-h-[1rem] mb-3 font-roboto">
+            <p className="absolute bg-white top-[49.9%] left-0 pr-3 -translate-y-[0.5px]">
+              Or {pageType === "signin" ? "sign in" : "sign up"} with email
             </p>
           </div>
           {pageType === "signin" ? (
