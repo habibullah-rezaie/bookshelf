@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ButtonWithSpinner } from "src/components/lib/Buttons";
 import { Input } from "src/components/lib/Forms";
 import { Stack } from "src/components/lib/Layout";
+import AuthFormFooter from "./AuthFormFooter";
 import SubmitBtn from "./SubmitBtn";
 
 function SignInForm({
@@ -29,17 +30,7 @@ function SignInForm({
 
           <Input type="password" id="password" placeholder="password" ring />
         </Stack>
-        <div className="w-full relative pb-7">
-          <SubmitBtn buttonText="Sign In" submitBtnLoading={signInBtnLoading} />
-          <div className="text-xs w-full absolute bottom-2">
-            <div className="flex justify-between">
-              <div>
-                <Link to="/auth/signup">Create an account?</Link>
-              </div>
-              <div></div>
-            </div>
-          </div>
-        </div>
+        <AuthFormFooter pageType="signin" submitBtnLoading={signInBtnLoading} />
       </Stack>
     </form>
   );

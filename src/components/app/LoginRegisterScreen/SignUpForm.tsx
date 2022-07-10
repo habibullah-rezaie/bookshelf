@@ -1,9 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
-import { ButtonWithSpinner } from "src/components/lib/Buttons";
 import { Form, Input } from "src/components/lib/Forms";
 import { Stack } from "src/components/lib/Layout";
-import SubmitBtn from "./SubmitBtn";
+import AuthFormFooter from "./AuthFormFooter";
 
 type SignUpFormData = {
   email: string;
@@ -119,16 +117,7 @@ function SignUpForm({
         />
       </Stack>
 
-      <div className="w-full relative pb-7">
-        <SubmitBtn buttonText="Sign Up" submitBtnLoading={signUpBtnLoading} />
-        <div className="text-xs w-full absolute bottom-2">
-          <div className="flex justify-between">
-            <div>
-              <Link to="/auth/signin">Already have an account?</Link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AuthFormFooter pageType="signup" submitBtnLoading={signUpBtnLoading} />
     </Form>
   );
 }
