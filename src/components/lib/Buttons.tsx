@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FaSpinner } from "react-icons/fa";
 type ButtonPrimaryVariant = "primary" | "secondary" | "danger" | "plain";
 type ButtonVariant =
   | ButtonPrimaryVariant
@@ -120,3 +121,33 @@ export const CircleButton = React.forwardRef(
     );
   }
 );
+
+export const ButtonWithSpinner = React.forwardRef(function ButtonWithSpinner(
+  {
+    children,
+    className,
+    loadingState,
+    variant,
+    ...props
+  }: ButtonProps & {
+    loadingState: boolean;
+    variant?: ButtonVariant;
+  },
+  ref?: React.ForwardedRef<HTMLButtonElement>
+) {
+  return (
+    <Button
+      ref={ref}
+      variant={variant}
+      className={`${className} flex space-x-1 items-center justify-center`}
+      {...props}
+    >
+      <div>{children}</div>
+      {loadingState && (
+        <div>
+          <FaSpinner className={`animate-spin text-inheret`} />
+        </div>
+      )}
+    </Button>
+  );
+});

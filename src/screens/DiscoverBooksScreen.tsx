@@ -1,11 +1,11 @@
-import BooksList from "components/app/DiscoverBooksScreen/BooksList";
-import SearchBooks from "components/app/DiscoverBooksScreen/SearchBooks";
-import Header from "components/lib/Header";
-import { Container, Stack } from "components/lib/Layout";
-import Logo from "components/logo";
+import DetailedBooksList from "src/components/app/DiscoverBooksScreen/BooksList";
+import SearchBooks from "src/components/app/DiscoverBooksScreen/SearchBooks";
+import Header from "src/components/lib/Header";
+import { Container, Stack } from "src/components/lib/Layout";
+import Logo from "src/components/logo";
 import * as React from "react";
-import { SearchResult } from "types/DiscoverBooksScreenTypes";
-import { BaseComponentStatuses } from "types/types";
+import { SearchResult } from "src/types/DiscoverBooksScreenTypes";
+import { BaseComponentStatuses } from "src/types/types";
 
 type dicoverBooksReducerAction = {
   type: "RESOLVE" | "REJECT" | "SET_PENDING";
@@ -97,7 +97,10 @@ function DiscoverBooksScreen() {
                 setRejected={setRejected}
                 setResolved={setResolved}
               />
-              <BooksList result={state.data} status={state.status} />
+              <DetailedBooksList
+                books={state.data?.items || []}
+                status={state.status}
+              />
             </Stack>
           </main>
         </Stack>

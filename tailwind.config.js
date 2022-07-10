@@ -4,16 +4,13 @@ module.exports = {
 
   theme: {
     extend: {
-      screens: {
-        xxs: "320px",
-        xsm: "420px",
-        ...tlTheme.screens,
-      },
       colors: {
         baseColor: "3f51b5",
         secondaryColor: "#F9B713",
         textColor: "#434449",
-        baseGray: "#f1f2f7",
+        baseGray: "#777677",
+        baseBlack: "#565454",
+        darkerBlack: "#525252",
         lighterGray: "#f1f1f4",
         lightGray: "#e4e5e9",
         darkGray: "#6f7077",
@@ -27,6 +24,16 @@ module.exports = {
       },
       fontSize: {
         xxs: ["0.625rem", ".875rem"],
+      },
+      fontFamily: {
+        aldrich: "'Aldrich', sans-serif",
+        poppins: "'Poppins', sans-serif",
+        inter: "'Inter', sans-serif",
+        roboto: "'Roboto', sans-serif",
+      },
+      screens: {
+        "mobile-sm": "320px",
+        ...tlTheme.screens,
       },
     },
   },

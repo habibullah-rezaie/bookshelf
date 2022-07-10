@@ -1,11 +1,13 @@
 import { UserBookStatus } from "@prisma/client";
-import { Button } from "components/lib/Buttons";
-import Rating from "components/lib/Rating";
+import { Button } from "src/components/lib/Buttons";
+import Rating from "src/components/lib/Rating";
 import * as React from "react";
 import { FaHeart, FaMinus, FaRegHeart } from "react-icons/fa";
-import { Book } from "types/types";
+import { Book, BriefBook } from "src/types/types";
+import { getAuthorsSummary } from "src/utils/book";
+import { trimTextWithElepsis } from "src/utils/utils";
 
-function BookCard({ book }: { book: Book }) {
+function DetailedBookCard({ book }: { book: Book }) {
   const [isFavorite, setIsFavorite] = React.useState(false);
   const [readingStatus, setReadingStatus] = React.useState<
     UserBookStatus | "none"
@@ -21,7 +23,7 @@ function BookCard({ book }: { book: Book }) {
     "book.jpeg";
 
   // TODO: say author1 and author2 or author1, and 2 others
-  const author = book.volumeInfo.authors?.[0] || "";
+  const author = getAuthorsSummary(book.volumeInfo.authors);
   const rating = book.volumeInfo.averageRating;
   const pageCount = book.volumeInfo.pageCount;
   const publishedYear =
@@ -35,7 +37,7 @@ function BookCard({ book }: { book: Book }) {
         </div>
         <div className="flex flex-col space-y-1 items-center text-center">
           <h3 className="text-sm text-indigo  w-[80%]" title={title}>
-            {title.substring(0, 40) + `${title.length > 40 ? "..." : ""}`}
+            {trimTextWithElepsis(title, 35)}
           </h3>
           <p className="text-indigoLighten80 text-[.6rem]">{author}</p>
           <div className="flex justify-center">
@@ -120,4 +122,18 @@ function BookCard({ book }: { book: Book }) {
   );
 }
 
-export default BookCard;
+export function BriefBookCard({ book }: { book: BriefBook }) {
+  const { title, bookImage, author } = book;
+
+  return (
+    <section>
+      <div>
+        <img src={bookImage || "book.jpeg"} alt={`${title}'s cover`} />
+      </div>
+      <h1>{trimTextWithElepsis(title, 30)}</h1>
+      <div>{author}</div>
+    </section>
+  );
+}
+
+export default DetailedBookCard;
