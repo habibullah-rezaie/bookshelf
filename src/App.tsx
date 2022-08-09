@@ -7,36 +7,25 @@ import SignInPage from "./components/app/LoginRegisterScreen/SignInPage";
 import SignUpPage from "./components/app/LoginRegisterScreen/SignUpPage";
 
 function App() {
-  // const user = { password: "mypassword", username: "GUEST" };
-
-  // return <>{user ? <DiscoverBooksScreen /> : <LoginRegisterScreen />}</>;
-  return (
-    <Router>
-      <AuthProvider>
-        <AppWithAuth />
-      </AuthProvider>
-    </Router>
-  );
+	return (
+		<Router>
+			<AuthProvider>
+				<AppRoutes />
+			</AuthProvider>
+		</Router>
+	);
 }
 
 export default App;
 function AppRoutes() {
-  return (
-    <Routes>
-      <Route path="/auth" element={<LoginRegisterScreen />}>
-        <Route path="signup" element={<SignUpPage />} />
-        <Route path="signin" element={<SignInPage />} />
-        <Route path="" element={<SignInPage />} />
-      </Route>
-      <Route path="/" element={<HomeScreen />} />
-    </Routes>
-  );
-}
-
-function AppWithAuth() {
-  return (
-    <>
-      <AppRoutes />
-    </>
-  );
+	return (
+		<Routes>
+			<Route path="/auth" element={<LoginRegisterScreen />}>
+				<Route path="signup" element={<SignUpPage />} />
+				<Route path="signin" element={<SignInPage />} />
+				<Route path="" element={<SignInPage />} />
+			</Route>
+			<Route path="/" element={<HomeScreen />} />
+		</Routes>
+	);
 }
