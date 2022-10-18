@@ -1,2 +1,0 @@
-seed:
-  run: ts-node seed.ts

@@ -1,4 +1,3 @@
-import { BestsellerBook, BestsellerType } from "@prisma/client";
 import React from "react";
 import { Resource } from "src/client/resource";
 import { BriefBooksList } from "../DiscoverBooksScreen/BooksList";
