@@ -9,8 +9,8 @@ import { BestsellerBook } from "@prisma/client";
 
 function HomeScreen() {
   const bestsellersResource = createResource<BestsellerBook[]>(
-    fetchBestSellers()
   );
+		selectBestsellers()
 
   return (
     <div className="w-full h-full relative px-2 text-sm">
