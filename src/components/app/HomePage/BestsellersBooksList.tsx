@@ -1,5 +1,5 @@
 import React from "react";
-import { Resource } from "src/client/resource";
+import { Resource } from "src/api/resource";
 import { BriefBooksList } from "../DiscoverBooksScreen/BooksList";
 
 function BestsellersBooksList({
