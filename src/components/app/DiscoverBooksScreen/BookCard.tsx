@@ -8,19 +8,19 @@ import { getAuthorsSummary } from "src/utils/book";
 import { trimTextWithElepsis } from "src/utils/utils";
 
 function DetailedBookCard({ book }: { book: Book }) {
-  const [isFavorite, setIsFavorite] = React.useState(false);
-  const [readingStatus, setReadingStatus] = React.useState<
-    UserBookStatus | "none"
-  >("none");
+	const [isFavorite, setIsFavorite] = React.useState(false);
+	const [readingStatus, setReadingStatus] = React.useState<
+		UserBookStatus | "none"
+	>("none");
 
-  const toggleIsFavorite = () =>
-    setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+	const toggleIsFavorite = () =>
+		setIsFavorite((prevIsFavorite) => !prevIsFavorite);
 
-  const title = book.volumeInfo.title;
-  const img =
-    book.volumeInfo.imageLinks?.smallThumbnail ||
-    book.volumeInfo.imageLinks?.thumbnail ||
-    "book.jpeg";
+	const title = book.volumeInfo.title;
+	const img =
+		book.volumeInfo.imageLinks?.smallThumbnail ||
+		book.volumeInfo.imageLinks?.thumbnail ||
+		"book.jpeg";
 
 	//  Get book properties
 	const author = getAuthorsSummary(book.volumeInfo.authors);
@@ -92,48 +92,48 @@ function DetailedBookCard({ book }: { book: Book }) {
 						</Button>
 					)}
 
-          <div className="flex bg-logoGray rounded-lg px-3 py-1 text-lg hover:ring-indigoLighten80 hover:ring-4 hover:ring-opacity-50">
-            {readingStatus !== "none" && (
-              <Button
-                variant="plain"
-                title="Remove from Reading"
-                className="p-1 hover:brightness-150"
-                onClick={() => setReadingStatus("none")}
-              >
-                <FaMinus className="text-logoOrange" />
-              </Button>
-            )}
-            <Button
-              variant="plain"
-              title={!isFavorite ? "Add to favorites" : "Remove from favorites"}
-              className={`p-1 hover:brightness-150`}
-              onClick={toggleIsFavorite}
-            >
-              {isFavorite ? (
-                <FaHeart className="text-logoOrange " />
-              ) : (
-                <FaRegHeart className="text-logoOrange" />
-              )}
-            </Button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+					<div className="flex bg-logoGray rounded-lg px-3 py-1 text-lg hover:ring-indigoLighten80 hover:ring-4 hover:ring-opacity-50">
+						{readingStatus !== "none" && (
+							<Button
+								variant="plain"
+								title="Remove from Reading"
+								className="p-1 hover:brightness-150"
+								onClick={() => setReadingStatus("none")}
+							>
+								<FaMinus className="text-logoOrange" />
+							</Button>
+						)}
+						<Button
+							variant="plain"
+							title={!isFavorite ? "Add to favorites" : "Remove from favorites"}
+							className={`p-1 hover:brightness-150`}
+							onClick={toggleIsFavorite}
+						>
+							{isFavorite ? (
+								<FaHeart className="text-logoOrange " />
+							) : (
+								<FaRegHeart className="text-logoOrange" />
+							)}
+						</Button>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
 }
 
 export function BriefBookCard({ book }: { book: BriefBook }) {
-  const { title, bookImage, author } = book;
+	const { title, bookImage, author } = book;
 
-  return (
-    <section>
-      <div>
-        <img src={bookImage || "book.jpeg"} alt={`${title}'s cover`} />
-      </div>
-      <h1>{trimTextWithElepsis(title, 30)}</h1>
-      <div>{author}</div>
-    </section>
-  );
+	return (
+		<section>
+			<div>
+				<img src={bookImage || "book.jpeg"} alt={`${title}'s cover`} />
+			</div>
+			<h1>{trimTextWithElepsis(title, 30)}</h1>
+			<div>{author}</div>
+		</section>
+	);
 }
 
 export default DetailedBookCard;
