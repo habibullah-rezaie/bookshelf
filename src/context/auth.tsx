@@ -4,9 +4,9 @@ import {
   User,
   UserCredentials,
 } from "@supabase/supabase-js";
+import supabase from "../database/db";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import supabaseClient from "src/client/supabase-client";
 import { BaseComponentStatuses } from "src/types/types";
 
 export type SignIn = (credentials: UserCredentials) => Promise<void>;
