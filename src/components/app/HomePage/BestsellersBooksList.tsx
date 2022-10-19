@@ -32,7 +32,6 @@ function BestsellersBooksList({
 	);
 }
 
-export default BestsellersBooksList;
 function BestsellersListBody({
 	resource,
 	bestsellerType,
@@ -55,3 +54,5 @@ function BestsellersListBody({
 		/>
 	);
 }
+
+export default BestsellersBooksList;
