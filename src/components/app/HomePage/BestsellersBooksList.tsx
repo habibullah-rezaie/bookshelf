@@ -1,6 +1,6 @@
 import React from "react";
 import { Resource } from "src/api/resource";
-import SectionWithLoaderAndErrorBoundary from "src/components/lib/Section";
+import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import {
 	BestsellerBook,
 	BestsellerType,
@@ -21,7 +21,7 @@ function BestsellersBooksList({
 
 	return (
 		// TODO: add a fallback here
-		<SectionWithLoaderAndErrorBoundary heading={<h3>{listHeader}</h3>}>
+		<SectionWithLoaderAndErrorBoundary header={<h3>{listHeader}</h3>}>
 			<div>
 				<BestsellersListBody
 					resource={resource}
