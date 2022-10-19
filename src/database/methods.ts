@@ -28,6 +28,28 @@ export async function select<T>(
 
 	return await waitForQuery(selectQuery);
 }
+
+export async function selectAndFilter<T>(
+	tableName: string,
+	query: string,
+	filterer: (
+		filterBuilder: PostgrestFilterBuilder<any>
+	) => PostgrestFilterBuilder<any>,
+	options?: SelectOptions
+): Promise<T[]> {
+	if (!supabase) {
+		return Promise.reject("Something went wrong connecting to server.");
+	}
+
+	const finalQuery = query ? query : "*";
+
+	let filterBuilder = supabase?.from(tableName).select(finalQuery, options);
+
+	let filteredQuery = filterer(filterBuilder);
+
+	return await waitForQuery(filteredQuery);
+}
+
 export async function waitForQuery(query: PostgrestFilterBuilder<any>) {
 	const { data, error, status } = await query;
 
