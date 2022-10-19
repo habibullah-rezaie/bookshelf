@@ -135,19 +135,19 @@ export const ButtonWithSpinner = React.forwardRef(function ButtonWithSpinner(
   },
   ref?: React.ForwardedRef<HTMLButtonElement>
 ) {
-  return (
-    <Button
-      ref={ref}
-      variant={variant}
-      className={`${className} flex space-x-1 items-center justify-center`}
-      {...props}
-    >
-      <div>{children}</div>
-      {loadingState && (
-        <div>
-          <FaSpinner className={`animate-spin text-inheret`} />
-        </div>
-      )}
-    </Button>
-  );
+	return (
+		<Button
+			ref={ref}
+			variant={variant}
+			className={`${className} flex space-x-1 items-center justify-center`}
+			{...props}
+		>
+			<div>{children}</div>
+			{loadingState && (
+				<div>
+					<Spinner />
+				</div>
+			)}
+		</Button>
+	);
 });
