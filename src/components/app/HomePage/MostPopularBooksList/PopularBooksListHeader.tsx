@@ -6,6 +6,22 @@ interface ListProps {
 	onPeriodChange: (period: PopularBookPeriod) => void;
 	period: PopularBookPeriod;
 }
+function ListHeader({ onPeriodChange, period }: ListProps) {
+	return (
+		<div>
+			<h2>Most Popular Books</h2>
+
+			{/* SELECT Period of Popular Books */}
+			<PopularBookPeriodsListBox
+				onPeriodChange={onPeriodChange}
+				period={period}
+			/>
+		</div>
+	);
+}
+
+export default ListHeader;
+
 function PopularBookPeriodsListBox({ onPeriodChange, period }: ListProps) {
 	return (
 		<Listbox value={period} onChange={onPeriodChange}>
