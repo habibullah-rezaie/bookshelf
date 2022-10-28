@@ -42,8 +42,11 @@ export async function selectAndFilter<T>(
 	}
 
 	const finalQuery = query ? query : "*";
+	if (!supabase) {
+		return Promise.reject("Something went wrong connecting to server.");
+	}
 
-	let filterBuilder = supabase?.from(tableName).select(finalQuery, options);
+	let filterBuilder = supabase.from(tableName).select(finalQuery, options);
 
 	let filteredQuery = filterer(filterBuilder);
 
