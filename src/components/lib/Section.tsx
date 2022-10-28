@@ -22,10 +22,11 @@ export function SectionWithLoaderAndErrorBoundary({
 	header,
 	loader,
 	children,
+	className = "",
 	...props
 }: SectionWithLoaderAndErrorBoundaryProps) {
 	return (
-		<Section {...props}>
+		<Section className={`${className}`} {...props}>
 			{header}
 			<React.Suspense fallback={"Loading..."}>{children}</React.Suspense>
 		</Section>
