@@ -1,3 +1,4 @@
+import appConfig from "../../../../appConfig";
 import React from "react";
 import { createResource, Resource } from "src/api/resource";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
@@ -23,14 +24,22 @@ function MostPopularBooksList({
 	let [resource, setResource] =
 		React.useState<Resource<MostPopularBook[]>>(popularBooksResource);
 
+	console.log(resource, "recource");
+	let prevPeriodRef = React.useRef(period);
 	React.useEffect(() => {
-		let newResource = createResource<MostPopularBook[]>(
-			selectAndFilterPopularBooks("", (filterBuilder) => {
-				return filterBuilder.eq("period", period);
-			})
-		);
+		if (prevPeriodRef.current !== period) {
+			console.log("Refetched popular books");
+			let newResource = createResource<MostPopularBook[]>(
+				selectAndFilterPopularBooks("", (filterBuilder) => {
+					return filterBuilder
+						.eq("period", period)
+						.limit(appConfig.DEFAULT_POPULAR_BOOKS_LIMIT);
+				})
+			);
 
-		setResource(newResource);
+			setResource(newResource);
+			prevPeriodRef.current = period;
+		}
 	}, [period]);
 
 	return (
