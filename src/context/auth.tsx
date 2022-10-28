@@ -49,7 +49,6 @@ export default function AuthProvider({
 	React.useLayoutEffect(() => {
 		const subscription = supabase?.auth.onAuthStateChange((event, session) => {
 			// TODO: remove log
-			console.log(event, session);
 			if (event === "SIGNED_IN" && session) {
 				setUser(session.user);
 				setSession(session);
@@ -72,7 +71,6 @@ export default function AuthProvider({
 		provider,
 	}: UserCredentials) {
 		setStatus("PENDING");
-
 		if (supabase) {
 			const { error } = await supabase.auth.signIn({
 				email,
