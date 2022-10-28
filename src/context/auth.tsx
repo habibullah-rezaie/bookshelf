@@ -34,7 +34,12 @@ const AuthContext = React.createContext<{
 export default function AuthProvider({
 	children,
 }: React.PropsWithChildren<{}>) {
-	const [user, setUser] = React.useState<null | User>(null);
+	const [user, setUser] = React.useState<null | User>(() => {
+		if (supabase) {
+			return supabase.auth.user();
+		}
+		return null;
+	});
 	const [status, setStatus] = React.useState<BaseComponentStatuses>("IDLE");
 	const [error, setError] = React.useState<ApiError | null>(null);
 	const [session, setSession] = React.useState<Session | null>(null);
