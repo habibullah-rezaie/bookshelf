@@ -1,13 +1,10 @@
-import React from "react";
 import { createResource } from "src/api/resource";
-import BestsellersBooksList from "src/components/app/HomePage/BestsellersBooksList";
+import appConfig from "src/appConfig";
+import BestsellersBooksList from "src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList";
 import MostPopularBooksList from "src/components/app/HomePage/MostPopularBooksList/MostPopularBooksList";
-import Header from "src/components/lib/Header";
-import { Stack } from "src/components/lib/Layout";
-import Logo from "src/components/logo";
 import {
 	BestsellerBook,
-	select as selectBestsellers,
+	selectAndFilterBestsellerBooks,
 } from "src/database/tables/BestsellerBook";
 import {
 	MostPopularBook,
@@ -17,39 +14,49 @@ import {
 
 const DEFUALT_PERIOD: PopularBookPeriod = "WEEK";
 function HomeScreen() {
-	// TODO: Decide on how many books to fetch at first render
-	const bestsellersResource = createResource<BestsellerBook[]>(
-		selectBestsellers()
+	const fictionBestsellersResource = createResource<BestsellerBook[]>(
+		selectAndFilterBestsellerBooks("", (filterBuilder) => {
+			return filterBuilder
+				.eq("type", "FICTION")
+				.order("rank")
+				.limit(appConfig.DEFAULT_BESTSELLER_BOOKS_LIMIT);
+		})
 	);
 
+	const nonFictionBestsellersResource = createResource<BestsellerBook[]>(
+		selectAndFilterBestsellerBooks("", (filterBuilder) => {
+			return filterBuilder
+				.eq("type", "NON_FICTION")
+				.order("rank")
+				.limit(appConfig.DEFAULT_BESTSELLER_BOOKS_LIMIT);
+		})
+	);
 	const popularBooksResource = createResource<MostPopularBook[]>(
 		selectAndFilterPopularBooks("", (filterBuilder) => {
-			return filterBuilder.eq("period", DEFUALT_PERIOD);
+			return filterBuilder
+				.eq("period", appConfig.DEFAULT_POPULAR_BOOKS_PERIOD)
+				.order("rank")
+				.limit(appConfig.DEFAULT_POPULAR_BOOKS_LIMIT);
 		})
 	);
 
 	return (
-		<div className="w-full h-full relative px-2 text-sm">
-			<Header
-				Logo={<Logo className="max-h-8 md:max-h-12" />}
-				userName="Habibullah"
-				userProfileIMG="profile.jpg"
+		<>
+			<BestsellersBooksList
+				bestsellerType="FICTION"
+				resource={fictionBestsellersResource}
 			/>
-			<Stack direction="vertical">
-				<BestsellersBooksList
-					bestsellerType="FICTION"
-					resource={bestsellersResource}
-				/>
-				<BestsellersBooksList
-					bestsellerType="NON_FICTION"
-					resource={bestsellersResource}
-				/>
+			<BestsellersBooksList
+				bestsellerType="NON_FICTION"
+				resource={nonFictionBestsellersResource}
+			/>
+			<div className="w-screen px-7 mt-8">
 				<MostPopularBooksList
 					popularBooksResource={popularBooksResource}
 					period={DEFUALT_PERIOD}
 				/>
-			</Stack>
-		</div>
+			</div>
+		</>
 	);
 }
 
