@@ -7,14 +7,14 @@ import {
 } from "../methods";
 
 export type BestsellerBook = {
-	id: string;
+	bookId: string;
 	title: string;
-	author: string | null;
+	authors: string[] | null;
 	bookImage: string | null;
 	createdAt: string;
-	updatedAt: string;
-	primaryISBN10: string;
 	primaryISBN13: string;
+	weeksOnList: number;
+	rank: number;
 	type: BestsellerType;
 };
 
