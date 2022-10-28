@@ -13,13 +13,10 @@ export type BestsellerBook = {
 
 export type BestsellerType = "FICTION" | "NON_FICTION";
 
+const TABLE_NAME = "BestsellerBook";
 export async function select(
 	query?: string,
 	options?: SelectOptions
 ): Promise<BestsellerBook[]> {
-	return selectFromTable<BestsellerBook>(
-		"BestsellerBook",
-		query || "",
-		options
-	);
+	return selectFromTable<BestsellerBook>(TABLE_NAME, query || "", options);
 }
