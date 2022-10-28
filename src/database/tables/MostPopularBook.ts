@@ -6,12 +6,15 @@ import {
 	SelectOptions,
 } from "../methods";
 
-// TODO: Check if this matches db
 export type MostPopularBook = {
+	id: string;
 	title: string;
-	author: string;
-	imageURL: string;
-	isbn: string;
+	authors: string[];
+	bookImage: string;
+	primaryISBN13: string;
+	averageRating: number;
+	publishedDate: string;
+	rank: number;
 };
 
 export type PopularBookPeriod = "YEAR" | "MONTH" | "WEEK";
