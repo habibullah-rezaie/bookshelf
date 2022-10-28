@@ -1,5 +1,5 @@
 import * as React from "react";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 type ButtonPrimaryVariant = "primary" | "secondary" | "danger" | "plain";
 type ButtonVariant =
 	| ButtonPrimaryVariant
@@ -151,3 +151,34 @@ export const ButtonWithSpinner = React.forwardRef(function ButtonWithSpinner(
 		</Button>
 	);
 });
+
+interface BlackBtnSpecailProps {
+	loadingState?: boolean;
+}
+
+// Don't Include variant and overright new props in case of collisions
+type BlackBtnProps = BlackBtnSpecailProps &
+	Omit<Omit<ButtonProps, "variant">, keyof BlackBtnSpecailProps>;
+
+export function BlackButton({
+	className = "",
+	loadingState,
+	children,
+}: BlackBtnProps) {
+	const styles = `bg-baseBlack hover:bg-darkerBlack hover:ring-baseBlack hover:ring-opacity-50 text-white font-poppins font-meduim`;
+	return (
+		<>
+			{/* Catch if loading state is given */}
+			{/* eslint-disable-next-line eqeqeq */}
+			{loadingState != undefined ? (
+				<ButtonWithSpinner
+					className={`${styles} ${className}`}
+					loadingState={loadingState}
+					children={children}
+				/>
+			) : (
+				<Button className={`${styles} ${className}`} children={children} />
+			)}
+		</>
+	);
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { ButtonWithSpinner } from "src/components/lib/Buttons";
+import { ButtonWithSpinner } from "src/components/lib/Buttons/Buttons";
 import { SignIn } from "src/context/auth";
 
 type AcceptableAuthProviders = "google" | "facebook";

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactModal from "react-modal";
-import { CloseButton } from "./Buttons";
+import { CloseButton } from "./Buttons/Buttons";
 import { Stack } from "./Layout";
 
 /**

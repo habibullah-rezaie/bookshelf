@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonWithSpinner } from "src/components/lib/Buttons";
+import { ButtonWithSpinner } from "src/components/lib/Buttons/Buttons";
 
 function SubmitBtn({
   submitBtnLoading,

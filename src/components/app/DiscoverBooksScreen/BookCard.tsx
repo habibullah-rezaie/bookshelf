@@ -1,8 +1,8 @@
 import { UserBookStatus } from "@prisma/client";
-import { Button } from "src/components/lib/Buttons";
 import Rating from "src/components/lib/Rating";
 import * as React from "react";
 import { FaHeart, FaMinus, FaRegHeart } from "react-icons/fa";
+import { Button } from "src/components/lib/Buttons/Buttons";
 import { Book, BriefBook } from "src/types/types";
 import { getAuthorsSummary } from "src/utils/book";
 import { trimTextWithElepsis } from "src/utils/utils";

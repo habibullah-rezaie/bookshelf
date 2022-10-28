@@ -1,4 +1,4 @@
-import { Button } from "src/components/lib/Buttons";
+import { Button } from "src/components/lib/Buttons/Buttons";
 import { Form, Input } from "src/components/lib/Forms";
 import { Stack } from "src/components/lib/Layout";
 import React, { FormEvent, useEffect, useState } from "react";
