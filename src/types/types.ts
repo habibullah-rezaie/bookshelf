@@ -43,9 +43,8 @@ export type BaseComponentStatuses =
 	| "REJECTED";
 
 export type BriefBook = {
-  bookImage: string | null;
-  title: string;
-  author: string | null;
-  primaryISBN10: string;
-  primaryISBN13: string;
+	bookImage: string | null;
+	title: string;
+	authors: string[];
+	primaryISBN13: string;
 };
