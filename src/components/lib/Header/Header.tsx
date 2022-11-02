@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "src/context/auth";
-import { BlackButton, Button } from "../Buttons/Buttons";
+import { BlackButton } from "../Buttons/Buttons";
 import { Stack } from "../Layout";
 import NotificationBell from "./NotificationBell";
 
