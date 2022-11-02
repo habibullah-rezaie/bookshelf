@@ -48,3 +48,13 @@ export type BriefBook = {
 	authors: string[];
 	primaryISBN13: string;
 };
+
+export type BasicBookInfo = {
+	id: string;
+	title: string;
+	authors: string[];
+	bookImage: string;
+	primaryISBN13: string;
+	averageRating: number;
+	publishedDate: string;
+};

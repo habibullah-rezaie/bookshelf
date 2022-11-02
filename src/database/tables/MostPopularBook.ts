@@ -8,16 +8,7 @@ import {
 	SelectOptions,
 } from "../methods";
 
-export type MostPopularBook = {
-	id: string;
-	title: string;
-	authors: string[];
-	bookImage: string;
-	primaryISBN13: string;
-	averageRating: number;
-	publishedDate: string;
-	rank: number;
-};
+export type MostPopularBook = BasicBookInfo & { rank: number };
 
 export type PopularBookPeriod = "YEAR" | "MONTH" | "WEEK";
 
