@@ -1,10 +1,11 @@
-import * as React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthProvider from "src/context/auth";
 import HomeScreen from "src/screens/HomeScreen";
 import LoginRegisterScreen from "src/screens/LoginRegisterScreen";
 import SignInPage from "./components/app/LoginRegisterScreen/SignInPage";
 import SignUpPage from "./components/app/LoginRegisterScreen/SignUpPage";
+import ReactQueryProvider from "./context/QueryClient";
 import DiscoverBooksScreen from "./screens/DiscoverBooksScreen";
 import NotesScreen from "./screens/NotesScreen";
 import SettingsScreen from "./screens/SettingsScreen";
@@ -17,7 +18,10 @@ function App() {
 	return (
 		<Router>
 			<AuthProvider>
-				<AppWithAuth />
+				<ReactQueryProvider>
+					<AppWithAuth />
+					<ReactQueryDevtools initialIsOpen={false} />
+				</ReactQueryProvider>
 			</AuthProvider>
 		</Router>
 	);
