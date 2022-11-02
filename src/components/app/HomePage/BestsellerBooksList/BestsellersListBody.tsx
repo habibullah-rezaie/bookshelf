@@ -1,19 +1,23 @@
 import React from "react";
-import { Resource } from "src/api/resource";
+import { useBestsellerBooks } from "src/api/hooks/bestsellers";
 import ScrollNext from "src/components/lib/Buttons/ScrollNext";
-import { BestsellerBook as BestsellerBookType } from "src/database/tables/BestsellerBook";
+import { BestsellerType as BestsellerKind } from "src/database/tables/BestsellerBook";
 import BestsellerCard from "./BestsellerCard";
 
 function BestsellersListBody({
-	resource,
 	className = "",
+	kind,
 }: {
-	resource: Resource<BestsellerBookType[]>;
 	className?: string;
+	kind: BestsellerKind;
 }) {
-	const books = resource.read();
-
+	const { data, isError, isLoading, error } = useBestsellerBooks(kind);
 	const selfRef = React.useRef<null | HTMLUListElement>(null);
+
+	if (isError) throw error;
+	if (isLoading) return <div>Loading...</div>;
+
+	const books = data.data;
 
 	const handleScrollLeft = () => {
 		const bestsellersList = selfRef.current;
