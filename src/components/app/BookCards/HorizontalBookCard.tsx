@@ -1,13 +1,14 @@
-import { VscBookmark } from "react-icons/vsc";
-import { MostPopularBook } from "src/database/tables/MostPopularBook";
-import { trimTextWithElepsis } from "src/utils/utils";
-import { getCardDateText } from "./popularBookHelper";
 import { BsStarFill } from "react-icons/bs";
-import { getAuthorsSummary } from "src/utils/book";
+import { VscBookmark } from "react-icons/vsc";
 import appConfig from "src/appConfig";
+import { BasicBookInfo } from "src/types/types";
+import { getAuthorsSummary } from "src/utils/book";
+import { trimTextWithElepsis } from "src/utils/utils";
+import { getCardDateText } from "../HomePage/MostPopularBooksList/popularBookHelper";
 
-function PopularBookCard({
+function HorizontalBookCard({
 	book: {
+		id,
 		title,
 		authors,
 		bookImage,
@@ -16,10 +17,10 @@ function PopularBookCard({
 		publishedDate,
 	},
 }: {
-	book: MostPopularBook;
+	book: BasicBookInfo;
 }) {
-	const dateString = getCardDateText(publishedDate);
-	const authorFullText = getAuthorsSummary(authors);
+	const dateString = getCardDateText(publishedDate || "");
+	const authorFullText = getAuthorsSummary(authors || "");
 	const authorText = trimTextWithElepsis(
 		authorFullText.replace(" and ", " & "),
 		20
@@ -70,4 +71,4 @@ function PopularBookCard({
 	);
 }
 
-export default PopularBookCard;
+export default HorizontalBookCard;

@@ -1,6 +1,6 @@
-import PopularBookCard from "./PopularBookCard";
 import { useMostPopularBooks } from "src/api/hooks/mostPopular";
 import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
+import HorizontalBookCard from "../../BookCards/HorizontalBookCard";
 interface Props {
 	period: PopularBookPeriod;
 }
@@ -23,7 +23,7 @@ function PopularBooksListBody({ period }: Props) {
 						? books.map((book) => {
 								return (
 									<li className={``} key={book.id}>
-										<PopularBookCard book={book} />
+										<HorizontalBookCard book={book} />
 									</li>
 								);
 						  })
