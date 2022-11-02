@@ -1,6 +1,7 @@
 import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
 import supabase from "./db";
 
+export type DbFetchResult<T> = { data: T[]; count: number | null };
 export type SelectOptions = {
 	head?: boolean | undefined;
 	count?:
@@ -18,7 +19,7 @@ export async function select<T>(
 	tableName: string,
 	query: string,
 	options?: SelectOptions
-): Promise<T[]> {
+): Promise<DbFetchResult<T>> {
 	if (!supabase) {
 		return Promise.reject("Something went wrong connecting to server.");
 	}
@@ -36,7 +37,7 @@ export async function selectAndFilter<T>(
 		filterBuilder: PostgrestFilterBuilder<any>
 	) => PostgrestFilterBuilder<any>,
 	options?: SelectOptions
-): Promise<T[]> {
+): Promise<DbFetchResult<T>> {
 	if (!supabase) {
 		return Promise.reject("Something went wrong connecting to server.");
 	}
@@ -54,7 +55,7 @@ export async function selectAndFilter<T>(
 }
 
 export async function waitForQuery(query: PostgrestFilterBuilder<any>) {
-	const { data, error, status } = await query;
+	const { error, status, ...payload } = await query;
 
 	if (error) {
 		return Promise.reject(error);
@@ -65,5 +66,9 @@ export async function waitForQuery(query: PostgrestFilterBuilder<any>) {
 		return Promise.reject("Non 200 response code");
 	}
 
-	return data;
+	if (payload.data == null) {
+		console.log(payload);
+		return Promise.reject("Unacceptable data");
+	}
+	return payload;
 }
