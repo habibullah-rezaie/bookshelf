@@ -1,11 +1,20 @@
-import { Resource } from "src/api/resource";
-import { MostPopularBook } from "src/database/tables/MostPopularBook";
 import PopularBookCard from "./PopularBookCard";
+import { useMostPopularBooks } from "src/api/hooks/mostPopular";
+import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
 interface Props {
-	popularBookResource: Resource<MostPopularBook[]>;
+	period: PopularBookPeriod;
 }
-function PopularBooksListBody({ popularBookResource }: Props) {
-	const books = popularBookResource.read();
+function PopularBooksListBody({ period }: Props) {
+	let { data, isError, error, isLoading, isSuccess } =
+		useMostPopularBooks(period);
+
+	if (isError) throw error;
+
+	if (isLoading) return <div>Loading</div>;
+
+	if (!isSuccess) throw new Error("Fetching popular books failed :(");
+
+	const books = data?.data ?? [];
 	return (
 		<>
 			<ul className={`flex flex-col space-y-6`}>
