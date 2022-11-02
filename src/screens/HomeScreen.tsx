@@ -1,60 +1,43 @@
-import { createResource } from "src/api/resource";
+import React from "react";
+import { usePrefetchBestsellers } from "src/api/hooks/bestsellers";
+import { usePrefetchMostPopular } from "src/api/hooks/mostPopular";
 import appConfig from "src/appConfig";
-import BestsellersBooksList from "src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList";
-import MostPopularBooksList from "src/components/app/HomePage/MostPopularBooksList/MostPopularBooksList";
-import {
-	BestsellerBook,
-	selectAndFilterBestsellerBooks,
-} from "src/database/tables/BestsellerBook";
-import {
-	MostPopularBook,
-	PopularBookPeriod,
-	selectAndFilterPopularBooks,
-} from "src/database/tables/MostPopularBook";
 
-const DEFUALT_PERIOD: PopularBookPeriod = "WEEK";
+let BestsellersBooksList = React.lazy(
+	() =>
+		import(
+			/* webpackPrefetch: true */
+			"src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList"
+		)
+);
+
+let MostPopularBooksList = React.lazy(
+	() =>
+		import(
+			/* webpackPrefetch: true */
+			"src/components/app/HomePage/MostPopularBooksList/MostPopularBooksList"
+		)
+);
+
 function HomeScreen() {
-	const fictionBestsellersResource = createResource<BestsellerBook[]>(
-		selectAndFilterBestsellerBooks("", (filterBuilder) => {
-			return filterBuilder
-				.eq("type", "FICTION")
-				.order("rank")
-				.limit(appConfig.DEFAULT_BESTSELLER_BOOKS_LIMIT);
-		})
-	);
-
-	const nonFictionBestsellersResource = createResource<BestsellerBook[]>(
-		selectAndFilterBestsellerBooks("", (filterBuilder) => {
-			return filterBuilder
-				.eq("type", "NON_FICTION")
-				.order("rank")
-				.limit(appConfig.DEFAULT_BESTSELLER_BOOKS_LIMIT);
-		})
-	);
-	const popularBooksResource = createResource<MostPopularBook[]>(
-		selectAndFilterPopularBooks("", (filterBuilder) => {
-			return filterBuilder
-				.eq("period", appConfig.DEFAULT_POPULAR_BOOKS_PERIOD)
-				.order("rank")
-				.limit(appConfig.DEFAULT_POPULAR_BOOKS_LIMIT);
-		})
-	);
+	usePrefetchBestsellers("FICTION");
+	usePrefetchBestsellers("NON_FICTION");
+	usePrefetchMostPopular(appConfig.DEFAULT_POPULAR_BOOKS_PERIOD);
 
 	return (
 		<>
-			<BestsellersBooksList
-				bestsellerType="FICTION"
-				resource={fictionBestsellersResource}
-			/>
-			<BestsellersBooksList
-				bestsellerType="NON_FICTION"
-				resource={nonFictionBestsellersResource}
-			/>
+			<React.Suspense fallback={<div>Loading...</div>}>
+				<BestsellersBooksList bestsellerType="FICTION" />
+			</React.Suspense>
+			<React.Suspense fallback={<div>Loading...</div>}>
+				<BestsellersBooksList bestsellerType="NON_FICTION" />
+			</React.Suspense>
 			<div className="w-screen px-7 mt-8">
-				<MostPopularBooksList
-					popularBooksResource={popularBooksResource}
-					period={DEFUALT_PERIOD}
-				/>
+				<React.Suspense fallback={<div>Loading...</div>}>
+					<MostPopularBooksList
+						period={appConfig.DEFAULT_POPULAR_BOOKS_PERIOD}
+					/>
+				</React.Suspense>
 			</div>
 		</>
 	);
