@@ -43,3 +43,21 @@ export function selectAndFilterPopularBooks(
 
 	return selectAndFilter<MostPopularBook>(TABLE_NAME, query, filterer, options);
 }
+
+export function selectAndFilterBasePopularBook(
+	filterer: (
+		filterBuilder: PostgrestFilterBuilder<any>
+	) => PostgrestFilterBuilder<any>,
+	options?: SelectOptions
+): Promise<DbFetchResult<MostPopularBook>> {
+	if (!supabase) {
+		return Promise.reject("Something went wrong connecting to server.");
+	}
+
+	return selectAndFilter<MostPopularBook>(
+		TABLE_NAME,
+		"id,title,authors,bookImage,primaryISBN13,averageRating,publishedDate,rank",
+		filterer,
+		options
+	);
+}
