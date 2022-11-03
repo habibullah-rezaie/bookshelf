@@ -1,5 +1,3 @@
-import { Book } from "./types";
-
 export type BookLanguage = { English: string; alpha2: string };
 export type SearchFilters = {
   author?: string;
