@@ -5,12 +5,6 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { FaFilter, FaSearch, FaSpinner } from "react-icons/fa";
 import { BaseComponentStatuses } from "src/types/types";
 import { isDeepStrictEqual } from "src/utils/utils";
-const FiltersModal = React.lazy(
-	() =>
-		import(
-			/* webpackPrefetch: true */ "src/components/app/DiscoverBooksScreen/FiltersModal"
-		)
-);
 
 function useSearchWithFilters({
 	setResolved,
@@ -129,21 +123,6 @@ function SearchBooks({
 					</Button>
 				</Stack>
 			</Form>
-			<React.Suspense
-				fallback={
-					<FaSpinner
-						className="animate-spin fixed bottom-0 right-0 text-sm"
-						title="still laoding"
-					/>
-				}
-			>
-				<FiltersModal
-					isOpen={filterModalOpen}
-					onClose={closeFiltersModal}
-					setFilters={setFilters}
-					setFiltersSubmitted={setFiltersSubmitted}
-				/>
-			</React.Suspense>
 		</>
 
 
