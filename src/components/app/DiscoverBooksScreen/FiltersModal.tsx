@@ -1,6 +1,7 @@
 import { Switch } from "@headlessui/react";
 import * as React from "react";
 import { BiCategory } from "react-icons/bi";
+import { BsCardHeading } from "react-icons/bs";
 import { FaBarcode, FaHome } from "react-icons/fa";
 import { IoMdPerson } from "react-icons/io";
 import { Button } from "src/components/lib/Buttons/Buttons";
@@ -29,6 +30,7 @@ function FiltersModal({
 
 	const [publisher, setPublisher] = React.useState("");
 	const [author, setAuthor] = React.useState("");
+	const [title, setTitle] = React.useState("");
 	const [category, setCategory] = React.useState("");
 	const [ISBN, setISBN] = React.useState("");
 	const [downloadable, setDownloadable] = React.useState<"true" | "false">(
@@ -43,6 +45,7 @@ function FiltersModal({
 
 	function setFiltersAndClose(setSubmitFlag: boolean) {
 		setFilters({
+			title,
 			publisher,
 			author,
 			isbn: ISBN,
@@ -50,7 +53,6 @@ function FiltersModal({
 			downloadable: downloadable === "true" ? true : false,
 			language: selectedLang?.alpha2,
 			sortBy: sortBy,
-			// TODO: add title
 		});
 
 		setFiltersSubmitted(setSubmitFlag);
@@ -73,6 +75,23 @@ function FiltersModal({
 			onClose={() => setFiltersAndClose(false)}
 		>
 			<Form onSubmit={handleFormSubmit} className={`text-xs`}>
+				<Stack
+					gap={0}
+					className="peer items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-baseBlack focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
+				>
+					<label htmlFor="author-filter" className="sr-only">
+						Title
+					</label>
+					<div className="flex items-center justify-center py-0.5 px-1.5 bg-baseBlack text-white h-full">
+						<BsCardHeading title="Book's Title" />
+					</div>
+					<Input
+						id="author-filter"
+						placeholder="filter by author"
+						value={title}
+						onChange={(ev) => setTitle(ev.target.value)}
+					/>
+				</Stack>
 				<Stack
 					gap={0}
 					className="peer items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-baseBlack focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
