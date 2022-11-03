@@ -3,10 +3,6 @@ import { Form, Input } from "src/components/lib/Forms";
 import { Stack } from "src/components/lib/Layout";
 import React, { FormEvent, useEffect, useState } from "react";
 import { FaFilter, FaSearch, FaSpinner } from "react-icons/fa";
-import {
-	SearchFilters,
-	SearchResult,
-} from "src/types/DiscoverBooksScreenTypes";
 import { BaseComponentStatuses } from "src/types/types";
 import { isDeepStrictEqual } from "src/utils/utils";
 const FiltersModal = React.lazy(
@@ -152,30 +148,6 @@ function SearchBooks({
 	);
 }
 
-function processQueryFilters(filters: SearchFilters): string {
-	const hasQueryFilters =
-		filters.author || filters.category || filters.isbn || filters.publisher;
-	const paramFiltersMapping = {
-		author: "+inauthor",
-		category: "+subject",
-		isbn: "+isbn",
-		publisher: "+inpublisher",
-	};
-
-	if (hasQueryFilters) {
-		let queryParam = "";
-		for (const filter of Object.keys(paramFiltersMapping)) {
-			//@ts-ignore
-			if (filters[filter]) {
-				//@ts-ignore
-				queryParam += `${paramFiltersMapping[filter]}:${filters[filter]}`;
-			}
-		}
-
-		return queryParam;
-	}
-	return "";
-}
 
 function searchBook(term: string, filters?: SearchFilters) {
 	const baseURL = `${process.env.REACT_APP_BOOK_API}/volumes`;
