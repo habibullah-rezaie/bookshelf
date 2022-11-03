@@ -145,31 +145,9 @@ function SearchBooks({
 				/>
 			</React.Suspense>
 		</>
-	);
-}
 
 
-function searchBook(term: string, filters?: SearchFilters) {
-	const baseURL = `${process.env.REACT_APP_BOOK_API}/volumes`;
-	let finalURL = `${baseURL}?q=${term}`;
 
-	if (filters) {
-		const { downloadable, sortBy, language } = filters;
-		const queryFilters = processQueryFilters(filters);
-		const downloadableParam = downloadable ? "&download=epub" : "";
-		const sortByParam = sortBy !== "newest" ? "" : "&orderBy=newest";
-		const languageParam = language ? "&langRestrict=" + language : "";
-		finalURL += `${queryFilters}${downloadableParam}${sortByParam}${languageParam}`;
-	}
-
-	return fetch(finalURL, { method: "GET" }).then(
-		(res) => {
-			console.log(finalURL);
-			return res.json();
-		},
-		(err) => {
-			throw err;
-		}
 	);
 }
 
