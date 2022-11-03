@@ -45,3 +45,26 @@ export type GoogleBook = {
 	};
 };
 
+export type SearchResultBookSchema =
+	| GoogleBook
+	| {
+			id: string;
+			volumeInfo: {
+				title: string;
+				authors: string[];
+				publishedDate: string;
+				industryIdentifiers: GoogleBookIdentifiers;
+				averageRating: number;
+				imageLinks: {
+					smallThumbnail: string;
+					thumbnail: string;
+					small: string;
+					medium: string;
+				};
+			};
+	  };
+
+export type SearchResult = {
+	totalItems: number;
+	items: SearchResultBookSchema[];
+};

@@ -12,5 +12,3 @@ export type SearchFilters = {
 };
 
 export type setFilters = React.Dispatch<React.SetStateAction<SearchFilters>>;
-
-export type SearchResult = { totalItems: number; items: Book[] };
