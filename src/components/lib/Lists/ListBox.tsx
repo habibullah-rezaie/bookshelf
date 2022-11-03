@@ -1,9 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import { FaCheck } from "react-icons/fa";
 import { HiChevronUpDown } from "react-icons/hi2";
-import ListHeading from "src/components/app/HomePage/ListHeader";
 import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
-import { isOptionalTypeNode } from "typescript";
 
 type OptionType = {
 	value: any;
