@@ -36,20 +36,20 @@ function FilterByLangComboBox({
 						<Combobox.Label className={`font-medium mb-1`}>
 							Language:{" "}
 						</Combobox.Label>
-						<div className="relative transition-all duration-150 border-[1px] border-indigo focus-within:ring-1 focus-within:ring-indigo focus-within:ring-opacity-40 rounded-md overflow-hidden bg-gray-50">
+						<div className="relative transition-all duration-150 border-[1px] border-baseBlack focus-within:ring-1 focus-within:ring-baseBlack focus-within:ring-opacity-40 rounded-md overflow-hidden bg-gray-50">
 							<Combobox.Input
 								onChange={(event) => setQuery(event.target.value)}
 								displayValue={(lang: BookLanguage) => lang?.English}
 								className={`outline-hidden outline-0 focus:outline-0 focus:outline-hidden rounded-md w-full p-1 pr-4 leading-5 rounded-b-none`}
 							/>
 							<Combobox.Button
-								className={`absolute top-0.5 right-0 h-6 w-5 text-center `}
+								className={`absolute top-0.5 right-0 h-6 w-5 text-indigoLighten80center `}
 								as={Button}
 								variant={"plain"}
 							>
 								{open ? <FaAngleUp /> : <FaAngleDown />}
 							</Combobox.Button>
-							{open && <hr className="text-indigo" />}
+							{open && <hr className="text-baseBlacindigoLighten80k" />}
 							<Combobox.Options className={"max-h-25 h-20 overflow-x-hidden"}>
 								{filteredLangs.map((language) => (
 									<Combobox.Option

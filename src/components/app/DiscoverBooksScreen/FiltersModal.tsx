@@ -80,12 +80,12 @@ function FiltersModal({
 			<Form onSubmit={handleFormSubmit} className={`text-xs`}>
 				<Stack
 					gap={0}
-					className="peer items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-logoBlue focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
+					className="peer items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-baseBlack focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
 				>
 					<label htmlFor="author-filter" className="sr-only">
 						Author
 					</label>
-					<div className="flex items-center py-0.5 px-1.5 bg-indigo bg-opacity-60 h-full">
+					<div className="flex items-center justify-center py-0.5 px-1.5 bg-baseBlack text-white h-full">
 						<IoMdPerson title="Author" />
 					</div>
 					<Input
@@ -97,12 +97,12 @@ function FiltersModal({
 				</Stack>
 				<Stack
 					gap={0}
-					className="peer items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-logoBlue focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
+					className="peer items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-baseBlack focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
 				>
 					<label htmlFor="publisher-filter" className="sr-only">
 						Publisher
 					</label>
-					<div className="flex items-center py-0.5 px-1.5 bg-indigo bg-opacity-60 h-full">
+					<div className="flex items-center justify-center py-0.5 px-1.5 bg-baseBlack text-white h-full">
 						<FaHome title="Publisher" />
 					</div>
 					<Input
@@ -114,9 +114,9 @@ function FiltersModal({
 				</Stack>
 				<Stack
 					gap={0}
-					className="items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-logoBlue focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
+					className="items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-baseBlack focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
 				>
-					<div className="flex items-center py-0.5 px-1.5 bg-indigo bg-opacity-60 h-full ">
+					<div className="flex items-center justify-center py-0.5 px-1.5 bg-baseBlack text-white h-full ">
 						<BiCategory title="categories" />
 					</div>
 
@@ -132,9 +132,9 @@ function FiltersModal({
 				</Stack>
 				<Stack
 					gap={0}
-					className="items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-logoBlue focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
+					className="items-center rounded-md ring-1 ring-opacity-40 ring-logoDarkGray focus-within:ring-2 focus-within:ring-opacity-80  focus-within:ring-baseBlack focus-within:border-[1px] focus-within:border-none max-w-full overflow-hidden"
 				>
-					<div className="flex items-center py-0.5 px-1.5 bg-indigo bg-opacity-60 h-full ">
+					<div className="flex items-center justify-center py-0.5 px-1.5 bg-baseBlack text-white h-full ">
 						<FaBarcode className="" title="ISBN" />
 					</div>
 					<label htmlFor="isbn-filter" className="sr-only">
@@ -155,8 +155,8 @@ function FiltersModal({
 							checked={downloadable === "true" ? true : false}
 							onChange={(value) => setDownloadable(`${value}`)}
 							className={`${
-								downloadable === "true" ? "bg-indigo" : "bg-logoGray"
-							} relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigoLighten80 focus:ring-offset-1`}
+								downloadable === "true" ? "bg-baseBlack" : "bg-logoGray"
+							} relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-baseBlack focus:ring-opacity-25 focus:ring-offset-1`}
 						>
 							<span
 								className={`${
@@ -173,8 +173,8 @@ function FiltersModal({
 					<div className="w-fit" id="">
 						<label
 							htmlFor="sortBy-newest"
-							className={`px-3 py-1.5 cursor-pointer  border-indigo border-[1px]  focus-within:ring-1 focus-within:ring-indigo focus-within:ring-opacity-40 border-r-0 rounded-l-md ${
-								sortBy === "newest" ? "bg-indigo text-white" : ""
+							className={`px-3 py-1.5 cursor-pointer  border-baseBlack border-[1px]  focus-within:ring-1 focus-within:ring-baseBlack focus-within:ring-opacity-40 border-r-0 rounded-l-md ${
+								sortBy === "newest" ? "bg-baseBlack text-white" : ""
 							}`}
 							onClick={() => setSortBy("newest")}
 						>
@@ -190,8 +190,8 @@ function FiltersModal({
 						</label>
 						<label
 							htmlFor="sortBy-relevance"
-							className={`px-3 py-1.5 cursor-pointer  border-indigo border-[1px]  focus-within:ring-1 focus-within:ring-indigo focus-within:ring-opacity-40 rounded-r-md ${
-								sortBy === "relevance" ? "bg-indigo text-white" : ""
+							className={`px-3 py-1.5 cursor-pointer  border-baseBlack border-[1px]  focus-within:ring-1 focus-within:ring-baseBlack focus-within:ring-opacity-40 rounded-r-md ${
+								sortBy === "relevance" ? "bg-baseBlack text-white" : ""
 							}`}
 							onClick={() => setSortBy("relevance")}
 						>
@@ -213,7 +213,15 @@ function FiltersModal({
 						selectedLang={selectedLang}
 					/>
 				</Stack>
-				<Button type="submit">Filter</Button>
+				<Button
+					type="submit"
+					// TODO: Find a way to overwrite this
+					// Use baseBlack to overwrite bg
+					// Use white as color
+					style={{ backgroundColor: `#565454`, color: "white" }}
+				>
+					Filter
+				</Button>
 			</Form>
 		</Modal>
 	);

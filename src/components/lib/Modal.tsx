@@ -33,7 +33,9 @@ export function Modal({
 			shouldCloseOnOverlayClick={true}
 		>
 			<Stack className="justify-between items-center pb-3">
-				<h3 className="text-xl font-semibold text-indigo">{modalTitle}</h3>
+				<h3 className="text-xl font-semibold font-poppins text-baseBlack">
+					{modalTitle}
+				</h3>
 				<CloseButton onClick={onClose} />
 			</Stack>
 			<div>{children}</div>
