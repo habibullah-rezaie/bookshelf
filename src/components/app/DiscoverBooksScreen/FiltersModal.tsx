@@ -6,6 +6,7 @@ import { IoMdPerson } from "react-icons/io";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import { Form, Input } from "src/components/lib/Forms";
 import { Stack } from "src/components/lib/Layout";
+import ListSortByBar from "src/components/lib/Lists/ListSortByBar";
 import useModal from "src/components/lib/Modal";
 import {
 	BookLanguage,
@@ -166,8 +167,8 @@ function FiltersModal({
 						</Switch>
 					</Switch.Group>
 				</Stack>
-				<Stack gap={0} className="justify-between">
-					<label htmlFor="sortBy-radio" className="flex-1">
+				<Stack gap={0} className="">
+					{/* <label htmlFor="sortBy-radio" className="flex-1">
 						Sort By
 					</label>
 					<div className="w-fit" id="">
@@ -204,8 +205,14 @@ function FiltersModal({
 								checked={sortBy === "relevance"}
 								onChange={handleSortByChange}
 							/>
-						</label>
-					</div>
+						</label> 
+
+					 </div> */}
+					<ListSortByBar
+						Heading={<span className="text-xs font-normal">Sort By: </span>}
+						onSortChange={setSortBy}
+						selectedSorting={sortBy}
+					/>
 				</Stack>
 				<Stack direction="vertical" className="max-w-fit">
 					<FilterByLangComboBox
