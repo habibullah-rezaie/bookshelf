@@ -19,7 +19,7 @@ function SearchResultsSection({
 	return (
 		<div className="flex flex-col space-y-2">
 			<ListSortByBar
-				Heading={<span className="text-sm">Sort By: </span>}
+				Heading={<span className="text-sm font-semibold">Sort By: </span>}
 				onSortChange={onSortChange}
 				selectedSorting={selectedSorting}
 			/>
