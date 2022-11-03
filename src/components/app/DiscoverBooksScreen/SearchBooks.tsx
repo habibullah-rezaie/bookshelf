@@ -5,7 +5,7 @@ import { SearchHandler } from "src/api/hooks/searchBooks";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import { Input } from "src/components/lib/Forms";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
-import FilterModalLander from "./FilterButton";
+import FilterModalLander from "./FilterModalLander";
 
 export type FiltersSetter = React.Dispatch<React.SetStateAction<SearchFilters>>;
 
