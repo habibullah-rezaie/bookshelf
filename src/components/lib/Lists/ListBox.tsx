@@ -14,20 +14,17 @@ function ListBox({
 	selectedOption,
 	onChange,
 	allOptions,
-	Heading,
 	className = "",
 }: {
 	onChange: (option: typeof selectedOption.value) => void;
 	selectedOption: OptionType;
 	allOptions: OptionType[];
-	Heading: React.ReactNode;
 	className?: string;
 }) {
 	return (
 		<div
-			className={`relative flex w-full justify-between items-center text-[#453C3C] text-xs ml-1 ${className}`}
+			className={`relative flex  items-center text-[#453C3C] text-xs ml-1 ${className}`}
 		>
-			<ListHeading className="text-base">{Heading}</ListHeading>
 			<Listbox value={selectedOption.value} onChange={onChange}>
 				<Listbox.Button
 					className={`flex flex-row items-center focus:outline-none rounded-md px-1 py-1`}
