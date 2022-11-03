@@ -41,12 +41,6 @@ function FiltersModal({
 		null
 	);
 
-	function handleSortByChange() {
-		setSortBy((prevSortBy) =>
-			prevSortBy === "newest" ? "relevance" : "newest"
-		);
-	}
-
 	function setFiltersAndClose(setSubmitFlag: boolean) {
 		setFilters({
 			publisher,
