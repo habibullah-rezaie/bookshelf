@@ -1,12 +1,12 @@
-import BookCardSkeletonLoader from "./BookCardSkeletonLoader";
+import BookCardSkeletonLoader from "../BookCards/BookCardSkeletonLoader";
 
 function SerachBookLoader() {
-  return (
-    <>
-      <BookCardSkeletonLoader />
-      <BookCardSkeletonLoader />
-    </>
-  );
+	return (
+		<>
+			<BookCardSkeletonLoader />
+			<BookCardSkeletonLoader />
+		</>
+	);
 }
 
 export default SerachBookLoader;

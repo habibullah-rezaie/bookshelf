@@ -1,12 +1,12 @@
 import { Switch } from "@headlessui/react";
-import { Button } from "src/components/lib/Buttons/Buttons";
-import { Form, Input } from "src/components/lib/Forms";
-import { Stack } from "src/components/lib/Layout";
-import useModal from "src/components/lib/Modal";
 import * as React from "react";
 import { BiCategory } from "react-icons/bi";
 import { FaBarcode, FaHome } from "react-icons/fa";
 import { IoMdPerson } from "react-icons/io";
+import { Button } from "src/components/lib/Buttons/Buttons";
+import { Form, Input } from "src/components/lib/Forms";
+import { Stack } from "src/components/lib/Layout";
+import useModal from "src/components/lib/Modal";
 import {
 	BookLanguage,
 	setFilters as FilterSetter,
@@ -55,11 +55,13 @@ function FiltersModal({
 			downloadable: downloadable === "true" ? true : false,
 			language: selectedLang?.alpha2,
 			sortBy: sortBy,
+			// TODO: add title
 		});
 
 		setFiltersSubmitted(setSubmitFlag);
 		onClose();
 	}
+
 	function handleFormSubmit(ev: React.FormEvent<HTMLFormElement>) {
 		ev.preventDefault();
 
