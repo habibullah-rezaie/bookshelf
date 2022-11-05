@@ -22,6 +22,12 @@ const keys = {
 		pageSize: number = 10,
 		page: number
 	) => [...keys.books, "search", query, filters, { page, pageSize }] as const,
+
+	searchBooksInfinite: (
+		query: string,
+		filters: SearchFilters,
+		pageSize: number = 10
+	) => [...keys.books, "search", query, filters, pageSize] as const,
 };
 
 export default keys;
