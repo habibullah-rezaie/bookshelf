@@ -238,7 +238,9 @@ function FiltersModal({
 					// TODO: Find a way to overwrite this
 					// Use baseBlack to overwrite bg
 					// Use white as color
+					className="disabled:cursor-not-allowed disabled:hover:ring-0 disabled:grayscale"
 					style={{ backgroundColor: `#565454`, color: "white" }}
+					disabled={!(title || author || ISBN || publisher || category)}
 				>
 					Filter
 				</Button>
