@@ -15,7 +15,6 @@ function Pagination({
 	totalItems: number;
 }) {
 	const firstIndex = (page - 1) * pageSize + 1;
-	console.log("conditions", hasNextPage, page > 0, page, pageSize);
 	return (
 		<div className="px-5 py-5 bg-white border-t flex flex-row xs:flex-row items-center justify-between          ">
 			<span className="text-xs xs:text-sm text-gray-900">
