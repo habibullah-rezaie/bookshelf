@@ -4,7 +4,6 @@ import {
 	useQuery,
 } from "@tanstack/react-query";
 import React from "react";
-import SearchResultsSection from "src/components/app/DiscoverBooksScreen/SearchResultsList";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 import { BasicBookInfo } from "src/types/types";
 import {
