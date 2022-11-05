@@ -32,7 +32,8 @@ function SearchRow({
 
 	React.useEffect(() => {
 		if (filtersSubmitted) {
-			onSearch(query, filters);
+			// If any of these fields are filled submit search
+			if (shouldSearch(filters)) onSearch(query, filters);
 		}
 	}, [filters, filtersSubmitted, onSearch, query]);
 
@@ -44,7 +45,10 @@ function SearchRow({
 		ev.preventDefault();
 
 		// Either newly submitted filters or original filters
-		onSearch(query, filtersSubmitted ? filters : finalFilters);
+		const searchFilters = filtersSubmitted ? filters : finalFilters;
+
+		// If any of these fields are filled submit search or a query
+		if (shouldSearch(searchFilters) || query) onSearch(query, searchFilters);
 	}
 
 	return (
@@ -76,7 +80,7 @@ function SearchRow({
 						role="searchbox"
 						id="searchInput"
 						className="flex-1"
-						placeholder="Search"
+						placeholder="Search or use filters on right"
 						value={query}
 						onChange={(ev) => setQuery(ev.target.value)}
 						// autoFocus
@@ -104,3 +108,18 @@ function SearchRow({
 }
 
 export default SearchRow;
+
+/**
+ * Takes a filter an determines of the filters contains fields
+ * that bring up resutls
+ * @returns boolean
+ */
+function shouldSearch(filters: SearchFilters) {
+	return filters.author ||
+		filters.category ||
+		filters.isbn ||
+		filters.publisher ||
+		filters.title
+		? true
+		: false;
+}
