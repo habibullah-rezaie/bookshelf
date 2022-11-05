@@ -1,12 +1,16 @@
 import {
 	InfiniteData,
+	useInfiniteQuery,
 	useQuery,
 } from "@tanstack/react-query";
 import React from "react";
 import SearchResultsSection from "src/components/app/DiscoverBooksScreen/SearchResultsList";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 import { BasicBookInfo } from "src/types/types";
-import { useSearchQueryBuilder } from "../queries/searchBooks";
+import {
+	infiniteLoadingSearchQueryBuilder,
+	useSearchQueryBuilder,
+} from "../queries/searchBooks";
 import {
 	GoogleBookIdentifiers,
 	GoogleBookImageLinks,
@@ -94,6 +98,29 @@ function changeIncommingBooktoBasic(
 		title: book.volumeInfo.title,
 	};
 }
+
+export function useSearchBookInfiniteLoading(pageSize: number) {
+	const [query, setQuery] = React.useState<string>("");
+	const [filters, setFilters] = React.useState<SearchFilters>({});
+
+	const useQueryResult = useInfiniteQuery({
+		...infiniteLoadingSearchQueryBuilder(query, filters, pageSize),
+		select: InfiniteSearchResultMapper,
+	});
+
+	const search = React.useCallback((query: string, filters: SearchFilters) => {
+		setFilters(filters);
+		setQuery(query);
+	}, []);
+
+	return {
+		...useQueryResult,
+		query,
+		filters,
+		search,
+	};
+}
+
 function InfiniteSearchResultMapper(
 	data: InfiniteData<SearchResult>
 ): InfiniteData<{
