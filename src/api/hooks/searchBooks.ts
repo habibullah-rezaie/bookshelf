@@ -1,4 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import {
+	InfiniteData,
+	useQuery,
+} from "@tanstack/react-query";
 import React from "react";
 import SearchResultsSection from "src/components/app/DiscoverBooksScreen/SearchResultsList";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
@@ -8,6 +11,7 @@ import {
 	GoogleBookIdentifiers,
 	GoogleBookImageLinks,
 	SearchResult,
+	SearchResultBookSchema,
 } from "../types";
 
 export type SearchHandler = (query: string, filters: SearchFilters) => void;
@@ -90,4 +94,58 @@ function changeIncommingBooktoBasic(
 		title: book.volumeInfo.title,
 	};
 }
+function InfiniteSearchResultMapper(
+	data: InfiniteData<SearchResult>
+): InfiniteData<{
+	totalItems: number;
+	items: BasicBookInfo[];
+}> {
+	if (data.pages.length > 0) {
+		let newData: InfiniteData<{
+			totalItems: number;
+			items: BasicBookInfo[];
+		}> = { pageParams: data.pageParams, pages: [] };
+
+		const mapper = (
+			item: SearchResultBookSchema,
+			i: number
+		): [SearchResultBookSchema, number] => {
+			return [item, i];
+		};
+
+		const allRows: [SearchResultBookSchema, number][] = data.pages.flatMap(
+			(pg, i) => (pg.items ? pg.items.map((item) => mapper(item, i)) : [])
+		);
+
+		console.log("flatMapInside", data);
+		console.log("AllRowsInside", allRows);
+		new Set(
+			data.pages.flatMap((pg) => {
+				return pg.items != null ? pg.items.map((item) => item && item.id) : [];
+			})
+		).forEach((id) => {
+			const item = allRows.find((el) => el[0].id === id);
+
+			if (!item) {
+				return;
+			}
+
+			const changedItem = changeIncommingBooktoBasic(item[0]);
+			const pageIndex = item[1];
+			let newPage = newData.pages[pageIndex] ?? null;
+			if (!newPage) {
+				newPage = {
+					totalItems: data.pages[pageIndex].totalItems,
+					items: [changedItem],
+				};
+				newData.pages[pageIndex] = newPage;
+			} else {
+				newPage.items.push(changedItem);
+			}
+		});
+
+		console.log(newData, "newData");
+		return newData;
+	}
+	return { pages: [], pageParams: data.pageParams };
 }
