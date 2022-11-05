@@ -46,7 +46,7 @@ function SearchResultsSection({
 	React.useLayoutEffect(() => {
 		const refCurrent = parentRef.current;
 		const mouseInHandler = (_: any) => {
-			if (listRef.current && listRef.current.children.length > 0)
+			if (listRef.current && listRef.current.children.length > 1)
 				setScrollBarClassName("thin-scrollbar");
 		};
 
