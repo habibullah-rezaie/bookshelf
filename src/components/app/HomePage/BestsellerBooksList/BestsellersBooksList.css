@@ -43,8 +43,29 @@
 	width: calc(var(--bk-page-padding) / 2);
 }
 
+/* only for firefox */
+/* chrome already doesn't show scrollbar because of overflow: hidden */
 .no-scrollbar {
 	scrollbar-width: none;
 	margin-bottom: 0;
 	padding-bottom: 0;
+}
+
+.thin-scrollbar::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
+	width: 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+	background-color: transparent;
+}
+.no-scrollbar::-webkit-scrollbar-thumb {
+	background-color: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+	background-color: #bfbfbf;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #565454;
 }
