@@ -12,7 +12,6 @@ function DiscoverBooksScreen() {
 
 	const {
 		data,
-		error,
 		isError,
 		isLoading,
 		isSuccess,
@@ -74,6 +73,16 @@ function DiscoverBooksScreen() {
 								isFetchingNextPage={isFetchingNextPage}
 							/>
 						</>
+					)}
+					{!isQueried && (
+						<div className="w-full flex  items-center justify-center text-baseBlack font-poppins">
+							Search! Results appear in here ;)
+						</div>
+					)}
+					{isError && (
+						<div className="w-full flex items-center justify-center text-baseBlack font-poppins">
+							Something went wrong :(
+						</div>
 					)}
 				</main>
 			</Stack>
