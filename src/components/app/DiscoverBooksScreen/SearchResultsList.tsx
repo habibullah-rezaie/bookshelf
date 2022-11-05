@@ -43,6 +43,15 @@ function SearchResultsSection({
 		overscan: 5,
 	});
 
+	// For the first elements of list fetch more pages
+	React.useEffect(() => {
+		if (!listRef.current) return;
+
+		if (!isFetchingNextPage && hasNextPage && data.pages.length < 3) {
+			fetchNextPage();
+		}
+	}, [data.pages.length, fetchNextPage, hasNextPage, isFetchingNextPage]);
+
 	React.useLayoutEffect(() => {
 		const refCurrent = parentRef.current;
 		const mouseInHandler = (_: any) => {
