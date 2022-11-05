@@ -6,7 +6,6 @@ import ListHeading from "src/components/app/HomePage/ListHeader";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import ScrollDirection from "src/components/lib/Icons/ScrollDirection";
 import { Stack } from "src/components/lib/Layout";
-import Pagination from "src/components/lib/Lists/Pagination";
 
 // TODO: Show sort bar on every State
 // TODO:  Show loader
@@ -20,8 +19,6 @@ function DiscoverBooksScreen() {
 		query,
 		search,
 		filters,
-		page,
-		setPage,
 		hasNextPage,
 	} = useSearchBookBox(10);
 
@@ -71,18 +68,8 @@ function DiscoverBooksScreen() {
 								<ScrollDirection direction="UP" className="w-8 h-8" />
 							</Button>
 
-							<Pagination
-								page={page}
-								pageSize={10}
-								totalItems={data.totalItems}
 								hasNextPage={hasNextPage}
-								onNextPage={() => setPage((page) => page + 1)}
-								onPreviousPage={() =>
-									setPage((page) => {
-										console.log("changed paged");
-										return page > 0 ? page - 1 : page;
-									})
-								}
+								isFetchingNextPage={isFetchingNextPage}
 							/>
 						</>
 					)}
