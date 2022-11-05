@@ -57,17 +57,6 @@ function DiscoverBooksScreen() {
 								data={data}
 								onSortChange={handleSortChange}
 								selectedSorting={filters.sortBy || "relevance"}
-							/>
-
-							<Button
-								variant="plain"
-								className="fixed bottom-28 right-10 w-10 h-10 z-10 flex items-center justify-center rounded-[100%] bg-baseBlack text-white"
-								title="Scroll to Search"
-								onClick={() => divRef.current?.scrollIntoView()}
-							>
-								<ScrollDirection direction="UP" className="w-8 h-8" />
-							</Button>
-
 								hasNextPage={hasNextPage}
 								isFetchingNextPage={isFetchingNextPage}
 							/>
