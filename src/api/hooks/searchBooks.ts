@@ -108,6 +108,7 @@ export function useSearchBookInfiniteLoading(
 
 	const useQueryResult = useInfiniteQuery({
 		enabled,
+		retry: (count, _) => count <= 2,
 		...infiniteLoadingSearchQueryBuilder(query, filters, pageSize),
 		select: InfiniteSearchResultMapper,
 	});
