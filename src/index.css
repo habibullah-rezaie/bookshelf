@@ -5,6 +5,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Aldrich&family=Inter&family=Poppins:ital,wght@0,400;0,600;1,400&family=Roboto&display=swap");
 
 #root {
-	height: 100vh;
 	scroll-behavior: smooth;
 }
