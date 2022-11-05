@@ -76,7 +76,7 @@ function SearchResultsSection({
 
 			if (
 				listRef.current.getBoundingClientRect().bottom <=
-					1.8 * window.innerHeight &&
+					1.5 * window.innerHeight &&
 				hasNextPage &&
 				!isFetchingNextPage
 			) {
