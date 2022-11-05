@@ -14,12 +14,14 @@ function SearchRow({
 	filters: finalFilters,
 	query: finalQuery,
 	isLoading,
+	isQueried,
 	isError,
 }: {
 	query: string;
 	filters: SearchFilters;
 	onSearch: SearchHandler;
 	isLoading: boolean;
+	isQueried: boolean;
 	isError: boolean;
 }) {
 	const [filterModalOpen, setFilterModalOpen] = React.useState(false);
@@ -63,7 +65,7 @@ function SearchRow({
 					>
 						{/* TODO: disable button */}
 						{/* TODO: turn red on error */}
-						{isLoading ? (
+						{isLoading && isQueried ? (
 							<FaSpinner className="animate-spin" />
 						) : (
 							<FaSearch className="" />

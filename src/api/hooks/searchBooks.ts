@@ -99,11 +99,15 @@ function changeIncommingBooktoBasic(
 	};
 }
 
-export function useSearchBookInfiniteLoading(pageSize: number) {
+export function useSearchBookInfiniteLoading(
+	pageSize: number,
+	enabled: boolean = true
+) {
 	const [query, setQuery] = React.useState<string>("");
 	const [filters, setFilters] = React.useState<SearchFilters>({});
 
 	const useQueryResult = useInfiniteQuery({
+		enabled,
 		...infiniteLoadingSearchQueryBuilder(query, filters, pageSize),
 		select: InfiniteSearchResultMapper,
 	});
