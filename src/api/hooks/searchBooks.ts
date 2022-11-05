@@ -155,7 +155,9 @@ function InfiniteSearchResultMapper(
 				return pg.items != null ? pg.items.map((item) => item && item.id) : [];
 			})
 		).forEach((id) => {
-			const item = allRows.find((el) => el[0].id === id);
+			const item = allRows.find(
+				(el) => el[0].id === id && el[0].volumeInfo.title
+			);
 
 			if (!item) {
 				return;
