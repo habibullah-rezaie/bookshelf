@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import SearchResultsSection from "src/components/app/DiscoverBooksScreen/SearchResultsList";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 import { BasicBookInfo } from "src/types/types";
 import { useSearchQueryBuilder } from "../queries/searchBooks";
@@ -66,20 +67,25 @@ function changeSearchResultToUseableBook(data: SearchResult) {
 	let newBooks: BasicBookInfo[] = [];
 	if (data.totalItems != null && data?.items instanceof Array) {
 		for (const book of data.items) {
-			newBooks.push({
-				id: book.id,
-				authors: book.volumeInfo.authors || [],
-				averageRating: book.volumeInfo.averageRating,
-				bookImage: chooseBetterImageSize(book.volumeInfo.imageLinks),
-				primaryISBN13: findISBN13OfGoogleBook(
-					book.volumeInfo.industryIdentifiers || []
-				),
-				publishedDate: book.volumeInfo.publishedDate,
-				title: book.volumeInfo.title,
-			});
+			newBooks.push(changeIncommingBooktoBasic(book));
 		}
 		return { totalItems: data.totalItems, items: newBooks };
 	}
 
 	return { ...data, totalItems: undefined };
+function changeIncommingBooktoBasic(
+	book: SearchResultBookSchema
+): BasicBookInfo {
+	return {
+		id: book.id,
+		authors: book.volumeInfo.authors || [],
+		averageRating: book.volumeInfo.averageRating,
+		bookImage: chooseBetterImageSize(book.volumeInfo.imageLinks),
+		primaryISBN13: findISBN13OfGoogleBook(
+			book.volumeInfo.industryIdentifiers || []
+		),
+		publishedDate: book.volumeInfo.publishedDate,
+		title: book.volumeInfo.title,
+	};
+}
 }
