@@ -1,3 +1,4 @@
+import { InfiniteData } from "@tanstack/react-query";
 import ListSortByBar from "src/components/lib/Lists/ListSortByBar";
 import { MostPopularBook } from "src/database/tables/MostPopularBook";
 import HorizontalBookCard from "../BookCards/HorizontalBookCard";
@@ -6,15 +7,19 @@ function SearchResultsSection({
 	onSortChange,
 	selectedSorting,
 	data,
+	hasNextPage,
+	fetchNextPage,
+	isFetchingNextPage,
 }: {
-	onSortChange: (sortBy: "relevance" | "newest") => void;
+	fetchNextPage: () => any;
+	isFetchingNextPage: boolean;
 	selectedSorting: "relevance" | "newest";
-	data:
-		| {
-				totalItems: number;
-				items: Omit<MostPopularBook, "rank">[];
-		  }
-		| undefined;
+	onSortChange: (sortBy: "relevance" | "newest") => void;
+	hasNextPage: boolean | undefined;
+	data: InfiniteData<{
+		totalItems: number;
+		items: BasicBookInfo[];
+	}>;
 }) {
 	return (
 		<div className="flex flex-col space-y-2">
