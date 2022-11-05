@@ -1,5 +1,5 @@
 import React, { FormEvent } from "react";
-import { FaSearch, FaSpinner } from "react-icons/fa";
+import { FaSearch, FaSpinner, FaTimes } from "react-icons/fa";
 import { VscSettings } from "react-icons/vsc";
 import { SearchHandler } from "src/api/hooks/searchBooks";
 import { Button } from "src/components/lib/Buttons/Buttons";
@@ -77,6 +77,8 @@ function SearchRow({
 						{/* TODO: turn red on error */}
 						{isLoading && isQueried ? (
 							<FaSpinner className="animate-spin" />
+						) : isError ? (
+							<FaTimes className="text-red-500" />
 						) : (
 							<FaSearch className="" />
 						)}
