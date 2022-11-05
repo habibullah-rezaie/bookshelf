@@ -1,5 +1,5 @@
 import React from "react";
-import { useSearchBookBox } from "src/api/hooks/searchBooks";
+import { useSearchBookInfiniteLoading } from "src/api/hooks/searchBooks";
 import SearchBox from "src/components/app/DiscoverBooksScreen/SearchBooks";
 import SearchResultsSection from "src/components/app/DiscoverBooksScreen/SearchResultsList";
 import ListHeading from "src/components/app/HomePage/ListHeader";
@@ -20,7 +20,9 @@ function DiscoverBooksScreen() {
 		search,
 		filters,
 		hasNextPage,
-	} = useSearchBookBox(10);
+		fetchNextPage,
+		isFetchingNextPage,
+	} = useSearchBookInfiniteLoading(10);
 
 	const divRef = React.useRef<HTMLDivElement>(null);
 
@@ -51,12 +53,13 @@ function DiscoverBooksScreen() {
 						/>
 					</div>
 
-					{isSuccess && data.totalItems && data.items instanceof Array && (
+					{isSuccess && data != null && (
 						<>
 							<SearchResultsSection
 								data={data}
 								onSortChange={handleSortChange}
 								selectedSorting={filters.sortBy || "relevance"}
+								fetchNextPage={fetchNextPage}
 								hasNextPage={hasNextPage}
 								isFetchingNextPage={isFetchingNextPage}
 							/>
