@@ -57,7 +57,13 @@ function SearchRow({
 				className="w-full h-10 flex flex-row items-center justify-center space-x-2"
 				onSubmit={handleSubmit}
 			>
-				<div className="w-64 h-9 flex flex-row ring-1 ring-opacity-40 ring-baseBlack focus-within:ring-2 focus-within:ring-opacity-20  focus-within:ring-baseBlack focus-within:border-[1px] focus-within:boring-baseBlack max-w-full transition-all duration-75">
+				<div
+					className={`w-64 h-9 flex flex-row ring-1 ring-opacity-40 focus-within:ring-2 focus-within:ring-opacity-20  ${
+						isError
+							? `focus-within:ring-red-600 ring-red-600`
+							: `focus-within:ring-baseBlack ring-baseBlack`
+					} focus-within:border-[1px] max-w-full transition-all duration-75`}
+				>
 					<label htmlFor="searchInput" className="sr-only">
 						search for books
 					</label>
