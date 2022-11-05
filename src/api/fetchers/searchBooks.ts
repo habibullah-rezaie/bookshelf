@@ -30,7 +30,15 @@ export function searchBook(
 	return fetch(finalURL, { method: "GET" }).then(
 		(res) => {
 			console.log(finalURL);
-			return res.json();
+			return res.json().then((data) => {
+				if (!res.ok)
+					if (data.error) {
+						throw data.error;
+					} else {
+						throw data;
+					}
+				return data;
+			});
 		},
 		(err) => {
 			throw err;
