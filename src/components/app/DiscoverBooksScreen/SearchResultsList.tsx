@@ -120,35 +120,42 @@ function SearchResultsSection({
 					}}
 					ref={listRef}
 				>
-					{virtualizer.getVirtualItems().map((row) => {
-						console.log(row, allRows.length);
-						const isLoaderRow = row.index >= allRows.length ? true : false;
-						const book = allRows[row.index];
-						return (
-							<li
-								key={book?.id || "loaderRow"}
-								className={`${isLoaderRow && "loaderRow"}`}
-								style={{
-									position: "absolute",
-									top: 0,
-									left: 0,
-									width: `100%`,
-									height: `${row.size}px`,
-									transform: `translateY(${row.start}px)`,
-								}}
-							>
-								{!isLoaderRow ? (
-									<HorizontalBookCard book={book} />
-								) : isFetchingNextPage ? (
-									<div className="w-full flex justify-center items-center text-baseBlack">
-										<Spinner title="Loading more books" className="w-8 h-8" />
-									</div>
-								) : (
-									"We are all caught up!"
-								)}
-							</li>
-						);
-					})}
+					{allRows.length > 0 &&
+						virtualizer.getVirtualItems().map((row) => {
+							const isLoaderRow = row.index >= allRows.length ? true : false;
+							const book = allRows[row.index];
+							return (
+								<li
+									key={book?.id || "loaderRow"}
+									className={`${isLoaderRow && "loaderRow"}`}
+									style={{
+										position: "absolute",
+										top: 0,
+										left: 0,
+										width: `100%`,
+										height: `${row.size}px`,
+										transform: `translateY(${row.start}px)`,
+									}}
+								>
+									{!isLoaderRow ? (
+										<HorizontalBookCard book={book} />
+									) : isFetchingNextPage ? (
+										<div className="w-full flex justify-center items-center text-baseBlack">
+											<Spinner title="Loading more books" className="w-8 h-8" />
+										</div>
+									) : (
+										<div className="w-full flex justify-center items-center text-baseBlack font-poppins">
+											we are all caught up!
+										</div>
+									)}
+								</li>
+							);
+						})}
+					{allRows.length === 0 && (
+						<div className="w-full flex items-center justify-center text-baseBlack font-poppins">
+							No Results Found :(
+						</div>
+					)}
 				</ul>
 			</div>
 
