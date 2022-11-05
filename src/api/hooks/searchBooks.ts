@@ -72,7 +72,9 @@ function changeSearchResultToUseableBook(data: SearchResult) {
 		return { totalItems: data.totalItems, items: newBooks };
 	}
 
-	return { ...data, totalItems: undefined };
+	return { items: newBooks, totalItems: NaN };
+}
+
 function changeIncommingBooktoBasic(
 	book: SearchResultBookSchema
 ): BasicBookInfo {
