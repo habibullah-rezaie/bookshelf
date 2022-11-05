@@ -7,6 +7,7 @@ import ListSortByBar from "src/components/lib/Lists/ListSortByBar";
 import Spinner from "src/components/lib/Spinner";
 import { BasicBookInfo } from "src/types/types";
 import HorizontalBookCard from "../BookCards/HorizontalBookCard";
+import "src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList.css";
 
 function SearchResultsSection({
 	onSortChange,
@@ -26,9 +27,14 @@ function SearchResultsSection({
 		items: BasicBookInfo[];
 	}>;
 }) {
+	const [scrollBarClassName, setScrollBarClassName] = React.useState<
+		"no-scrollbar" | "thin-scrollbar"
+	>("no-scrollbar");
 	const allRows = data.pages.flatMap((pg) => pg.items);
 	const parentRef = React.useRef<HTMLDivElement>(null);
 	const listRef = React.useRef<HTMLUListElement>(null);
+
+	console.log("hasNextPage", hasNextPage);
 	const virtualizer = useVirtualizer({
 		count: hasNextPage ? allRows.length + 1 : allRows.length,
 		getScrollElement: () => parentRef.current,
@@ -36,6 +42,27 @@ function SearchResultsSection({
 		paddingEnd: 16,
 		overscan: 5,
 	});
+
+	React.useLayoutEffect(() => {
+		const refCurrent = parentRef.current;
+		const mouseInHandler = (_: any) => {
+			if (listRef.current && listRef.current.children.length > 0)
+				setScrollBarClassName("thin-scrollbar");
+		};
+
+		const mouseOutHandler = (_: any) => {
+			setScrollBarClassName("no-scrollbar");
+		};
+
+		refCurrent?.addEventListener("mouseenter", mouseInHandler);
+		refCurrent?.addEventListener("mouseleave", mouseOutHandler);
+
+		return () => {
+			refCurrent?.removeEventListener("mouseenter", mouseInHandler);
+			refCurrent?.removeEventListener("mouseleave", mouseOutHandler);
+		};
+	}, []);
+
 	// Fetch the next page if the user has scroll more than
 	React.useEffect(() => {
 		const handler = (_: any) => {
@@ -70,10 +97,17 @@ function SearchResultsSection({
 				onSortChange={onSortChange}
 				selectedSorting={selectedSorting}
 			/>
+			<div
+				// On firefox this looks ok, no need to change from thin to none
+				// on webkit, We need to set it to none if mouse exits or
+				// to custom thin style if enters
+				className={`${scrollBarClassName}`}
 				style={{
 					height: `${window.innerHeight - 268}px`,
 					width: "100%",
 					overflowY: "scroll",
+					// thıs works om Fırefox
+					scrollbarWidth: "thin",
 				}}
 				ref={parentRef}
 			>
