@@ -1,13 +1,13 @@
 import { InfiniteData } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React from "react";
+import "src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList.css";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import ScrollDirection from "src/components/lib/Icons/ScrollDirection";
 import ListSortByBar from "src/components/lib/Lists/ListSortByBar";
 import Spinner from "src/components/lib/Spinner";
 import { BasicBookInfo } from "src/types/types";
 import HorizontalBookCard from "../BookCards/HorizontalBookCard";
-import "src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList.css";
 
 function SearchResultsSection({
 	onSortChange,
@@ -34,7 +34,6 @@ function SearchResultsSection({
 	const parentRef = React.useRef<HTMLDivElement>(null);
 	const listRef = React.useRef<HTMLUListElement>(null);
 
-	console.log("hasNextPage", hasNextPage);
 	const virtualizer = useVirtualizer({
 		count: hasNextPage ? allRows.length + 1 : allRows.length,
 		getScrollElement: () => parentRef.current,
@@ -76,12 +75,6 @@ function SearchResultsSection({
 	React.useEffect(() => {
 		const handler = (_: any) => {
 			if (!listRef.current) return;
-
-			console.log(
-				listRef.current.scrollHeight,
-				listRef.current.scrollTop,
-				listRef.current.getBoundingClientRect()
-			);
 
 			if (
 				listRef.current.getBoundingClientRect().bottom <=
