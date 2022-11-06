@@ -1,5 +1,7 @@
 import React from "react";
 import { useSearchBookInfiniteLoading } from "src/api/hooks/searchBooks";
+import HorizontalBookCard from "src/components/app/BookCards/HorizontalBookCard";
+import HorizontalBookLoader from "src/components/app/BookCards/HorizontalBookLoader";
 import SearchBox from "src/components/app/DiscoverBooksScreen/SearchBooks";
 import SearchResultsSection from "src/components/app/DiscoverBooksScreen/SearchResultsList";
 import ListHeading from "src/components/app/HomePage/ListHeader";
@@ -74,16 +76,31 @@ function DiscoverBooksScreen() {
 							/>
 						</>
 					)}
-					{!isQueried && (
-						<div className="w-full flex  items-center justify-center text-baseBlack font-poppins">
-							Search! Results appear in here ;)
+
+					{isQueried && isLoading && (
+						<div
+							// 19 bottom of `SearchRow` margin included
+							className={`h-[calc(100vh-19rem)] w-full flex flex-col space-y-6 overflow-hidden`}
+						>
+							{new Array(10).fill(0).map((_, i) => (
+								<div className="h-28">
+									<HorizontalBookLoader key={i} />
+								</div>
+							))}
 						</div>
 					)}
-					{isError && (
+					{isError && !isLoading && (
 						<div className="w-full flex items-center justify-center text-baseBlack font-poppins">
 							Something went wrong :(
 						</div>
 					)}
+
+					{/* When it is not queried is Loading is true, why? Then shouldn't include that */}
+					{!isQueried ? (
+						<div className="w-full flex  items-center justify-center text-baseBlack font-poppins">
+							Search! Results appear in here ;)
+						</div>
+					) : null}
 				</main>
 			</Stack>
 		</div>
