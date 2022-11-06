@@ -1,7 +1,8 @@
 const tlTheme = require("tailwindcss/defaultTheme");
 module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
-
+	mode: "jit",
+	// These paths are just examples, customize them to match your project structure
 	theme: {
 		extend: {
 			colors: {
