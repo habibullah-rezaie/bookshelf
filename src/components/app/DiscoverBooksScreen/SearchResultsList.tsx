@@ -8,6 +8,7 @@ import ListSortByBar from "src/components/lib/Lists/ListSortByBar";
 import Spinner from "src/components/lib/Spinner";
 import { BasicBookInfo } from "src/types/types";
 import HorizontalBookCard from "../BookCards/HorizontalBookCard";
+import HorizontalBookLoader from "../BookCards/HorizontalBookLoader";
 
 function SearchResultsSection({
 	onSortChange,
@@ -142,9 +143,7 @@ function SearchResultsSection({
 									{!isLoaderRow ? (
 										<HorizontalBookCard book={book} />
 									) : isFetchingNextPage ? (
-										<div className="w-full flex justify-center items-center text-baseBlack">
-											<Spinner title="Loading more books" className="w-8 h-8" />
-										</div>
+										<HorizontalBookLoader />
 									) : (
 										<div className="w-full flex justify-center items-center text-baseBlack font-poppins">
 											we are all caught up!
