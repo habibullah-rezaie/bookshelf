@@ -54,6 +54,7 @@
 		]
 	},
 	"devDependencies": {
+		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@testing-library/cypress": "^8.0.2",
 		"@types/pluralize": "^0.0.29",
 		"@types/react-modal": "^3.13.1",
