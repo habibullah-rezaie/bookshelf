@@ -87,7 +87,7 @@ function FiltersModal({
 					</div>
 					<Input
 						id="author-filter"
-						placeholder="filter by author"
+						placeholder="filter by title"
 						value={title}
 						onChange={(ev) => setTitle(ev.target.value)}
 					/>
