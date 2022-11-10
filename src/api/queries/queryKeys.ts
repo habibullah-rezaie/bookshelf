@@ -28,6 +28,13 @@ const keys = {
 		filters: SearchFilters,
 		pageSize: number = 10
 	) => [...keys.books, "search", query, filters, pageSize] as const,
+
+	// Books Details
+	bookDetails: (id: string) => [...keys.books, "google detail", id] as const,
+	bestsellerDetail: (id: string) =>
+		[...keys.books, "bestseller detail", id] as const,
+	mostPopularDetail: (id: string) =>
+		[...keys.books, "popular detail", id] as const,
 };
 
 export default keys;
