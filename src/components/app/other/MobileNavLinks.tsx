@@ -37,7 +37,6 @@ function MobileNavItem({
 	return (
 		<NavLink to={to}>
 			{({ isActive }) => {
-				console.log("IS_ACTIVE:", isActive);
 				return (
 					<div
 						className={`flex flex-row items-center justify-center h-full rounded-3xl ${

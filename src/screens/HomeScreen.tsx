@@ -1,23 +1,11 @@
-import React from "react";
 import { usePrefetchBestsellers } from "src/api/hooks/bestsellers";
 import { usePrefetchMostPopular } from "src/api/hooks/mostPopular";
 import appConfig from "src/appConfig";
-
-let BestsellersBooksList = React.lazy(
-	() =>
-		import(
-			/* webpackPrefetch: true */
-			"src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList"
-		)
-);
-
-let MostPopularBooksList = React.lazy(
-	() =>
-		import(
-			/* webpackPrefetch: true */
-			"src/components/app/HomePage/MostPopularBooksList/MostPopularBooksList"
-		)
-);
+import HomeScreenMain from "src/components/app/HomePage/HomeScreenMain";
+import MobileNavLinks from "src/components/app/other/MobileNavLinks";
+import BottomBar from "src/components/lib/BottomBar";
+import Header from "src/components/lib/Header/Header";
+import HeaderBase from "src/components/lib/Header/HeaderBase";
 
 function HomeScreen() {
 	usePrefetchBestsellers("FICTION");
@@ -26,19 +14,13 @@ function HomeScreen() {
 
 	return (
 		<>
-			<React.Suspense fallback={<div>Loading...</div>}>
-				<BestsellersBooksList bestsellerType="FICTION" />
-			</React.Suspense>
-			<React.Suspense fallback={<div>Loading...</div>}>
-				<BestsellersBooksList bestsellerType="NON_FICTION" />
-			</React.Suspense>
-			<div className="w-screen px-7 mt-8">
-				<React.Suspense fallback={<div>Loading...</div>}>
-					<MostPopularBooksList
-						period={appConfig.DEFAULT_POPULAR_BOOKS_PERIOD}
-					/>
-				</React.Suspense>
-			</div>
+			<Header>
+				<HeaderBase />
+			</Header>
+			<HomeScreenMain />
+			<BottomBar>
+				<MobileNavLinks />
+			</BottomBar>
 		</>
 	);
 }

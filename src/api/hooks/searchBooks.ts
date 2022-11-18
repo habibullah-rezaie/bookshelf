@@ -2,20 +2,21 @@ import {
 	InfiniteData,
 	useInfiniteQuery,
 	useQuery,
+	useQueryClient,
 } from "@tanstack/react-query";
-import React from "react";
+import React, { useMemo } from "react";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 import { BasicBookInfo } from "src/types/types";
+import {
+	changeIncommingBooktoBasic,
+	infiniteSearchResultMapper,
+} from "src/utils/list";
+import keys from "../queries/queryKeys";
 import {
 	infiniteLoadingSearchQueryBuilder,
 	useSearchQueryBuilder,
 } from "../queries/searchBooks";
-import {
-	GoogleBookIdentifiers,
-	GoogleBookImageLinks,
-	SearchResult,
-	SearchResultBookSchema,
-} from "../types";
+import { SearchResult } from "../types";
 
 export type SearchHandler = (query: string, filters: SearchFilters) => void;
 
@@ -48,28 +49,6 @@ export function useSearchBookBox(pageSize: number) {
 	};
 }
 
-function chooseBetterImageSize(imageLinks: GoogleBookImageLinks) {
-	if (imageLinks?.medium) return imageLinks.medium;
-	else if (imageLinks?.small) return imageLinks.small;
-	else if (imageLinks?.thumbnail) return imageLinks.thumbnail;
-	else if (imageLinks?.smallThumbnail) return imageLinks.smallThumbnail;
-	else return "";
-}
-
-function findISBN13OfGoogleBook(identifiers: GoogleBookIdentifiers) {
-	if (identifiers?.length > 0) {
-		const identifier = identifiers.find(
-			(indentifier) => indentifier.type === "ISBN_13"
-		);
-
-		if (identifier) {
-			return identifier.identifier;
-		}
-	}
-
-	return "";
-}
-
 function changeSearchResultToUseableBook(data: SearchResult) {
 	let newBooks: BasicBookInfo[] = [];
 	if (data.totalItems != null && data?.items instanceof Array) {
@@ -80,22 +59,6 @@ function changeSearchResultToUseableBook(data: SearchResult) {
 	}
 
 	return { items: newBooks, totalItems: NaN };
-}
-
-function changeIncommingBooktoBasic(
-	book: SearchResultBookSchema
-): BasicBookInfo {
-	return {
-		id: book.id,
-		authors: book.volumeInfo.authors || [],
-		averageRating: book.volumeInfo.averageRating,
-		bookImage: chooseBetterImageSize(book.volumeInfo.imageLinks),
-		primaryISBN13: findISBN13OfGoogleBook(
-			book.volumeInfo.industryIdentifiers || []
-		),
-		publishedDate: book.volumeInfo.publishedDate,
-		title: book.volumeInfo.title,
-	};
 }
 
 export function useSearchBookInfiniteLoading(
@@ -109,7 +72,8 @@ export function useSearchBookInfiniteLoading(
 		enabled,
 		retry: (count, _) => count <= 2,
 		...infiniteLoadingSearchQueryBuilder(query, filters, pageSize),
-		select: InfiniteSearchResultMapper,
+		staleTime: 1000 * 60,
+		select: infiniteSearchResultMapper,
 	});
 
 	const search = React.useCallback((query: string, filters: SearchFilters) => {
@@ -125,60 +89,46 @@ export function useSearchBookInfiniteLoading(
 	};
 }
 
-function InfiniteSearchResultMapper(
-	data: InfiniteData<SearchResult>
-): InfiniteData<{
-	totalItems: number;
-	items: BasicBookInfo[];
-}> {
-	if (data.pages.length > 0) {
-		let newData: InfiniteData<{
-			totalItems: number;
-			items: BasicBookInfo[];
-		}> = { pageParams: data.pageParams, pages: [] };
+export function useCachedSearchedBook(
+	id: string,
+	state: any
+): null | BasicBookInfo {
+	const queryClient = useQueryClient();
+	return useMemo(() => {
+		if (!id) return null;
 
-		const mapper = (
-			item: SearchResultBookSchema,
-			i: number
-		): [SearchResultBookSchema, number] => {
-			return [item, i];
-		};
+		// the state is not from search then return null
+		if (state.from !== "/search") {
+			return null;
+		}
 
-		const allRows: [SearchResultBookSchema, number][] = data.pages.flatMap(
-			(pg, i) => (pg.items ? pg.items.map((item) => mapper(item, i)) : [])
+		// if thereis no state no query then cannot retrieve any cache
+		if (!state.query && !state.filters) {
+			return null;
+		}
+
+		const queryData = queryClient.getQueryData<InfiniteData<SearchResult>>(
+			keys.searchBooksInfinite(
+				state.query || "",
+				state.filters || {},
+				state.pageSize
+			)
 		);
 
-		console.log("flatMapInside", data);
-		console.log("AllRowsInside", allRows);
-		new Set(
-			data.pages.flatMap((pg) => {
-				return pg.items != null ? pg.items.map((item) => item && item.id) : [];
-			})
-		).forEach((id) => {
-			const item = allRows.find(
-				(el) => el[0].id === id && el[0].volumeInfo.title
-			);
+		if (queryData) {
+			const finalData = infiniteSearchResultMapper(queryData);
 
-			if (!item) {
-				return;
-			}
+			let book: BasicBookInfo | null = null;
+			finalData.pages.forEach((page) => {
+				const foundBook =
+					page.items && page.items.find((item) => item.bookId === id);
 
-			const changedItem = changeIncommingBooktoBasic(item[0]);
-			const pageIndex = item[1];
-			let newPage = newData.pages[pageIndex] ?? null;
-			if (!newPage) {
-				newPage = {
-					totalItems: data.pages[pageIndex].totalItems,
-					items: [changedItem],
-				};
-				newData.pages[pageIndex] = newPage;
-			} else {
-				newPage.items.push(changedItem);
-			}
-		});
+				if (foundBook) book = foundBook;
+			});
 
-		console.log(newData, "newData");
-		return newData;
-	}
-	return { pages: [], pageParams: data.pageParams };
+			return book;
+		}
+
+		return null;
+	}, [id, queryClient, state.filters, state.from, state.pageSize, state.query]);
 }

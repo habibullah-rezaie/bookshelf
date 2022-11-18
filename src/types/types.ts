@@ -12,7 +12,7 @@ export type BriefBook = {
 };
 
 export type BasicBookInfo = {
-	id: string;
+	bookId: string;
 	title: string;
 	authors: string[];
 	bookImage: string;

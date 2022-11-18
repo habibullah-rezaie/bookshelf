@@ -1,4 +1,4 @@
-import { GoogleBook } from "../types";
+import { GoogleBook, GoogleBookImageLinks } from "../types";
 
 async function getGoogleBookDetail(id: string): Promise<GoogleBook> {
 	if (!id) {
@@ -29,3 +29,34 @@ async function getGoogleBookDetail(id: string): Promise<GoogleBook> {
 }
 
 export default getGoogleBookDetail;
+
+export async function fetchBasicBookInfo(bookId: string): Promise<{
+	id: string;
+	volumeInfo: {
+		title: string;
+		authors?: string[];
+		publishedDate?: string;
+		imageLinks?: GoogleBookImageLinks;
+	};
+}> {
+	if (!bookId) {
+		throw new Error("Something went wrong");
+	}
+
+	const baseURL = process.env.REACT_APP_BOOK_API;
+	const finalURL = `${baseURL}/volumes/${bookId}?fields=id,volumeInfo(title,authors,publishedDate,imageLinks)`;
+
+	try {
+		console.log("url", finalURL);
+		const response = await fetch(finalURL);
+		if (response.ok) return response.json();
+		else {
+			const errorResp = await response.json();
+			if (errorResp.error) return Promise.reject(errorResp.error);
+			return Promise.reject(errorResp);
+		}
+	} catch (err) {
+		if (process.env.NODE_ENV !== "production") console.error(err);
+		return Promise.reject(err);
+	}
+}

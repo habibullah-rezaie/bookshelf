@@ -1,11 +1,12 @@
 import { InfiniteData } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React from "react";
+import { useSearchParams } from "react-router-dom";
 import "src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList.css";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import ScrollDirection from "src/components/lib/Icons/ScrollDirection";
 import ListSortByBar from "src/components/lib/Lists/ListSortByBar";
-import Spinner from "src/components/lib/Spinner";
+import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 import { BasicBookInfo } from "src/types/types";
 import HorizontalBookCard from "../BookCards/HorizontalBookCard";
 import HorizontalBookLoader from "../BookCards/HorizontalBookLoader";
@@ -17,7 +18,11 @@ function SearchResultsSection({
 	hasNextPage,
 	fetchNextPage,
 	isFetchingNextPage,
+	query,
+	filters,
 }: {
+	query: string;
+	filters: SearchFilters;
 	fetchNextPage: () => any;
 	isFetchingNextPage: boolean;
 	selectedSorting: "relevance" | "newest";
@@ -28,6 +33,8 @@ function SearchResultsSection({
 		items: BasicBookInfo[];
 	}>;
 }) {
+	const [usedIndex, setUsedIndex] = React.useState(false);
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [scrollBarClassName, setScrollBarClassName] = React.useState<
 		"no-scrollbar" | "thin-scrollbar"
 	>("no-scrollbar");
@@ -42,6 +49,18 @@ function SearchResultsSection({
 		paddingEnd: 16,
 		overscan: 5,
 	});
+
+	// Use for when user has come back from another page
+	// and previously he/she was at the `location.state.index`
+	React.useEffect(() => {
+		if (!parentRef.current) return;
+		const indexStr = Number(searchParams.get("index"));
+
+		if (isNaN(indexStr)) return;
+		if (!usedIndex) setUsedIndex(true);
+
+		parentRef.current.scroll({ top: indexStr * 128 });
+	}, [searchParams, usedIndex]);
 
 	// For the first elements of list fetch more pages
 	React.useEffect(() => {
@@ -127,9 +146,10 @@ function SearchResultsSection({
 						virtualizer.getVirtualItems().map((row) => {
 							const isLoaderRow = row.index >= allRows.length ? true : false;
 							const book = allRows[row.index];
+
 							return (
 								<li
-									key={book?.id || "loaderRow"}
+									key={book?.bookId || "loaderRow"}
 									className={`${isLoaderRow && "loaderRow"}`}
 									style={{
 										position: "absolute",
@@ -141,7 +161,26 @@ function SearchResultsSection({
 									}}
 								>
 									{!isLoaderRow ? (
-										<HorizontalBookCard book={book} />
+										<HorizontalBookCard
+											book={book}
+											link={{
+												to: "/book/" + book.bookId,
+												state: {
+													filters,
+													query,
+													pageSize: 10,
+													from: "/search",
+													index: row.index,
+												},
+												onClick: () => {
+													const newSearchParams = new window.URLSearchParams(
+														searchParams
+													);
+													newSearchParams.set("index", row.index.toString());
+													setSearchParams(newSearchParams);
+												},
+											}}
+										/>
 									) : isFetchingNextPage ? (
 										<HorizontalBookLoader />
 									) : (

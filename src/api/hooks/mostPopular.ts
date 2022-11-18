@@ -1,7 +1,10 @@
-import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import appConfig from "src/appConfig";
 import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
-import { popularBookQueryBuilder } from "../queries/mostPopular";
+import {
+	popularBookQueryBuilder,
+	popularBooksListQueryBuilder,
+} from "../queries/mostPopular";
 
 export function useMostPopularBooks(
 	period: PopularBookPeriod,
@@ -19,7 +22,35 @@ export function usePrefetchMostPopular(
 ) {
 	let queryClient = useQueryClient();
 
-	queryClient.prefetchQuery(
-		popularBookQueryBuilder(period, queryClient, page, pageSize)
-	);
+	queryClient.prefetchQuery({
+		...popularBookQueryBuilder(period, queryClient, page, pageSize),
+		staleTime: 1000 * 30,
+	});
+}
+
+export function usePopularBooksAllList() {
+	const [annuallyPopular, monthlyPopular, weeklyPopular] = useQueries({
+		queries: [
+			{ ...popularBooksListQueryBuilder("YEAR") },
+			{ ...popularBooksListQueryBuilder("MONTH") },
+			{ ...popularBooksListQueryBuilder("WEEK") },
+		],
+	});
+
+	return { annuallyPopular, weeklyPopular, monthlyPopular };
+}
+
+export function usePrefetchPopularBookList(
+	popularityPeriod: PopularBookPeriod
+) {
+	const queryClient = useQueryClient();
+	queryClient.prefetchQuery({
+		...popularBooksListQueryBuilder(popularityPeriod),
+	});
+}
+
+export function usePrefetchPopularBooksListAll() {
+	usePrefetchPopularBookList("MONTH");
+	usePrefetchPopularBookList("YEAR");
+	usePrefetchPopularBookList("WEEK");
 }

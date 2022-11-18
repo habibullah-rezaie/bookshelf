@@ -1,6 +1,7 @@
 import React, { FormEvent } from "react";
 import { FaSearch, FaSpinner, FaTimes } from "react-icons/fa";
 import { VscSettings } from "react-icons/vsc";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { SearchHandler } from "src/api/hooks/searchBooks";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import { Input } from "src/components/lib/Forms";
@@ -27,8 +28,28 @@ function SearchRow({
 	const [filterModalOpen, setFilterModalOpen] = React.useState(false);
 
 	const [query, setQuery] = React.useState<string>(finalQuery);
+	const [hasChangedFilter, setHasChangedFilter] = React.useState(false);
 	const [filters, setFilters] = React.useState<SearchFilters>(finalFilters);
 	const [filtersSubmitted, setFiltersSubmitted] = React.useState(false);
+	const location: any = useLocation();
+
+	const [params] = useSearchParams();
+	React.useEffect(() => {
+		const queryParam = decodeURIComponent(params.get("q") || "");
+		const filtersParamJson = decodeURIComponent(params.get("filters") || "{}");
+		let filtersParam: SearchFilters | null = null;
+		try {
+			filtersParam = JSON.parse(filtersParamJson);
+		} catch (err) {
+			console.log(err);
+		}
+
+		if (!hasChangedFilter && (queryParam || filtersParam)) {
+			queryParam && setQuery(queryParam);
+			filtersParam && setFilters(filtersParam);
+			setHasChangedFilter(true);
+		}
+	}, [hasChangedFilter, location.state, params]);
 
 	React.useEffect(() => {
 		if (filtersSubmitted) {

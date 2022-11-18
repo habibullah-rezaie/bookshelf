@@ -1,15 +1,17 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AuthProvider from "src/context/auth";
 import HomeScreen from "src/screens/HomeScreen";
 import LoginRegisterScreen from "src/screens/LoginRegisterScreen";
 import SignInPage from "./components/app/LoginRegisterScreen/SignInPage";
 import SignUpPage from "./components/app/LoginRegisterScreen/SignUpPage";
 import ReactQueryProvider from "./context/QueryClient";
+import StandardPage from "./Pages/StandardPage";
+import BookDetailsScreen from "./screens/BookDetailsScreen";
 import DiscoverBooksScreen from "./screens/DiscoverBooksScreen";
 import NotesScreen from "./screens/NotesScreen";
+import ReviewFormScreen from "./screens/ReviewFormScreen";
 import SettingsScreen from "./screens/SettingsScreen";
-import StandardPage from "./screens/StandardPage";
 
 function App() {
 	// const user = { password: "mypassword", username: "GUEST" };
@@ -40,6 +42,8 @@ function AppRoutes() {
 				<Route path="/search" element={<DiscoverBooksScreen />} />
 				<Route path="/notes" element={<NotesScreen />} />
 				<Route path="/settings" element={<SettingsScreen />} />
+				<Route path="/book/:bookId" element={<BookDetailsScreen />} />
+				<Route path="/review-form/:bookId" element={<ReviewFormScreen />} />
 				<Route path="/" element={<HomeScreen />} />
 			</Route>
 		</Routes>

@@ -1,0 +1,31 @@
+.rating-wrapper label {
+	@apply text-[#FFC41F];
+}
+
+.rating-wrapper:hover label {
+	@apply text-[#FFC41F] !important;
+}
+
+input[name^="rating-"]:checked + label {
+	@apply text-[#FFC41F] !important;
+}
+
+input[name^="rating-"]:checked ~ label {
+	@apply text-[#D9D9D9];
+}
+
+input[name^="rating-"]:hover + label {
+	@apply text-[#FFC41F];
+}
+
+input[name^="rating-"]:hover ~ label {
+	@apply text-[#D9D9D9] !important;
+}
+
+input[name^="rating-"]:hover + label {
+	@apply text-[#FFC41F] !important;
+}
+
+/* .disabled input[name^="rating-"]:check + label {
+	@apply text-[#FFC41F] !important;
+} */

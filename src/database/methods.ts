@@ -1,7 +1,7 @@
 import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
 import supabase from "./db";
 
-export type DbFetchResult<T> = { data: T[]; count: number | null };
+export type DbFetchResult<T> = { data: T[] | null; count: number | null };
 export type SelectOptions = {
 	head?: boolean | undefined;
 	count?:
@@ -66,9 +66,63 @@ export async function waitForQuery(query: PostgrestFilterBuilder<any>) {
 		return Promise.reject("Non 200 response code");
 	}
 
-	if (payload.data == null) {
-		console.log(payload);
-		return Promise.reject("Unacceptable data");
-	}
 	return payload;
+}
+
+export async function insert<T, R>(
+	tableName: string,
+	data: T,
+	options: {
+		returning?: "minimal" | "representation" | undefined;
+		count?: "exact" | "planned" | "estimated" | null | undefined;
+	}
+): Promise<DbFetchResult<R>> {
+	if (!supabase) {
+		return Promise.reject("Something went wrong connecting to server.");
+	}
+
+	const result = supabase.from<T>(tableName).insert(data, options);
+
+	return await waitForQuery(result);
+}
+
+export async function update<T, R>(
+	tableName: string,
+	data: T,
+	filterer: (
+		filterBuilder: PostgrestFilterBuilder<any>
+	) => PostgrestFilterBuilder<any>,
+	options: {
+		returning?: "minimal" | "representation" | undefined;
+		count?: "exact" | "planned" | "estimated" | null | undefined;
+	}
+): Promise<DbFetchResult<R>> {
+	if (!supabase) {
+		return Promise.reject("Something went wrong connecting to server.");
+	}
+
+	const result = supabase.from<T>(tableName).update(data, options);
+
+	return await waitForQuery(filterer(result));
+}
+
+export async function remove<T>(
+	tableName: string,
+	filterer: (
+		filterBuilder: PostgrestFilterBuilder<any>
+	) => PostgrestFilterBuilder<any>,
+	options: {
+		returning?: "minimal" | "representation" | undefined;
+		count?: "exact" | "planned" | "estimated" | null | undefined;
+	}
+): Promise<DbFetchResult<T>> {
+	if (!supabase) {
+		return Promise.reject("Something went wrong connecting to server.");
+	}
+
+	const toDeleteBuilder = supabase.from<T>(tableName).delete(options);
+
+	const result = filterer(toDeleteBuilder);
+
+	return await waitForQuery(result);
 }

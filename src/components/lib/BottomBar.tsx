@@ -1,11 +1,13 @@
 import React from "react";
 
 // type props = React.PropsWithRef<{ children: React.ReactNode }>;
-type props = React.PropsWithChildren<{}>;
+type props = React.PropsWithChildren<{ className?: string }>;
 
-function BottomBar({ children }: props) {
+function BottomBar({ children, className = "" }: props) {
 	return (
-		<div className="fixed bottom-0 z-10 left-0 w-full h-16 py-5 bg-bottomBarGray">
+		<div
+			className={`fixed bottom-0 z-10 left-0 w-full h-16 py-5 bg-bottomBarGray ${className}`}
+		>
 			{children}
 		</div>
 	);

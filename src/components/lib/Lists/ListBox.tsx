@@ -13,11 +13,15 @@ function ListBox({
 	onChange,
 	allOptions,
 	className = "",
+	openingDirection = "down",
+	CustomButton,
 }: {
 	onChange: (option: typeof selectedOption.value) => void;
 	selectedOption: OptionType;
 	allOptions: OptionType[];
 	className?: string;
+	CustomButton?: React.ReactNode;
+	openingDirection?: "down" | "up";
 }) {
 	return (
 		<div
@@ -27,14 +31,22 @@ function ListBox({
 				<Listbox.Button
 					className={`flex flex-row items-center focus:outline-none rounded-md px-1 py-1`}
 				>
-					<div>{selectedOption.displayValue}</div>
-					<HiChevronUpDown
-						className="h-5 w-5 text-gray-400"
-						aria-hidden="true"
-					/>
+					{CustomButton ? (
+						<>{CustomButton}</>
+					) : (
+						<>
+							<div>{selectedOption.displayValue}</div>
+							<HiChevronUpDown
+								className="h-5 w-5 text-gray-400"
+								aria-hidden="true"
+							/>
+						</>
+					)}
 				</Listbox.Button>
 				<Listbox.Options
-					className={`absolute z-10 top-full left-[50%] translate-x-[-50%] w-30 h-fit focus:outline-none rounded-md border-[1px] border-baseBlack overflow-hidden`}
+					className={`absolute z-10 ${
+						openingDirection === "down" ? `top-full` : "bottom-full"
+					} left-[50%] translate-x-[-50%] w-30 h-fit focus:outline-none rounded-md border-[1px] border-baseBlack overflow-hidden`}
 				>
 					{allOptions.map((option) => (
 						<ListBoxOption

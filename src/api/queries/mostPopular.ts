@@ -1,12 +1,10 @@
-import { QueryClient } from "@tanstack/react-query";
-import appConfig from "src/appConfig";
-import { DbFetchResult } from "src/database/methods";
-import { BestsellerBook } from "src/database/tables/BestsellerBook";
+import { QueryClient, UseQueryOptions } from "@tanstack/react-query";
 import {
+	MostPopularBook,
 	PopularBookPeriod,
 	selectAndFilterBasePopularBook,
+	selectAndFilterPopularBooks,
 } from "src/database/tables/MostPopularBook";
-import { getPagination } from "src/utils/list";
 import queryKeys from "./queryKeys";
 
 export function popularBookQueryBuilder(
@@ -20,23 +18,43 @@ export function popularBookQueryBuilder(
 		queryFn: async () => {
 			return await selectAndFilterBasePopularBook(
 				(filterBuilder) => {
-					let maxCount = queryClient.getQueryData<
-						DbFetchResult<BestsellerBook>
-					>(queryKeys.popularOfPeriod(period))?.count;
-
-					// TODO: handle the case which paginate
-					let range: [number, number] =
-						maxCount !== undefined && maxCount !== null
-							? getPagination(page, pageSize, maxCount)
-							: [0, appConfig.DEFAULT_POPULAR_BOOKS_LIMIT];
-
-					return filterBuilder
-						.eq("period", period)
-						.order("rank")
-						.range(...range);
+					return filterBuilder.eq("period", period).order("rank").range(0, 10);
 				},
 				{ count: "exact" }
 			);
 		},
+		refetchOnWindowFocus: false,
+	};
+}
+
+export type ShortPopularBook = Pick<MostPopularBook, "rank">;
+export type ShortPopularMap = { [bookId: string]: ShortPopularBook };
+
+export function popularBooksListQueryBuilder(
+	period: PopularBookPeriod
+): UseQueryOptions<
+	ShortPopularMap,
+	unknown,
+	ShortPopularMap,
+	ReturnType<typeof queryKeys.popularFullListOfPeriod>
+> {
+	return {
+		queryKey: queryKeys.popularFullListOfPeriod(period),
+		queryFn: async () => {
+			const popularArr = await selectAndFilterPopularBooks<
+				ShortPopularBook & { bookId: string }
+			>(`bookId ,rank`, (filterBuilder) =>
+				filterBuilder.eq("period", period).order("rank")
+			);
+
+			const popularBooksMap: ShortPopularMap = {};
+			popularArr.data?.forEach(({ bookId, rank }) => {
+				popularBooksMap[bookId] = { rank };
+			});
+
+			return popularBooksMap;
+		},
+		// 1 day
+		staleTime: 86400 * 1000,
 	};
 }

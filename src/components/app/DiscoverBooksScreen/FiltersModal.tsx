@@ -181,46 +181,6 @@ function FiltersModal({
 					</Switch.Group>
 				</Stack>
 				<Stack gap={0} className="">
-					{/* <label htmlFor="sortBy-radio" className="flex-1">
-						Sort By
-					</label>
-					<div className="w-fit" id="">
-						<label
-							htmlFor="sortBy-newest"
-							className={`px-3 py-1.5 cursor-pointer  border-baseBlack border-[1px]  focus-within:ring-1 focus-within:ring-baseBlack focus-within:ring-opacity-40 border-r-0 rounded-l-md ${
-								sortBy === "newest" ? "bg-baseBlack text-white" : ""
-							}`}
-							onClick={() => setSortBy("newest")}
-						>
-							Newest
-							<input
-								type="radio"
-								name="sortBy-radio"
-								id="sortBy-newest"
-								className="sr-only"
-								checked={sortBy === "newest"}
-								onChange={handleSortByChange}
-							/>
-						</label>
-						<label
-							htmlFor="sortBy-relevance"
-							className={`px-3 py-1.5 cursor-pointer  border-baseBlack border-[1px]  focus-within:ring-1 focus-within:ring-baseBlack focus-within:ring-opacity-40 rounded-r-md ${
-								sortBy === "relevance" ? "bg-baseBlack text-white" : ""
-							}`}
-							onClick={() => setSortBy("relevance")}
-						>
-							relevance
-							<input
-								type="radio"
-								name="sortBy-radio"
-								id="sortBy-relevance"
-								className="sr-only"
-								checked={sortBy === "relevance"}
-								onChange={handleSortByChange}
-							/>
-						</label> 
-
-					 </div> */}
 					<ListSortByBar
 						Heading={<span className="text-xs font-normal">Sort By: </span>}
 						onSortChange={setSortBy}

@@ -29,19 +29,20 @@ export async function select(
 	return selectFromTable<BestsellerBook>(TABLE_NAME, query || "", options);
 }
 
-export function selectAndFilterBestsellerBooks(
+export function selectAndFilterBestsellerBooks<T>(
 	query: string,
 	filterer: (
 		filterBuilder: PostgrestFilterBuilder<any>
 	) => PostgrestFilterBuilder<any>,
 	options?: SelectOptions
-): Promise<DbFetchResult<BestsellerBook>> {
+): Promise<DbFetchResult<T>> {
 	if (!supabase) {
 		return Promise.reject("Something went wrong connecting to server.");
 	}
 
-	return selectAndFilter<BestsellerBook>(TABLE_NAME, query, filterer, options);
+	return selectAndFilter<T>(TABLE_NAME, query, filterer, options);
 }
+
 export function selectAndFilterBaseBestsellerBooks(
 	filterer: (
 		filterBuilder: PostgrestFilterBuilder<any>

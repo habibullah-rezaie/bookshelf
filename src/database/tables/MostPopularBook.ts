@@ -21,18 +21,18 @@ export async function select(
 	return selectFromTable<MostPopularBook>(TABLE_NAME, query || "", options);
 }
 
-export function selectAndFilterPopularBooks(
+export function selectAndFilterPopularBooks<T>(
 	query: string,
 	filterer: (
 		filterBuilder: PostgrestFilterBuilder<any>
 	) => PostgrestFilterBuilder<any>,
 	options?: SelectOptions
-): Promise<DbFetchResult<MostPopularBook>> {
+): Promise<DbFetchResult<T>> {
 	if (!supabase) {
 		return Promise.reject("Something went wrong connecting to server.");
 	}
 
-	return selectAndFilter<MostPopularBook>(TABLE_NAME, query, filterer, options);
+	return selectAndFilter<T>(TABLE_NAME, query, filterer, options);
 }
 
 export function selectAndFilterBasePopularBook(
@@ -47,7 +47,7 @@ export function selectAndFilterBasePopularBook(
 
 	return selectAndFilter<MostPopularBook>(
 		TABLE_NAME,
-		"id,title,authors,bookImage,primaryISBN13,averageRating,publishedDate,rank",
+		"bookId,title,authors,bookImage,primaryISBN13,averageRating,publishedDate,rank",
 		filterer,
 		options
 	);

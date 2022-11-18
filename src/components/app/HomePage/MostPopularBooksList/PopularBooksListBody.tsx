@@ -1,5 +1,9 @@
 import { useMostPopularBooks } from "src/api/hooks/mostPopular";
-import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
+import {
+	MostPopularBook,
+	PopularBookPeriod,
+} from "src/database/tables/MostPopularBook";
+import { createStateFromHomePopularBook } from "src/utils/book";
 import HorizontalBookCard from "../../BookCards/HorizontalBookCard";
 interface Props {
 	period: PopularBookPeriod;
@@ -22,8 +26,18 @@ function PopularBooksListBody({ period }: Props) {
 					{books.length > 0
 						? books.map((book) => {
 								return (
-									<li className={``} key={book.id}>
-										<HorizontalBookCard book={book} />
+									<li className={``} key={book.bookId}>
+										{/* Configure the place of scroll */}
+										<HorizontalBookCard
+											book={book}
+											link={{
+												to: "/book/" + book.bookId,
+												state: createStateFromHomePopularBook(
+													period,
+													book.bookId
+												),
+											}}
+										/>
 									</li>
 								);
 						  })
