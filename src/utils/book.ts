@@ -58,6 +58,6 @@ export function createStateFromHomeBestseller(
 }
 
 export const formatRatingDate = (ratingDate: string) =>
-	new Date(ratingDate).toLocaleDateString(window.navigator.language, {
+	new Date(ratingDate).toLocaleDateString("en-US", {
 		dateStyle: "medium",
 	});
