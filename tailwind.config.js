@@ -12,6 +12,7 @@ module.exports = {
 				bottomBarGray: "#F2F2F2",
 				baseGray: "#777677",
 				baseBlack: "#565454",
+				baseBlackBorder: "rgb(86 84 84 / 20%)",
 				darkerBlack: "#525252",
 				lighterGray: "#f1f1f4",
 				lightGray: "#e4e5e9",

@@ -7,7 +7,7 @@ export function WhiteShadowedContiainer({
 }) {
 	return (
 		<div
-			className={`rounded-md shadow-sm bg-white border-[1px] border-baseBlack border-opacity-20 focus:border-opacity-50 ${className}`}
+			className={`rounded-md shadow-sm bg-white border-[1px] border-baseBlackBorder hover:border-baseBlack hover:border-opacity-30 ${className}`}
 		>
 			{children}
 		</div>
