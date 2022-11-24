@@ -1,6 +1,5 @@
 import React, { FormEvent } from "react";
-import { FaSpinner, FaTimes, FaSearch } from "react-icons/fa";
-import { VscSettings } from "react-icons/vsc";
+import { FaSearch, FaSpinner, FaTimes } from "react-icons/fa";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import { Input } from "src/components/lib/Forms";
@@ -95,7 +94,7 @@ function ReviewSearchBox({
 				onSubmit={handleSubmit}
 			>
 				<div
-					className={`w-fit h-9 flex flex-row rounded-2xl focus-within:outline focus-within:outline-offset-2 focus-within:outline-baseBlack focus-within:outline-1 bg-white outline-1 ${
+					className={`w-fit h-9 flex flex-row rounded-2xl focus-within:outline focus-within:outline-offset-2 focus-within:outline-baseBlack focus-within:outline-1 bg-white outline outline-1 outline-offset-2 outline-baseBlackBorder ${
 						isError
 							? `focus-within:ring-red-600 ring-red-600`
 							: `focus-within:ring-baseBlack ring-baseBlack`
