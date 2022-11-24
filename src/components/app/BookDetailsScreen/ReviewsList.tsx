@@ -1,5 +1,4 @@
 import { useReviewsOnBook } from "src/api/hooks/userReview";
-import { Button } from "src/components/lib/Buttons/Buttons";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import { ReviewOnBook } from "src/database/tables/userReview";
 import ReviewsListHeader from "./ReviewsListHeader";
@@ -8,7 +7,6 @@ import UserReview from "./UserReview";
 function ReviewsList({ bookId }: { bookId: string }) {
 	const { data: bookReviews } = useReviewsOnBook(bookId);
 
-	console.log("DATA", bookReviews);
 	return (
 		<SectionWithLoaderAndErrorBoundary
 			className="relative  mb-6 mt-9"
