@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useRatingStats } from "src/api/hooks/userBook";
 import { WhiteShadowedContiainer } from "src/components/lib/Header/Container";
@@ -7,9 +6,9 @@ function ReviewStats({ bookId }: { bookId: string }) {
 	const { data: stats } = useRatingStats(bookId);
 	console.log(stats, "STATS");
 	return (
-		<WhiteShadowedContiainer>
+		<WhiteShadowedContiainer className="w-full max-w-[22rem]">
 			<figure className="flex justify-center w-full p-2">
-				<div className="flex flex-col w-[20rem-1px] space-y-[0.625rem]">
+				<div className="flex flex-col w-full  space-y-[0.625rem]">
 					<StatRow
 						starCount={5}
 						percentage={stats ? (stats[5] * 100) / stats.total : 0}
@@ -48,27 +47,32 @@ function StatRow({
 	link?: string;
 }) {
 	let newPercentage = +percentage.toFixed(0);
-	if (percentage > 100) percentage = 100;
-	if (percentage < 0) percentage = 0;
 
-	const fillWidth = 13 * (newPercentage / 100);
-	const blankWidth = 13 * ((100 - newPercentage) / 100);
+	if (percentage > 100) newPercentage = 100;
+	if (percentage < 0) newPercentage = 0;
+
 	return (
-		<div className="grid grid-cols-[3fr,13rem,2fr] gap-2 items-center font-poppins">
-			<Link to={link || "#"} className={"underline text-sm"}>
+		// TODO this has an issue on thinner devices
+		<div className="w-full grid grid-cols-[3rem,1fr,1.75rem] gap-2 items-center font-poppins">
+			<Link
+				to={link || "#"}
+				className={`w-full  justify-self-end underline text-sm`}
+			>
 				{starCount} stars
 			</Link>
-			<div className="h-2.5 w-[13rem] flex flex-row rounded-md overflow-hidden">
+			<div className="h-2.5 w-full flex flex-row rounded-md overflow-hidden">
 				<div
-					className={`bg-baseBlack h-full`}
-					style={{ width: fillWidth + "rem" }}
+					className={`bg-baseBlack h-full rounded-l-md`}
+					style={{ width: `${newPercentage}%` }}
 				></div>
 				<div
-					style={{ width: blankWidth + "rem" }}
-					className={`bg-[#D9D9D9] h-full`}
+					style={{ width: `${100 - newPercentage}%` }}
+					className={`bg-[#D9D9D9] h-full rounded-r-md`}
 				></div>
 			</div>
-			<p className="text-xs text-baseBlack text-opacity-75">{newPercentage}%</p>
+			<p className="text-xs text-baseBlack text-opacity-75 self-center">
+				{newPercentage}%
+			</p>
 		</div>
 	);
 }
