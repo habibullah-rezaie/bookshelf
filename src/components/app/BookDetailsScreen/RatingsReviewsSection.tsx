@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useUserBookReview } from "src/api/hooks/userReview";
 import { Button } from "src/components/lib/Buttons/Buttons";
+import { WhiteShadowedContiainer } from "src/components/lib/Header/Container";
 import ImgWithLoader from "src/components/lib/Img/ImgWithLoader";
 import Spinner from "src/components/lib/Spinner";
 import { useAuth } from "src/context/auth";
@@ -99,51 +100,53 @@ function UserHaveNoReviewOnBook({
 }) {
 	const navigate = useNavigate();
 	return (
-		<div className="flex flex-col w-full items-center mb-4 py-4 px-3 bg-white rounded-md">
-			<div className="w-fit">
-				<Link
-					to="/"
-					className="w-fit focus:outline-1 focus:outline-offset-2 focus:outline-baseBlack"
-				>
-					<ImgWithLoader
-						src={avatarUrl}
-						className={"rounded-[100%] overflow-hidden"}
-						aspectWidth={1}
-						aspectHeight={1}
-						width={"2.5rem"}
-						height={"2.5rem"}
-						Loader={<img src={"/defaultUser.jpeg"} alt={"User Avatar"} />}
+		<WhiteShadowedContiainer>
+			<div className="flex flex-col w-full items-center mb-4 py-4 px-3 ">
+				<div className="w-fit">
+					<Link
+						to="/"
+						className="w-fit focus:outline-1 focus:outline-offset-2 focus:outline-baseBlack"
+					>
+						<ImgWithLoader
+							src={avatarUrl}
+							className={"rounded-[100%] overflow-hidden"}
+							aspectWidth={1}
+							aspectHeight={1}
+							width={"2.5rem"}
+							height={"2.5rem"}
+							Loader={<img src={"/defaultUser.jpeg"} alt={"User Avatar"} />}
+						/>
+					</Link>
+				</div>
+				<div className="mt-4">
+					<h4 className="font-poppins font-medium text-sm text-baseBlack">
+						What do you think?
+					</h4>
+				</div>
+				<div className="mt-7">
+					<RatingInput
+						bookId={bookId}
+						isUserBooksLoading={isUserBooksLoading}
+						rating={rating}
+						userBookId={userBookId}
+						userId={userId}
+						starWidthClass={"w-[0.75rem]"}
+						onSuccessFullRating={(_) => {
+							redirectToForm();
+						}}
 					/>
-				</Link>
-			</div>
-			<div className="mt-4">
-				<h4 className="font-poppins font-medium text-sm text-baseBlack">
-					What do you think?
-				</h4>
-			</div>
-			<div className="mt-7">
-				<RatingInput
-					bookId={bookId}
-					isUserBooksLoading={isUserBooksLoading}
-					rating={rating}
-					userBookId={userBookId}
-					userId={userId}
-					starWidthClass={"w-[0.75rem]"}
-					onSuccessFullRating={(_) => {
-						redirectToForm();
+				</div>
+				<Button
+					variant="primary"
+					className="mt-4"
+					onClick={() => {
+						userId ? redirectToForm() : navigate("/auth");
 					}}
-				/>
+				>
+					Add Review
+				</Button>
 			</div>
-			<Button
-				variant="primary"
-				className="mt-4"
-				onClick={() => {
-					userId ? redirectToForm() : navigate("/auth");
-				}}
-			>
-				Add Review
-			</Button>
-		</div>
+		</WhiteShadowedContiainer>
 	);
 
 	function redirectToForm() {
