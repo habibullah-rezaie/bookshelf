@@ -6,7 +6,7 @@ import LoginRegisterScreen from "src/screens/LoginRegisterScreen";
 import SignInPage from "./components/app/LoginRegisterScreen/SignInPage";
 import SignUpPage from "./components/app/LoginRegisterScreen/SignUpPage";
 import ReactQueryProvider from "./context/QueryClient";
-import StandardPage from "./Pages/StandardPage";
+import StandardPage from "./screens/StandardPage";
 import BookAllReviews from "./screens/BookAllReview";
 import BookDetailsScreen from "./screens/BookDetailsScreen";
 import DiscoverBooksScreen from "./screens/DiscoverBooksScreen";
