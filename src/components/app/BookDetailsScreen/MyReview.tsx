@@ -91,7 +91,7 @@ function MyReview({
 							: "Add Review"}
 					</Button>
 				</div>
-				<ReviewCardRatinRow review={review} rating={rating} />
+				<ReviewCardRatingRow review={review} rating={rating} />
 				{review ? (
 					<div className="relative flex flex-col">
 						<p
@@ -148,7 +148,7 @@ function MyReview({
 
 export default MyReview;
 
-export function ReviewCardRatinRow({
+export function ReviewCardRatingRow({
 	review,
 	rating,
 }: {

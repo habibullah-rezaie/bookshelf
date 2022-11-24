@@ -9,7 +9,7 @@ import {
 	UserReview as TUserReview,
 } from "src/database/tables/userReview";
 import { formatRatingDate } from "src/utils/book";
-import { RatingStars, ReviewCardRatinRow } from "./MyReview";
+import { RatingStars, ReviewCardRatingRow } from "./MyReview";
 
 function UserReview({
 	review,
@@ -86,7 +86,7 @@ function UserReview({
 						Follow
 					</Button>
 				</div>
-				<ReviewCardRatinRow review={review} rating={rating} />
+				<ReviewCardRatingRow review={review} rating={rating} />
 				{review ? (
 					<div className="relative flex flex-col">
 						<p
