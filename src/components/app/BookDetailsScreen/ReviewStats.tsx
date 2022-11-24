@@ -1,35 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useRatingStats } from "src/api/hooks/userBook";
+import { WhiteShadowedContiainer } from "src/components/lib/Header/Container";
 
 function ReviewStats({ bookId }: { bookId: string }) {
 	const { data: stats } = useRatingStats(bookId);
 	console.log(stats, "STATS");
 	return (
-		<figure>
-			<div className="flex flex-col w-[20rem-1px] p-1 bg-white">
-				<StatRow
-					starCount={5}
-					percentage={stats ? (stats[5] * 100) / stats.total : 0}
-				/>
-				<StatRow
-					starCount={4}
-					percentage={stats ? (stats[4] * 100) / stats.total : 0}
-				/>
-				<StatRow
-					starCount={3}
-					percentage={stats ? (stats[3] * 100) / stats.total : 0}
-				/>
-				<StatRow
-					starCount={2}
-					percentage={stats ? (stats[2] * 100) / stats.total : 0}
-				/>
-				<StatRow
-					starCount={1}
-					percentage={stats ? (stats[1] * 100) / stats.total : 0}
-				/>
-			</div>
-		</figure>
+		<WhiteShadowedContiainer>
+			<figure className="flex justify-center w-full p-2">
+				<div className="flex flex-col w-[20rem-1px] space-y-[0.625rem]">
+					<StatRow
+						starCount={5}
+						percentage={stats ? (stats[5] * 100) / stats.total : 0}
+					/>
+					<StatRow
+						starCount={4}
+						percentage={stats ? (stats[4] * 100) / stats.total : 0}
+					/>
+					<StatRow
+						starCount={3}
+						percentage={stats ? (stats[3] * 100) / stats.total : 0}
+					/>
+					<StatRow
+						starCount={2}
+						percentage={stats ? (stats[2] * 100) / stats.total : 0}
+					/>
+					<StatRow
+						starCount={1}
+						percentage={stats ? (stats[1] * 100) / stats.total : 0}
+					/>
+				</div>
+			</figure>
+		</WhiteShadowedContiainer>
 	);
 }
 
@@ -44,7 +47,7 @@ function StatRow({
 	percentage: number;
 	link?: string;
 }) {
-	let newPercentage = percentage;
+	let newPercentage = +percentage.toFixed(0);
 	if (percentage > 100) percentage = 100;
 	if (percentage < 0) percentage = 0;
 

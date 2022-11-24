@@ -5,7 +5,9 @@ type ButtonVariant =
 	| ButtonPrimaryVariant
 	| ("primary-outline" | "danger-outline" | "secondary-outline");
 
-type CustomButtonProps = {};
+type CustomButtonProps = {
+	rounded?: "3xl" | "2xl" | "xl" | "lg" | "md" | "sm" | "none";
+};
 
 type ButtonProps = React.PropsWithChildren<
 	CustomButtonProps &
@@ -21,6 +23,7 @@ type ButtonProps = React.PropsWithChildren<
 export const Button = React.forwardRef(function Button(
 	{
 		variant = "primary",
+		rounded = "3xl",
 		children,
 		className = "",
 		...props
@@ -28,7 +31,6 @@ export const Button = React.forwardRef(function Button(
 	ref: React.ForwardedRef<HTMLButtonElement> | undefined
 ) {
 	const variantStyles = {
-		primary: `text-white bg-indigo ring-indigoLighten80 hover:bg-indigoDarken10 `,
 		secondary: `text-white ring-gray-300 bg-gray-400`,
 		danger: `text-darkGray ring-red-400 bg-red-500 hover:bg-red-600`,
 		"danger-outline": `bg-white text-red-500 border-1 border-red-500 hover:bg-red-500 ring-red-300 hover:text-white`,
@@ -41,13 +43,16 @@ export const Button = React.forwardRef(function Button(
 	return (
 		<button
 			ref={ref}
-			className={`outline-none focus:outline-none rounded-sm transition-all duration-200 ${
-				variant !== "plain" && `hover:ring-4 ring-opacity-50 px-5 py-2`
-			} ${variantStyles[variant]} ${
+			className={`outline-none focus:outline-none transition-all duration-200 ${
+				(variant !== "plain" ? `hover:ring-4 ring-opacity-50 px-5 py-2 ` : "") +
+				(variant === "primary"
+					? `text-white bg-baseBlack ring-indigoLighten80 focus:outline-1 focus:outline-offset-2 focus:outline-baseBlack focus:ring-offset-1 font-poppins font-semibold`
+					: "")
+			} ${
 				variant.includes("outline")
 					? "hover:font-semibold border bg-transparent"
 					: ""
-			} ${className}`}
+			} rounded-${rounded} ${className}`}
 			{...props}
 		>
 			{children}

@@ -12,10 +12,9 @@ function ContinueWithProviders({ signIn }: { signIn: SignIn }) {
 	>("");
 
 	const handleLoginWithProvider = (provider: AcceptableAuthProviders) => {
-		console.log(provider);
 		setProviderLoading(provider);
 
-		signIn({ provider })
+		signIn({ type: "provider", payload: { provider: provider } })
 			.then(() => {
 				setProviderLoading("");
 			})
@@ -29,6 +28,7 @@ function ContinueWithProviders({ signIn }: { signIn: SignIn }) {
 		<div className="font-roboto flex flex-row justify-center space-x-8">
 			<ButtonWithSpinner
 				className="hover:ring-1 hover:ring-baseGray h-10"
+				rounded="3xl"
 				variant="primary-outline"
 				onClick={() => {
 					handleLoginWithProvider("google");
@@ -42,6 +42,7 @@ function ContinueWithProviders({ signIn }: { signIn: SignIn }) {
 			</ButtonWithSpinner>
 			<ButtonWithSpinner
 				className="bg-blue h-10 w-11"
+				rounded="lg"
 				aria-label="Continue With Facebook"
 				title="Continue With Facebook"
 				onClick={() => {

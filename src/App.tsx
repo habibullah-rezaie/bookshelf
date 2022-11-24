@@ -7,6 +7,7 @@ import SignInPage from "./components/app/LoginRegisterScreen/SignInPage";
 import SignUpPage from "./components/app/LoginRegisterScreen/SignUpPage";
 import ReactQueryProvider from "./context/QueryClient";
 import StandardPage from "./Pages/StandardPage";
+import BookAllReviews from "./screens/BookAllReview";
 import BookDetailsScreen from "./screens/BookDetailsScreen";
 import DiscoverBooksScreen from "./screens/DiscoverBooksScreen";
 import NotesScreen from "./screens/NotesScreen";
@@ -44,6 +45,8 @@ function AppRoutes() {
 				<Route path="/settings" element={<SettingsScreen />} />
 				<Route path="/book/:bookId" element={<BookDetailsScreen />} />
 				<Route path="/review-form/:bookId" element={<ReviewFormScreen />} />
+				<Route path="/review/book/:bookId" element={<BookAllReviews />} />
+				// <Route path="/review/user/:userId" element={<ReviewFormScreen />} />
 				<Route path="/" element={<HomeScreen />} />
 			</Route>
 		</Routes>

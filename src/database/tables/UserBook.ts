@@ -34,8 +34,8 @@ export async function selectUserBook<T>(
 export function selectAndFilterUserBook<T>(
 	query: string,
 	filterer: (
-		filterBuilder: PostgrestFilterBuilder<any>
-	) => PostgrestFilterBuilder<any>,
+		filterBuilder: PostgrestFilterBuilder<any, any, any>
+	) => PostgrestFilterBuilder<any, any, any>,
 	options?: SelectOptions
 ): Promise<DbFetchResult<T>> {
 	if (!supabase) {

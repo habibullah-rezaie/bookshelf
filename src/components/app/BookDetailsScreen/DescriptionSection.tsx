@@ -34,14 +34,14 @@ function DescriptionSection({ description }: { description: string }) {
 					{/* Show a blur effect over description */}
 					{showMore === false ? (
 						<div className="absolute bottom-6 h-4 w-full">
-							<div className="h-2 w-full bg-white opacity-50 blur-sm"></div>
-							<div className="h-2 w-full bg-white opacity-65 blur-sm"></div>
-							<div className="h-4 w-full bg-white opacity-80 blur-md"></div>
+							<div className="h-2 w-full bg-bodyGray opacity-50 blur-sm"></div>
+							<div className="h-2 w-full bg-bodyGray opacity-65 blur-sm"></div>
+							<div className="h-4 w-full bg-bodyGray opacity-80 blur-md"></div>
 						</div>
 					) : null}
 					<div className="relative h-2 shadow-2xl">
 						<button
-							className="absolute bottom-0 translate-y-[50%] flex flex-row space-x-0.5 bg-white shadow-2xl text-[#065D94]"
+							className="absolute bottom-0 translate-y-[50%] flex flex-row space-x-0.5 bg-bodyGray shadow-2xl text-[#065D94]"
 							onClick={() => {
 								setShowMore(!showMore);
 							}}

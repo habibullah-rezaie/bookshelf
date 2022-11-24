@@ -1,4 +1,3 @@
-import { QueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { ShortBestseller } from "src/api/queries/bestsellers";
 import { ShortPopularBook } from "src/api/queries/mostPopular";
@@ -18,20 +17,17 @@ function BookDetailsMain({
 	bookDetail,
 	bestsellerBadge,
 	popularBadge,
-	queryClient,
 }: {
 	bestsellerBadge?: ShortBestseller;
 	popularBadge?: [ShortPopularBook, PopularBookPeriod];
 	bookFromCache?: BasicBookInfo | MostPopularBook | BestsellerBook;
 	bookDetail?: GoogleBook;
 	isLoading: boolean;
-	queryClient: QueryClient;
 }) {
 	const { bookId } = useParams();
 	return (
 		<main className={`w-full  px-7 `}>
 			<DetailedBookCard
-				queryClient={queryClient}
 				bestsellerBadge={bestsellerBadge}
 				popularBadge={popularBadge}
 				isLoading={isLoading}

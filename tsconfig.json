@@ -18,5 +18,9 @@
 		"jsx": "react-jsx",
 		"downlevelIteration": true
 	},
-	"include": ["src", "global.d.ts"]
+	"include": [
+		"src",
+		"global.d.ts",
+		"src/components/app/BookDetailsScreen/RatingsReviewsSection.tsx"
+	]
 }

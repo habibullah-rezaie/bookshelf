@@ -8,7 +8,7 @@ const Header = React.forwardRef(function Header(
 ) {
 	return (
 		<header
-			className={`z-50 w-full h-10 max-h-10 px-7 mt-10 bg-white flex items-center justify-between ${className}`}
+			className={`z-50 w-full h-fit max-h-20 px-7 pt-10 flex flex-row items-center justify-between ${className}`}
 			ref={ref}
 		>
 			{children}

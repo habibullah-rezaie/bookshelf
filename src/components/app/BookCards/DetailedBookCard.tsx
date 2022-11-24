@@ -6,6 +6,7 @@ import { ShortBestseller } from "src/api/queries/bestsellers";
 import { ShortPopularBook } from "src/api/queries/mostPopular";
 import { GoogleBook } from "src/api/types";
 import appConfig from "src/appConfig";
+import { WhiteShadowedContiainer } from "src/components/lib/Header/Container";
 import ImgWithLoader from "src/components/lib/Img/ImgWithLoader";
 import SquareLoader from "src/components/lib/Loaders/SquareLoader";
 import { BestsellerBook } from "src/database/tables/BestsellerBook";
@@ -21,14 +22,12 @@ import { getCardDateText } from "../HomePage/MostPopularBooksList/popularBookHel
 import RatingPublishedDateRow from "./RatingPublishedDateRow";
 
 function DetailedBookCard({
-	queryClient,
 	isLoading,
 	book,
 	cachedBook,
 	bestsellerBadge,
 	popularBadge,
 }: {
-	queryClient: QueryClient;
 	bestsellerBadge?: ShortBestseller;
 	popularBadge?: [ShortPopularBook, PopularBookPeriod];
 	book?: GoogleBook;
@@ -84,7 +83,7 @@ function DetailedBookCard({
 	return (
 		<section className="w-full h-fit flex flex-col">
 			<>
-				<div className="relative">
+				<WhiteShadowedContiainer className="relative">
 					{cachedBook ? (
 						cachedBookImage
 					) : (
@@ -136,16 +135,19 @@ function DetailedBookCard({
 							)}
 						</div>
 					) : null}
+				</WhiteShadowedContiainer>
+
+				<div className="mt-6">
+					<DetailedBookCardDetails
+						title={title}
+						authors={authors || []}
+						publishedDate={publishedDate}
+						averageRating={averageRating}
+						ratingCount={ratingCount}
+						// Change this
+						isLoading={isLoading}
+					/>
 				</div>
-				<DetailedBookCardDetails
-					title={title}
-					authors={authors || []}
-					publishedDate={publishedDate}
-					averageRating={averageRating}
-					ratingCount={ratingCount}
-					// Change this
-					isLoading={isLoading}
-				/>
 				{description && description.length > 0 ? (
 					<DescriptionSection description={description} />
 				) : !description && isLoading ? (
@@ -215,10 +217,13 @@ function DetailedBookCardDetails({
 			) : null}
 
 			{/* In this section will go rating and published Date */}
-			<RatingPublishedDateRow
-				dateString={dateString}
-				averageRating={averageRating}
-			/>
+			{!isLoading && (
+				<RatingPublishedDateRow
+					dateString={dateString}
+					averageRating={averageRating}
+				/>
+			)}
+
 			{ratingCount != null && ratingCount > 0 ? (
 				<div className="text-xxs text-baseBlack text-opacity-80 font-poppins">
 					{ratingCountStr}
@@ -239,7 +244,7 @@ const BookImage = React.memo(function BookImage({
 }) {
 	return (
 		<ImgWithLoader
-			className="rounded-md mb-4"
+			className=""
 			src={bookImage || appConfig.DEFUALT_BOOK_IMG}
 			style={{ height: "100%", maxWidth: "100%" }}
 			height={"20.635rem"}

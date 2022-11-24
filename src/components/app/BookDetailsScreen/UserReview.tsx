@@ -1,30 +1,30 @@
 import React from "react";
-import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
-import { RiStarFill, RiStarHalfFill, RiStarLine } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import { WhiteShadowedContiainer } from "src/components/lib/Header/Container";
 import ScrollDirection from "src/components/lib/Icons/ScrollDirection";
 import ImgWithLoader from "src/components/lib/Img/ImgWithLoader";
-import { useAuth } from "src/context/auth";
-import { UserReview } from "src/database/tables/userReview";
+import {
+	ReviewOnBook,
+	UserReview as TUserReview,
+} from "src/database/tables/userReview";
 import { formatRatingDate } from "src/utils/book";
+import { RatingStars, ReviewCardRatinRow } from "./MyReview";
 
-function MyReview({
+function UserReview({
 	review,
 	rating,
-	bookId,
+	user,
 }: {
-	review?: UserReview;
+	review?: TUserReview;
+	user: ReviewOnBook["UserBook"]["UserProfile"];
 	rating: number;
-	bookId: string;
 }) {
-	const { user } = useAuth();
+	console.log("USER_META_DATA", user?.metadata);
 	const avatarUrl =
-		user && user.user_metadata && user.user_metadata.avatar_url
-			? user.user_metadata.avatar_url
-			: "./defaultUser.jpeg";
-	const navigate = useNavigate();
+		user && user.metadata.avatar_url
+			? user.metadata.avatar_url
+			: "/defaultUser.jpeg";
 
 	const reviewCount = 1;
 	const followerCount = 0;
@@ -42,9 +42,10 @@ function MyReview({
 		);
 	}, []);
 
+	console.log("USER IN LIST", user);
 	return (
 		<WhiteShadowedContiainer>
-			<div className="relative flex flex-col space-y-2 px-2.5 mb-4 py-4">
+			<div className="relative flex flex-col space-y-2 px-3 py-4 ">
 				{review && review.isPublished === false ? (
 					<p className="text-xxs text-red-500">
 						This is a draft review, finish or{" "}
@@ -68,7 +69,7 @@ function MyReview({
 						<div className="">
 							<div className="text-xs text-baseBlack font-poppins font-semibold ">
 								{/* TODO: TRIM THIS  */}
-								{user?.user_metadata.name}
+								{user?.metadata.full_name}
 							</div>
 							<div className="flex flex-row text-xs text-baseBlack text-opacity-80 font-poppins font-medium space-x-2">
 								<div>{reviewCount} Reviews</div>
@@ -78,16 +79,11 @@ function MyReview({
 					</div>
 					<Button
 						variant="primary"
-						className="text-xs"
 						onClick={() => {
-							navigate("/review-form/" + bookId);
+							// TODO: Add Follow in here
 						}}
 					>
-						{review
-							? review.isPublished
-								? "Edit Review"
-								: "Finish Draft"
-							: "Add Review"}
+						Follow
 					</Button>
 				</div>
 				<ReviewCardRatinRow review={review} rating={rating} />
@@ -145,50 +141,4 @@ function MyReview({
 	);
 }
 
-export default MyReview;
-
-export function ReviewCardRatinRow({
-	review,
-	rating,
-}: {
-	review?: UserReview;
-	rating: number;
-}) {
-	return (
-		<div className="w-full flex flex-row justify-between items-center px-4">
-			{review ? (
-				<div className="text-xs text-baseBlack">
-					{formatRatingDate(review.updatedAt)}
-				</div>
-			) : null}
-			<RatingStars rating={rating} />
-		</div>
-	);
-}
-
-export function RatingStars({ rating = 0 }: { rating?: number }) {
-	const roundedRating = +rating.toFixed(1);
-	return (
-		<div className="flex flex-row space-x-1">
-			<div className="flex flex-row space-x-0.5">
-				{Array(6)
-					.fill("")
-					.map((_, i) => {
-						if (i === 0) return null;
-						if (roundedRating >= i) {
-							return <RiStarFill className="text-[#FFC41F] h-5" />;
-						} else if (roundedRating >= i - 0.5) {
-							return <RiStarHalfFill className=" text-[#ffc41f] h-5" />;
-						} else return <RiStarLine className="fill-[#ffc41f] h-5" />;
-					})}
-			</div>
-			<div>
-				{roundedRating > 0 ? (
-					<span className="text-baseBlack h-5 leading-5 font-semibold">
-						{roundedRating}
-					</span>
-				) : null}
-			</div>
-		</div>
-	);
-}
+export default UserReview;

@@ -1,17 +1,36 @@
 import {
-	ApiError,
+	AuthApiError,
+	AuthResponse,
+	OAuthResponse,
 	Session,
+	SignInWithOAuthCredentials,
+	SignInWithPasswordCredentials,
+	SignUpWithPasswordCredentials,
 	User,
-	UserCredentials,
 } from "@supabase/supabase-js";
-import supabase from "../database/db";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { BaseComponentStatuses } from "src/types/types";
+import supabase from "../database/db";
 
-export type SignIn = (credentials: UserCredentials) => Promise<void>;
+export type TSignInCredentials =
+	| {
+			type: "provider";
+			payload: SignInWithOAuthCredentials;
+	  }
+	| { type: "password"; payload: SignInWithPasswordCredentials };
+
+export type SignIn = (credentials: TSignInCredentials) => Promise<void>;
+
+export type TSignUpCredentials =
+	| {
+			type: "provider";
+			payload: SignInWithOAuthCredentials;
+	  }
+	| { type: "password"; payload: SignUpWithPasswordCredentials };
+
 export type SignUp = (
-	credentials: UserCredentials,
+	credentials: TSignUpCredentials,
 	options?: {
 		redirectTo?: string | undefined;
 		data?: object | undefined;
@@ -23,7 +42,7 @@ export type SignOut = () => Promise<void>;
 
 const AuthContext = React.createContext<{
 	user: User | null;
-	error: ApiError | null;
+	error: AuthApiError | null;
 	signOut: SignOut;
 	signIn: SignIn;
 	status: BaseComponentStatuses;
@@ -34,119 +53,121 @@ const AuthContext = React.createContext<{
 export default function AuthProvider({
 	children,
 }: React.PropsWithChildren<{}>) {
-	const [user, setUser] = React.useState<null | User>(() => {
-		if (supabase) {
-			return supabase.auth.user();
-		}
-		return null;
-	});
 	const [status, setStatus] = React.useState<BaseComponentStatuses>("IDLE");
-	const [error, setError] = React.useState<ApiError | null>(null);
+	const [error, setErrorState] = React.useState<AuthApiError | null>(null);
+
+	const setError = (message: string, status: number) => {
+		setErrorState(new AuthApiError(message, status));
+	};
 	const [session, setSession] = React.useState<Session | null>(null);
 
 	const navigate = useNavigate();
 
 	React.useLayoutEffect(() => {
+		supabase?.auth.getSession().then((sessionResp) => {
+			if (sessionResp.error) return;
+			else setSession(sessionResp.data.session);
+		});
+	}, []);
+
+	React.useLayoutEffect(() => {
 		const subscription = supabase?.auth.onAuthStateChange((event, session) => {
 			// TODO: remove log
 			if (event === "SIGNED_IN" && session) {
-				setUser(session.user);
 				setSession(session);
 				setStatus("RESOLVED");
 				navigate("/", { replace: true });
 			} else {
-				setError({
-					message: "Something went wrong signing you in, sorry!",
-					status: 500,
-				});
+				setError("Something went wrong signing you in, sorry!", 500);
 			}
 		});
 
-		return () => subscription?.data?.unsubscribe();
+		return () => subscription?.data?.subscription.unsubscribe();
 	}, [navigate]);
 
 	const signIn = React.useCallback(async function ({
-		email,
-		password,
-		provider,
-	}: UserCredentials) {
+		type: authType,
+		payload,
+	}: TSignInCredentials) {
 		setStatus("PENDING");
-		if (supabase) {
-			const { error } = await supabase.auth.signIn({
-				email,
-				password,
-				provider,
-			});
 
-			if (error) {
-				setStatus("REJECTED");
-				return setError(error);
+		if (supabase) {
+			if (authType === "provider") {
+				const resp = await supabase.auth.signInWithOAuth(payload);
+				if (resp.error) {
+					setStatus("REJECTED");
+					return setError(resp.error.message, 401);
+				}
+			} else if (authType === "password") {
+				const resp = await supabase.auth.signInWithPassword(payload);
+				if (resp.error) {
+					setStatus("REJECTED");
+					return setError(resp.error.message, 401);
+				}
 			}
 		} else {
 			setStatus("REJECTED");
-			return setError({
-				message: "Something went wrong signing you in!",
-				status: 500,
-			});
+			return setError("Something went wrong signing you in!", 500);
 		}
 	},
 	[]);
 
 	const signOut = React.useCallback(
-		async function signIn() {
+		async function signOut() {
 			const signOutResult = await supabase?.auth.signOut();
 
 			if (signOutResult) {
 				if (signOutResult.error) {
 					setStatus("REJECTED");
-					setError(signOutResult.error);
+					setError(signOutResult.error.message, 400);
 					return;
 				}
 
 				// TODO: Clear cache and all things related to user here
 				setStatus("RESOLVED");
-				setUser(null);
-				setError(null);
+				setSession(null);
+				setErrorState(null);
 				navigate("/", { replace: true });
 			}
 		},
 		[navigate]
 	);
 
-	const signUp = React.useCallback(
-		async function signUp(
-			credentials: UserCredentials,
-			options?: {
-				redirectTo?: string | undefined;
-				data?: object | undefined;
-				captchaToken?: string | undefined;
+	const signUp = React.useCallback(async function signUp(
+		credentials: TSignInCredentials
+	) {
+		console.log(credentials);
+
+		let signUpResult: OAuthResponse | AuthResponse | null = null;
+		if (!supabase) return;
+
+		if (credentials.type === "password") {
+			signUpResult = await supabase.auth.signUp(credentials.payload);
+			setStatus("RESOLVED");
+			setSession(signUpResult.data.session);
+			setErrorState(null);
+		} else if (credentials.type === "provider") {
+			signUpResult = await supabase.auth.signInWithOAuth(credentials.payload);
+		}
+		if (signUpResult) {
+			if (signUpResult.error) {
+				setStatus("REJECTED");
+				setError(signUpResult.error.message, 400);
+				return;
 			}
-		) {
-			console.log(credentials);
-			const signUpResult = await supabase?.auth.signUp(credentials, options);
+
 			console.log(signUpResult);
-			if (signUpResult) {
-				if (signUpResult.error) {
-					setStatus("REJECTED");
-					setError(signUpResult.error);
-					return;
-				}
+			// TODO: Clear cache and all things related to user here
+		}
+	},
+	[]);
 
-				console.log(signUpResult);
-				// TODO: Clear cache and all things related to user here
-				setStatus("RESOLVED");
-				setUser(signUpResult.user);
-				setError(null);
-				// TODO: redirect to confirmation email page
-				navigate("/", { replace: true });
-			}
-		},
-		[navigate]
-	);
-
+	React.useEffect(() => {
+		console.log(error);
+	}, [error]);
 	const value = React.useMemo(
 		() => ({
-			user,
+			user: session?.user ?? null,
 			error,
 			signOut,
 			signIn,
@@ -154,7 +175,7 @@ export default function AuthProvider({
 			signUp,
 			session,
 		}),
-		[error, signIn, signOut, signUp, status, user, session]
+		[error, session, signIn, signOut, signUp, status]
 	);
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

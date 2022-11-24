@@ -67,6 +67,7 @@ export function RatingSection({
 	userBookId,
 	rating,
 	ratingDate,
+	onSuccessFullRating,
 	starWidthClass = "w-3",
 }: {
 	userBookId: string;
@@ -76,6 +77,7 @@ export function RatingSection({
 	bookId: string;
 	userId: string;
 	starWidthClass?: string;
+	onSuccessFullRating?: (rating: number) => void;
 }) {
 	const navigate = useNavigate();
 	const { rateByCreate, rateByUdpate } = useRatingMutate();
@@ -84,7 +86,7 @@ export function RatingSection({
 
 	return (
 		<div className="flex flex-col items-center h-fit w-fit">
-			{isUserBooksLoading ? (
+			{isUserBooksLoading && userBookId ? (
 				<Spinner className="w-5 h-5" />
 			) : isSavingRating ? (
 				<div>Saving...</div>
@@ -106,12 +108,22 @@ export function RatingSection({
 										userBookId,
 										userId,
 								  })
-								: rateByCreate.mutate({ userId, bookId, rating })
+								: rateByCreate.mutate(
+										{ userId, bookId, rating },
+										{
+											onSuccess:
+												typeof onSuccessFullRating === "function"
+													? (_, { rating }) => {
+															onSuccessFullRating(rating);
+													  }
+													: undefined,
+										}
+								  )
 						}
 					/>
 				</>
 			)}
-			<div className="flex flex-row space-x-1">
+			{/* <div className="flex flex-row space-x-1">
 				<p className="font-poppins text-xs text-baseBlack text-opacity-80">
 					{!userBookId || rating === 0
 						? "Rate this book"
@@ -119,7 +131,7 @@ export function RatingSection({
 						? `Rated ${formatRatingDate(ratingDate)}`
 						: null}
 				</p>
-			</div>
+			</div> */}
 		</div>
 	);
 }
@@ -163,6 +175,7 @@ export function UserReviewForm({
 		}
 
 		if (!review && userId) {
+			// is a user but current book isn't is his/her shelf and user has already typed sth
 			if (!userBook?.id && content.length > 0 && !createFromScratch.isLoading) {
 				const id = setTimeout(() => {
 					createFromScratch.mutate({ bookId, userId, content });
@@ -170,6 +183,7 @@ export function UserReviewForm({
 				}, 500);
 				return () => clearTimeout(id);
 			} else if (
+				// is a user and current book is is his/her shelf
 				userBook?.id &&
 				content.length > 0 &&
 				!createUserReview.isLoading
@@ -307,16 +321,12 @@ export function UserReviewForm({
 			</div>
 
 			<div className="flex flex-row justify-end w-full mt-4">
-				<Button
-					style={{
-						fontSize: "0.75rem",
-						backgroundColor: "#565454",
-						borderRadius: "6px",
-					}}
-					type="submit"
-				>
-					{/* TODO: Change the text */}
-					{!review?.isPublished ? "Publish" : "Save"}
+				<Button type="submit">
+					{updatePublishedReview.isLoading
+						? "Saving"
+						: !review?.isPublished
+						? "Publish"
+						: "Save"}
 				</Button>
 			</div>
 		</form>

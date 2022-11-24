@@ -1,7 +1,6 @@
 import React from "react";
-import { useBestsellersAllList } from "src/api/hooks/bestsellers";
 import { Stack } from "src/components/lib/Layout";
-import { useSearchBookByParam } from "src/hooks/DiscoverBooksScreen";
+import { useSearchBookByParam } from "src/hooks/search";
 import HorizontalBookLoader from "../BookCards/HorizontalBookLoader";
 import ListHeading from "../HomePage/ListHeader";
 import SearchRow from "./SearchBooks";
@@ -28,21 +27,6 @@ function DiscoverBooksMain() {
 		queryEnabled: isQueried,
 	} = useSearchBookByParam();
 
-	const {
-		nonFictionResult: {
-			data: nonFictions,
-			isSuccess: nonFictionsBestsellersSuccess,
-		},
-		fictionResult: { data: fictions, isSuccess: fictionsBestsellersSuccess },
-	} = useBestsellersAllList();
-
-	if (nonFictionsBestsellersSuccess) {
-		console.log("nonFictions", nonFictions);
-	}
-
-	if (fictionsBestsellersSuccess) {
-		console.log("fictions", fictions);
-	}
 	const divRef = React.useRef<HTMLDivElement>(null);
 
 	function handleSortChange(sortBy: "relevance" | "newest") {

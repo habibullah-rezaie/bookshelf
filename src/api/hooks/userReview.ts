@@ -1,22 +1,28 @@
 import {
 	QueryClient,
+	useInfiniteQuery,
 	useMutation,
 	useQuery,
 	useQueryClient,
 } from "@tanstack/react-query";
-import {
-	insertUserBook,
-	ReadingStatus,
-	UserBook,
-} from "src/database/tables/UserBook";
+import React from "react";
+import { DbFetchResult } from "src/database/methods";
+import { insertUserBook, UserBook } from "src/database/tables/UserBook";
 import {
 	insertUserReview,
+	ReviewOnBook,
+	searchReviewsOnBook,
 	updateUserReview,
 	UserReview,
 } from "src/database/tables/userReview";
+import { ReviewFilters } from "src/screens/ReviewSearchBox";
 import keys from "../queries/queryKeys";
 import { UserBookCache } from "../queries/userBook";
-import { getReviewOfUserOnBook as getReviewOfUserBookOptions } from "../queries/userReview";
+import {
+	getReviewOfUserOnBook as getReviewOfUserBookOptions,
+	getReviewsOnBookOptions,
+	searchReviewsOnBookOptions,
+} from "../queries/userReview";
 
 export function useUserBookReview(userBookId: string) {
 	const queryData = useQuery({
@@ -33,6 +39,22 @@ export function prefetchUserBookReview(
 	queryClient.prefetchQuery(getReviewOfUserBookOptions(userBookId));
 }
 
+export function useReviewsOnBook(bookId: string) {
+	const queryData = useInfiniteQuery({
+		...searchReviewsOnBookOptions(bookId, "", {}),
+	});
+
+	return queryData;
+}
+
+export function prefetchReviewsOnBook(
+	queryClient: QueryClient,
+	bookId: string
+) {
+	queryClient.prefetchInfiniteQuery({
+		...searchReviewsOnBookOptions(bookId, "", {}),
+	});
+}
 // ************** //
 //   MUTATIONS   //
 // ************** //
@@ -213,4 +235,18 @@ function useCreateReview(queryClient: QueryClient) {
 			},
 		}
 	);
+}
+
+export function useBookReviewSearch(bookId: string) {
+	const [query, setQuery] = React.useState("");
+	const [filters, setFitlers] = React.useState<ReviewFilters>({});
+
+	const options = searchReviewsOnBookOptions(bookId, query, filters);
+	const queryObj = useInfiniteQuery(options.queryKey, options.queryFn, options);
+
+	const search = React.useCallback((query: string, filters: ReviewFilters) => {
+		setQuery(query);
+		setFitlers(filters);
+	}, []);
+	return { queryObj, search, query, filters };
 }

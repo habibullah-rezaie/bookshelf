@@ -31,7 +31,7 @@ function HorizontalBookCard({
 	);
 
 	return (
-		<section className="w-full h-28 max-h-28 font-poppins flex flex-row justify-between rounded-md border-[1px] drop-shadow-sm">
+		<section className="w-full h-28 max-h-28 font-poppins flex flex-row justify-between rounded-md border-[1px] drop-shadow-sm bg-white">
 			<Link
 				{...link}
 				className="overflow-hidden h-28 w-[4.6rem] rounded-md flex items-center justify-center"

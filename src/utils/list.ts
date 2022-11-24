@@ -29,7 +29,7 @@ export type StateFromSearch = {
 	index: number;
 };
 
-export function generateSearchParams(query: string, filters: SearchFilters) {
+export function generateSearchParams(query: string, filters: object) {
 	const searchParams = new window.URLSearchParams();
 
 	searchParams.set("q", encodeURIComponent(query));

@@ -7,3 +7,6 @@
 #root {
 	scroll-behavior: smooth;
 }
+body {
+	@apply bg-bodyGray;
+}

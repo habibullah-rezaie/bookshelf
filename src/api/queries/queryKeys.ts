@@ -1,5 +1,6 @@
 import { BestsellerType } from "src/database/tables/BestsellerBook";
 import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
+import { ReviewFilters } from "src/screens/ReviewSearchBox";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 
 const keys = {
@@ -49,8 +50,8 @@ const keys = {
 	userReviewOnBook: (userBookId: string) =>
 		[...keys.books, "userReviews", { userBookId }] as const,
 
-	reviewsOnBook: (bookId: string) =>
-		[...keys.books, "userReview", { bookId }] as const,
+	reviewsOnBook: (bookId: string, filters: ReviewFilters, query: string) =>
+		[...keys.books, "userReview", { bookId, filters, query }] as const,
 
 	ratingStatOfBook: (bookId: string) =>
 		[...keys.books, "ratingStats", bookId] as const,

@@ -24,8 +24,8 @@ export async function select(
 export function selectAndFilterPopularBooks<T>(
 	query: string,
 	filterer: (
-		filterBuilder: PostgrestFilterBuilder<any>
-	) => PostgrestFilterBuilder<any>,
+		filterBuilder: PostgrestFilterBuilder<any, any, any>
+	) => PostgrestFilterBuilder<any, any, any>,
 	options?: SelectOptions
 ): Promise<DbFetchResult<T>> {
 	if (!supabase) {
@@ -37,8 +37,8 @@ export function selectAndFilterPopularBooks<T>(
 
 export function selectAndFilterBasePopularBook(
 	filterer: (
-		filterBuilder: PostgrestFilterBuilder<any>
-	) => PostgrestFilterBuilder<any>,
+		filterBuilder: PostgrestFilterBuilder<any, any, any>
+	) => PostgrestFilterBuilder<any, any, any>,
 	options?: SelectOptions
 ): Promise<DbFetchResult<MostPopularBook>> {
 	if (!supabase) {

@@ -47,11 +47,11 @@ function StandardPage() {
 				}
 			>
 				<div className="w-60 font-poppins text-sm space-y-2 mb-4">
-					<p>
+					<div>
 						<strong className="font-semibold">Bookshelf</strong> is created to
 						make you love books!
-					</p>
-					<p className="flex flex-col space-y-1">
+					</div>
+					<div className="flex flex-col space-y-1">
 						<div>
 							<strong className="font-semibold">NOTE: </strong> This app is
 							still under development.
@@ -60,12 +60,12 @@ function StandardPage() {
 							Some features are not yet implemented or they are finalized into
 							production.
 						</div>
-					</p>
+					</div>
 					{!isMobile() ? (
-						<p>
+						<div>
 							The app is not yet optimized for desktop or tablet, please open
 							the app in a mobile
-						</p>
+						</div>
 					) : null}
 				</div>
 			</Modal>

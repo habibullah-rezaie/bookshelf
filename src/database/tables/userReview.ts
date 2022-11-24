@@ -1,11 +1,12 @@
 import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
-import supabase from "../db";
+import config from "src/appConfig";
+import { ReviewFilters } from "src/screens/ReviewSearchBox";
 import {
-	SelectOptions,
 	DbFetchResult,
+	insert,
 	select,
 	selectAndFilter,
-	insert,
+	SelectOptions,
 	update,
 } from "../methods";
 
@@ -27,14 +28,10 @@ export async function selectUserReview<T>(
 export function selectAndFilterUserReview<T>(
 	query: string,
 	filterer: (
-		filterBuilder: PostgrestFilterBuilder<any>
-	) => PostgrestFilterBuilder<any>,
+		filterBuilder: PostgrestFilterBuilder<any, any, any>
+	) => PostgrestFilterBuilder<any, any, any>,
 	options?: SelectOptions
 ): Promise<DbFetchResult<T>> {
-	if (!supabase) {
-		return Promise.reject("Something went wrong connecting to server.");
-	}
-
 	return selectAndFilter<T>(TABLE_NAME, query, filterer, options);
 }
 
@@ -62,8 +59,8 @@ export function updateUserReview(
 	userBookId: string,
 	data: UpdateReviewData,
 	filterer?: (
-		filterBuilder: PostgrestFilterBuilder<any>
-	) => PostgrestFilterBuilder<any>
+		filterBuilder: PostgrestFilterBuilder<any, any, any>
+	) => PostgrestFilterBuilder<any, any, any>
 ) {
 	if (!filterer) {
 		return update<Omit<UserReview, "userBookId">, null>(
@@ -80,3 +77,60 @@ export function updateUserReview(
 		{ returning: "minimal" }
 	);
 }
+export type ReviewOnBook = UserReview & {
+	UserBook: {
+		rating: number;
+		UserProfile: {
+			metadata: {
+				avatar_url?: string;
+				full_name?: string;
+			};
+		};
+	};
+};
+
+export function getReviewsOnBook(bookId: string) {
+	return selectAndFilter<ReviewOnBook>(
+		TABLE_NAME,
+		"*, UserBook!inner(rating, UserProfile(metadata))",
+		(filterer) =>
+			filterer
+				.eq("UserBook.bookId", bookId)
+				.eq("isPublished", true)
+				.limit(config.DEFAULT_REVIEW_PAGE_SIZE)
+	);
+}
+
+export function searchReviewsOnBook(
+	bookId: string,
+	query: string,
+	filters: ReviewFilters,
+	page: number
+) {
+	const pageSize = config.DEFAULT_REVIEW_PAGE_SIZE;
+	return selectAndFilter<ReviewOnBook>(
+		TABLE_NAME,
+		"*, UserBook!inner(rating, UserProfile(metadata))",
+		(filterer) => {
+			let filter = filterer
+				.eq("UserBook.bookId", bookId)
+				.eq("isPublished", true);
+
+			if (query !== "") {
+				filter = filter.ilike("content", `%${query}%`);
+			}
+
+			// TODO: add rating filtering
+			if (filters.sortBy) {
+				// TODO: work on next
+			}
+
+			const start = (page - 1) * pageSize;
+			const end = start + pageSize - 1;
+			return filter.range(start, end);
+		},
+		{ count: "exact" }
+	);
+}
+
+(window as any).searchReview = searchReviewsOnBook;

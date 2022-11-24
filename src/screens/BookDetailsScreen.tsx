@@ -3,7 +3,10 @@ import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useGoogleBookDetail from "src/api/hooks/bookDetails";
 import { useStatusMutations } from "src/api/hooks/userBook";
-import { prefetchUserBookReview } from "src/api/hooks/userReview";
+import {
+	prefetchReviewsOnBook,
+	prefetchUserBookReview,
+} from "src/api/hooks/userReview";
 import { useUserBookOfId } from "src/components/app/BookCards/DetailedBookCard";
 import BookDetailsMain from "src/components/app/BookDetailsScreen/BookDetailsMain";
 import {
@@ -84,33 +87,35 @@ function BookDetailsScreen() {
 
 	return (
 		<>
-			<Header className="">
-				<Button
-					className={`flex flex-row items-center justify-center font-poppins text-sm text-baseBlack`}
-					variant="plain"
-					onClick={() => {
-						const backURL = getBackUrl(state);
-						if (backURL != null) {
-							navigate(backURL);
-						} else {
-							navigate(-1);
-						}
-					}}
-				>
-					<ScrollDirection direction="LEFT" />
-					<span>Back</span>
-				</Button>
+			<Header className="fixed top-0 left-0 bg-bodyGray">
+				<div className="w-full h-7 bg-bodyGray">
+					<Button
+						className={`flex flex-row items-center justify-center font-poppins text-sm text-baseBlack bg-bodyGray`}
+						variant="plain"
+						onClick={() => {
+							const backURL = getBackUrl(state);
+							if (backURL != null) {
+								navigate(backURL);
+							} else {
+								navigate(-1);
+							}
+						}}
+					>
+						<ScrollDirection direction="LEFT" />
+						<span>Back</span>
+					</Button>
+				</div>
 			</Header>
 
-			<BookDetailsMain
-				queryClient={queryClient}
-				bookFromCache={bookFromCache ?? undefined}
-				bestsellerBadge={bestsellerShortData?.[0]}
-				popularBadge={popularShortData}
-				bookDetail={data}
-				isLoading={isLoading}
-			/>
-
+			<div className="w-full h-full pt-20">
+				<BookDetailsMain
+					bookFromCache={bookFromCache ?? undefined}
+					bestsellerBadge={bestsellerShortData?.[0]}
+					popularBadge={popularShortData}
+					bookDetail={data}
+					isLoading={isLoading}
+				/>
+			</div>
 			<BottomBar>
 				<div className="flex flex-row items-center justify-between px-7">
 					<button className="w-[9rem] h-8 font-poppins bg-transparent text-baseBlack rounded-3xl border-[1px] border-baseBlack">
@@ -138,19 +143,25 @@ export function ReadingStatusButton({
 	const { changeStatus, createUserBook, removeUserBook } = useStatusMutations();
 
 	const queryClient = useQueryClient();
+	prefetchReviewsOnBook(queryClient, bookId);
+
 	const {
 		userBook,
 		queryData: userBooksQuery,
 		resetUserBook,
 	} = useUserBookOfId(bookId, userId);
 
+	(window as any).supabase = supabase;
+	(window as any).bookId = bookId;
+
 	prefetchUserBookReview(queryClient, userBook?.id || "");
 
-	const statusBoxLoading =
-		changeStatus.isLoading ||
-		createUserBook.isLoading ||
-		removeUserBook.isLoading ||
-		userBooksQuery.isLoading;
+	const statusBoxLoading = userId
+		? changeStatus.isLoading ||
+		  createUserBook.isLoading ||
+		  removeUserBook.isLoading ||
+		  userBooksQuery.isLoading
+		: false;
 	return (
 		<div className="flex items-center w-[9rem] h-8 font-poppins bg-baseBlack text-white rounded-3xl">
 			<ReadingStatusBox

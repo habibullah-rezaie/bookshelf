@@ -25,7 +25,7 @@ function BestsellerBookCard({
 	const weeksOnListText = pluralize("week", weeksOnList, true).toUpperCase();
 	return (
 		<section
-			className={`w-36 h-[calc(100% - 1px)] font-poppins flex flex-col rounded-md drop-shadow-lg shadow-md border-[1px] border-t-none ${className}`}
+			className={`w-36 h-[calc(100% - 1px)] font-poppins flex flex-col rounded-md drop-shadow-lg shadow-md border-[1px] border-t-none bg-white ${className}`}
 		>
 			<Link
 				className="h-[13.68rem] overflow-y-hidden"
