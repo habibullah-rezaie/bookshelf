@@ -1,11 +1,11 @@
 import React from "react";
-import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { RiStarFill, RiStarHalfFill, RiStarLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import { WhiteShadowedContiainer } from "src/components/lib/Header/Container";
 import ScrollDirection from "src/components/lib/Icons/ScrollDirection";
 import ImgWithLoader from "src/components/lib/Img/ImgWithLoader";
+import Warning from "src/components/lib/notices/Warning";
 import { useAuth } from "src/context/auth";
 import { UserReview } from "src/database/tables/userReview";
 import { formatRatingDate } from "src/utils/book";
@@ -46,10 +46,11 @@ function MyReview({
 		<WhiteShadowedContiainer>
 			<div className="relative flex flex-col space-y-2 px-2.5 mb-4 py-4">
 				{review && review.isPublished === false ? (
-					<p className="text-xxs text-red-500">
-						This is a draft review, finish or{" "}
-						<button className="font-semibold italic">delete it</button>
-					</p>
+					<Warning role={"note"} className={`w-full mb-2`}>
+						<p className="font-poppins font-medium text-xs text-baseBlack">
+							This draft is unfinished
+						</p>
+					</Warning>
 				) : null}
 
 				<div className="flex flex-row justify-between">
