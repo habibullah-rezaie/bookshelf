@@ -156,7 +156,7 @@ export function ReviewCardRatingRow({
 	rating: number;
 }) {
 	return (
-		<div className="w-full flex flex-row justify-between items-center px-4">
+		<div className="w-full flex flex-row justify-between items-center pr-4">
 			{review ? (
 				<div className="text-xs text-baseBlack">
 					{formatRatingDate(review.updatedAt)}
