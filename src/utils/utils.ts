@@ -1,3 +1,5 @@
+import { NavigateFunction } from "react-router-dom";
+
 export function isDeepStrictEqual(
 	obj1: { [key: string]: any },
 	obj2: { [key: string]: any }
@@ -40,3 +42,10 @@ export function isHistoryEmpty() {
 	} else return false;
 }
 
+export function goBackOrHome(navigate: NavigateFunction) {
+	if (isHistoryEmpty()) {
+		return navigate(new URL("/", window.location.origin));
+	} else {
+		return navigate(-1);
+	}
+}
