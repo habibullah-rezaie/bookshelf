@@ -16,6 +16,7 @@ import {
 import BottomBar from "src/components/lib/BottomBar";
 import { Button } from "src/components/lib/Buttons/Buttons";
 import Header from "src/components/lib/Header/Header";
+import HeaderWithBackAndShare from "src/components/lib/Header/HeaderWithBackAndShare";
 import ScrollDirection from "src/components/lib/Icons/ScrollDirection";
 import { useAuth } from "src/context/auth";
 import supabase from "src/database/db";
@@ -85,27 +86,18 @@ function BookDetailsScreen() {
 		window.scroll({ top: 0 });
 	}, []);
 
+	function onBackClick() {
+		const backURL = getBackUrl(state);
+		if (backURL != null) {
+			navigate(backURL);
+		} else {
+			navigate(-1);
+		}
+	}
+
 	return (
 		<>
-			<Header className="fixed top-0 left-0 bg-bodyGray">
-				<div className="w-full h-7 bg-bodyGray">
-					<Button
-						className={`flex flex-row items-center justify-center font-poppins text-sm text-baseBlack bg-bodyGray`}
-						variant="plain"
-						onClick={() => {
-							const backURL = getBackUrl(state);
-							if (backURL != null) {
-								navigate(backURL);
-							} else {
-								navigate(-1);
-							}
-						}}
-					>
-						<ScrollDirection direction="LEFT" />
-						<span>Back</span>
-					</Button>
-				</div>
-			</Header>
+			<HeaderWithBackAndShare onBackClick={onBackClick} />
 
 			<div className="w-full h-full pt-20">
 				<BookDetailsMain
