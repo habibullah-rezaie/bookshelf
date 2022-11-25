@@ -167,11 +167,17 @@ export function ReviewCardRatingRow({
 	);
 }
 
-export function RatingStars({ rating = 0 }: { rating?: number }) {
+export function RatingStars({
+	rating = 0,
+	className = "",
+}: {
+	rating?: number;
+	className?: string;
+}) {
 	const roundedRating = +rating.toFixed(1);
 	return (
-		<div className="flex flex-row space-x-1">
-			<div className="flex flex-row space-x-0.5">
+		<div className={`flex flex-row space-x-1 ${className}`}>
+			<div className={`flex flex-row space-x-0.5 self-center`}>
 				{Array(6)
 					.fill("")
 					.map((_, i) => {
@@ -183,11 +189,9 @@ export function RatingStars({ rating = 0 }: { rating?: number }) {
 						} else return <RiStarLine className="fill-[#ffc41f] h-5" />;
 					})}
 			</div>
-			<div>
+			<div className="flex items-center justify-center h-full">
 				{roundedRating > 0 ? (
-					<span className="text-baseBlack h-5 leading-5 font-semibold">
-						{roundedRating}
-					</span>
+					<span className="text-baseBlack font-semibold">{roundedRating}</span>
 				) : null}
 			</div>
 		</div>
