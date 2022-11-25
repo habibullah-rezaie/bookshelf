@@ -11,16 +11,17 @@ import HorizontalBookCard from "src/components/app/BookCards/HorizontalBookCard"
 import HorizontalBookLoader from "src/components/app/BookCards/HorizontalBookLoader";
 import BottomBar from "src/components/lib/BottomBar";
 import { Button } from "src/components/lib/Buttons/Buttons";
-import Header from "src/components/lib/Header/Header";
-import HeaderBase from "src/components/lib/Header/HeaderBase";
+import HeaderWithBackAndShare from "src/components/lib/Header/HeaderWithBackAndShare";
 import Rating from "src/components/lib/Rating/Rating";
 import Spinner from "src/components/lib/Spinner";
 import { useAuth } from "src/context/auth";
-import { formatRatingDate, getBookDetailLink } from "src/utils/book";
+import { getBookDetailLink } from "src/utils/book";
+import { goBackOrHome } from "src/utils/utils";
 import { ReadingStatusButton } from "./BookDetailsScreen";
 
 function ReviewFormScreen() {
 	const { bookId } = useParams();
+	const navigate = useNavigate();
 	const { user } = useAuth();
 	const {
 		data: bookInfo,
@@ -33,26 +34,27 @@ function ReviewFormScreen() {
 
 	return (
 		<>
-			<Header>
-				<HeaderBase />
-			</Header>
-			<main className="px-7 my-4">
-				{isBookInfoLoading ? (
-					<HorizontalBookLoader />
-				) : (
-					<HorizontalBookCard
-						book={{ ...bookInfo, averageRating: 0, primaryISBN13: "" }}
-						link={{ to: getBookDetailLink(bookId) }}
-					/>
-				)}
-				<div className="mt-8 ">
-					<UserReviewForm
-						className={"rounded-md"}
-						userId={user?.id}
-						bookId={bookId}
-					/>
-				</div>
-			</main>
+			<HeaderWithBackAndShare onBackClick={() => goBackOrHome(navigate)} />
+
+			<div className="pt-16">
+				<main className="px-7 my-4">
+					{isBookInfoLoading ? (
+						<HorizontalBookLoader />
+					) : (
+						<HorizontalBookCard
+							book={{ ...bookInfo, averageRating: 0, primaryISBN13: "" }}
+							link={{ to: getBookDetailLink(bookId) }}
+						/>
+					)}
+					<div className="mt-8 ">
+						<UserReviewForm
+							className={"rounded-md"}
+							userId={user?.id}
+							bookId={bookId}
+						/>
+					</div>
+				</main>
+			</div>
 			<BottomBar className="flex items-center"></BottomBar>
 		</>
 	);
