@@ -14,10 +14,7 @@ import {
 	ReadingStatusBoxOptions,
 } from "src/components/app/BookDetailsScreen/ReadingStatusBox";
 import BottomBar from "src/components/lib/BottomBar";
-import { Button } from "src/components/lib/Buttons/Buttons";
-import Header from "src/components/lib/Header/Header";
 import HeaderWithBackAndShare from "src/components/lib/Header/HeaderWithBackAndShare";
-import ScrollDirection from "src/components/lib/Icons/ScrollDirection";
 import { useAuth } from "src/context/auth";
 import supabase from "src/database/db";
 import {
@@ -25,6 +22,8 @@ import {
 	useCachedBasicBook,
 } from "src/hooks/cache/basicBook";
 import { useIsBestseller, useIsPopular } from "src/hooks/cache/book";
+import { useDocumentTitle } from "src/hooks/documentAPIs";
+import { getAuthorsSummary } from "src/utils/book";
 import { getBackUrl } from "src/utils/BookDetailsScreen";
 
 function BookDetailsScreen() {
@@ -94,6 +93,18 @@ function BookDetailsScreen() {
 			navigate(-1);
 		}
 	}
+
+	useDocumentTitle(
+		bookFromCache?.title
+			? bookFromCache.title +
+					" by " +
+					getAuthorsSummary(bookFromCache.authors || [])
+			: data?.volumeInfo.title
+			? data.volumeInfo.title +
+			  " by " +
+			  getAuthorsSummary(data.volumeInfo.authors || [])
+			: "Loading Details of book"
+	);
 
 	return (
 		<>
