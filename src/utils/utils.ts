@@ -29,3 +29,14 @@ export function isDeepStrictEqual(
 export function trimTextWithElepsis(title: string, length: number): String {
 	return title.substring(0, length) + `${title.length > length ? ".." : ""}`;
 }
+
+/**
+ *
+ * @returns true or false
+ */
+export function isHistoryEmpty() {
+	if (!(window.history.state && window.history.state.idx > 0)) {
+		return true;
+	} else return false;
+}
+
