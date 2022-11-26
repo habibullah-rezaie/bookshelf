@@ -49,3 +49,12 @@ export function goBackOrHome(navigate: NavigateFunction) {
 		return navigate(-1);
 	}
 }
+
+export function formatNumberSuffix(num = 0) {
+	const dividedBy10 = num / 10;
+
+	if (dividedBy10 >= 10 ** 8) return +(num / 10 ** 9).toFixed(1) + " B";
+	if (dividedBy10 >= 10 ** 5) return +(num / 10 ** 6).toFixed(1) + " M";
+	if (dividedBy10 >= 100) return +(num / 1000).toFixed(1) + " K";
+	return +num.toFixed(1) + "";
+}
