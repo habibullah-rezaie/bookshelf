@@ -219,13 +219,14 @@ function DetailedBookCardDetails({
 				</div>
 			) : null}
 
-			{/* In this section will go rating and published Date */}
-			{!isLoading && (
-				<RatingPublishedDateRow
-					dateString={dateString}
-					averageRating={averageRating}
-				/>
+			{dateString && (
+				<div className="text-baseBlack text-opacity-80 text-sm font-poppins mt-2">
+					Published {dateString}
+				</div>
 			)}
+
+			{/* In this section will go rating and published Date */}
+			{!isLoading && <RatingPublishedDateRow averageRating={averageRating} />}
 
 			{ratingCount != null && ratingCount > 0 ? (
 				<div className="text-xxs text-baseBlack text-opacity-80 font-poppins">
