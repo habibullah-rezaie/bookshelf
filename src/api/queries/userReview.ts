@@ -1,7 +1,4 @@
-import {
-	UseInfiniteQueryOptions,
-	UseQueryOptions,
-} from "@tanstack/react-query";
+import { UseQueryOptions } from "@tanstack/react-query";
 import config from "src/appConfig";
 import { DbFetchResult } from "src/database/methods";
 import {

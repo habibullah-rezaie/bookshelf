@@ -1,4 +1,3 @@
-import { QueryClient } from "@tanstack/react-query";
 import pluralize from "pluralize";
 import React from "react";
 import { useUserBooks } from "src/api/hooks/userBook";

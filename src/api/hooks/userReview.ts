@@ -6,12 +6,9 @@ import {
 	useQueryClient,
 } from "@tanstack/react-query";
 import React from "react";
-import { DbFetchResult } from "src/database/methods";
 import { insertUserBook, UserBook } from "src/database/tables/UserBook";
 import {
 	insertUserReview,
-	ReviewOnBook,
-	searchReviewsOnBook,
 	updateUserReview,
 	UserReview,
 } from "src/database/tables/userReview";
@@ -20,7 +17,6 @@ import keys from "../queries/queryKeys";
 import { UserBookCache } from "../queries/userBook";
 import {
 	getReviewOfUserOnBook as getReviewOfUserBookOptions,
-	getReviewsOnBookOptions,
 	searchReviewsOnBookOptions,
 } from "../queries/userReview";
 

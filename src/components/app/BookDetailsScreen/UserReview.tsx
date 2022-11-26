@@ -8,8 +8,7 @@ import {
 	ReviewOnBook,
 	UserReview as TUserReview,
 } from "src/database/tables/userReview";
-import { formatRatingDate } from "src/utils/book";
-import { RatingStars, ReviewCardRatingRow } from "./MyReview";
+import { ReviewCardRatingRow } from "./MyReview";
 
 function UserReview({
 	review,
