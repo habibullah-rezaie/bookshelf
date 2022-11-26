@@ -34,6 +34,9 @@ function BookDetailsScreen() {
 	const state: AppLocationState = location.state;
 
 	const queryClient = useQueryClient();
+
+	if (bookId) prefetchReviewsOnBook(queryClient, bookId);
+
 	const { isSuccess, isError, isLoading, data, error } = useGoogleBookDetail(
 		bookId || ""
 	);
@@ -146,7 +149,6 @@ export function ReadingStatusButton({
 	const { changeStatus, createUserBook, removeUserBook } = useStatusMutations();
 
 	const queryClient = useQueryClient();
-	prefetchReviewsOnBook(queryClient, bookId);
 
 	const {
 		userBook,
