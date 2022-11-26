@@ -9,10 +9,14 @@ import {
 } from "src/api/hooks/userReview";
 import { useUserBookOfId } from "src/components/app/BookCards/DetailedBookCard";
 import BookDetailsMain from "src/components/app/BookDetailsScreen/BookDetailsMain";
+import BottomBarBtn from "src/components/app/BookDetailsScreen/BottomBarBtn";
 import {
 	ReadingStatusBox,
 	ReadingStatusBoxOptions,
 } from "src/components/app/BookDetailsScreen/ReadingStatusBox";
+import CartIcon from "src/components/icons/CartIcon";
+import ManageIcon from "src/components/icons/ManageIcon";
+import NotesIcon from "src/components/icons/NotesIcon";
 import BottomBar from "src/components/lib/BottomBar";
 import HeaderWithBackAndShare from "src/components/lib/Header/HeaderWithBackAndShare";
 import { useAuth } from "src/context/auth";
@@ -122,12 +126,12 @@ function BookDetailsScreen() {
 					isLoading={isLoading}
 				/>
 			</div>
-			<BottomBar>
-				<div className="flex flex-row items-center justify-between px-7">
-					<button className="w-[9rem] h-8 font-poppins bg-transparent text-baseBlack rounded-3xl border-[1px] border-baseBlack">
-						Note your Idea
-					</button>
-					<ReadingStatusButton userId={user?.id || ""} bookId={bookId || ""} />
+			<BottomBar className="py-4 h-[5.3125rem]">
+				<div className="flex flex-row items-center justify-between px-7 h-[3.3125rem] font-poppins text-xs text-baseBlack transition-colors duration-75">
+					<BottomBarBtn Icon={NotesIcon} text={"Notes"} />
+					<BottomBarBtn Icon={ManageIcon} text={"Manage"} />
+					<BottomBarBtn Icon={CartIcon} text={"Buy"} />
+					{/* <ReadingStatusButton userId={user?.id || ""} bookId={bookId || ""} /> */}
 				</div>
 			</BottomBar>
 		</>
