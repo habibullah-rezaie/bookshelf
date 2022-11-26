@@ -1,30 +1,32 @@
-import React from "react";
-import { NavLink, To } from "react-router-dom";
-import MobileNav from "./MobileNav";
+import { IconType } from "react-icons";
 import {
 	RiBookLine,
 	RiHomeLine,
 	RiSearchLine,
 	RiSettingsLine,
 } from "react-icons/ri";
-import { IconType } from "react-icons";
+import { NavLink, To } from "react-router-dom";
+import BottomBar from "src/components/lib/BottomBar";
+import MobileNav from "./MobileNav";
 
-function MobileNavLinks() {
+function MobileBottomNavLinks() {
 	return (
-		<MobileNav className="bg-bottomBarGray">
-			<MobileNavItem to={"/"} routeName="Home" Icon={RiHomeLine} />
-			<MobileNavItem to={"/search"} routeName="Search" Icon={RiSearchLine} />
-			<MobileNavItem to={"/notes"} routeName="Notes" Icon={RiBookLine} />
-			<MobileNavItem
-				to={"/settings"}
-				routeName="Settings"
-				Icon={RiSettingsLine}
-			/>
-		</MobileNav>
+		<BottomBar className=" py-5 h-16">
+			<MobileNav className="bg-bottomBarGray">
+				<MobileNavItem to={"/"} routeName="Home" Icon={RiHomeLine} />
+				<MobileNavItem to={"/search"} routeName="Search" Icon={RiSearchLine} />
+				<MobileNavItem to={"/notes"} routeName="Notes" Icon={RiBookLine} />
+				<MobileNavItem
+					to={"/settings"}
+					routeName="Settings"
+					Icon={RiSettingsLine}
+				/>
+			</MobileNav>
+		</BottomBar>
 	);
 }
 
-export default MobileNavLinks;
+export default MobileBottomNavLinks;
 function MobileNavItem({
 	to,
 	routeName,
