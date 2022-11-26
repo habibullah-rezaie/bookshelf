@@ -44,7 +44,7 @@ export function useSearchBookByParam() {
 
 	const onSearch = useCallback(
 		(query = "", filters: SearchFilters) => {
-			let param = generateSearchParams(query, filters);
+			let param = generateSearchParams<SearchFilters>(query, filters);
 
 			setSearchParams(param);
 		},
@@ -96,7 +96,7 @@ export function useSearchReviewByParam(bookId: string) {
 
 	const onSearch = useCallback(
 		(query: string, filters: ReviewFilters) => {
-			let param = generateSearchParams(query, filters);
+			let param = generateSearchParams<ReviewFilters>(query, filters);
 
 			setSearchParams(param);
 		},

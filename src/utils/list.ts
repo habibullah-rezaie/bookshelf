@@ -29,7 +29,7 @@ export type StateFromSearch = {
 	index: number;
 };
 
-export function generateSearchParams(query: string, filters: object) {
+export function generateSearchParams<T>(query: string, filters: T) {
 	const searchParams = new window.URLSearchParams();
 
 	searchParams.set("q", encodeURIComponent(query));
@@ -42,7 +42,7 @@ export function backToSearchUrl(state: StateFromSearch) {
 	if (!state.from || state.from !== "/search") return null;
 	const url = new URL(state.from, window.location.origin);
 
-	for (const param of generateSearchParams(
+	for (const param of generateSearchParams<SearchFilters>(
 		state.query,
 		state.filters
 	).entries()) {
