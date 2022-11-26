@@ -16,6 +16,7 @@ import {
 import { UserBook } from "src/database/tables/UserBook";
 import { BasicBookInfo } from "src/types/types";
 import { chooseBetterImageSize } from "src/utils/book";
+import BookCategories from "../BookDetailsScreen/BookCategories";
 import DescriptionSection from "../BookDetailsScreen/DescriptionSection";
 import { getCardDateText } from "../HomePage/MostPopularBooksList/popularBookHelper";
 import RatingPublishedDateRow from "./RatingPublishedDateRow";
@@ -162,6 +163,9 @@ function DetailedBookCard({
 
 				{/* Get the user rating in here */}
 				{book?.id && <div></div>}
+				{book?.volumeInfo.categories instanceof Array ? (
+					<BookCategories categories={book?.volumeInfo.categories} />
+				) : null}
 			</>
 		</section>
 	);
