@@ -19,6 +19,16 @@ function RatingsReviewsSection({ bookId = "" }: { bookId?: string }) {
 			</h2>
 
 			<MyReviewSection bookId={bookId} />
+
+			<section className=" mt-7">
+				<h2 className="font-poppins font-semibold text-baseBlack text-lg mb-3">
+					Cummunity Reviews
+				</h2>
+				<div className="w-full flex flex-row justify-center">
+					<ReviewStats bookId={bookId} />
+				</div>
+				<ReviewsList bookId={bookId} />
+			</section>
 		</section>
 	);
 }
@@ -69,16 +79,6 @@ function MyReviewSection({ bookId }: { bookId: string }) {
 					review={review ?? undefined}
 				/>
 			)}
-
-			<section className=" mt-7">
-				<h2 className="font-poppins font-semibold text-baseBlack text-lg mb-3">
-					Cummunity Reviews
-				</h2>
-				<div className="w-full flex flex-row justify-center">
-					<ReviewStats bookId={bookId} />
-				</div>
-				<ReviewsList bookId={bookId} />
-			</section>
 		</section>
 	);
 }
