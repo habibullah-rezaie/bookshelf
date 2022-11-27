@@ -1,27 +1,28 @@
 import { Listbox } from "@headlessui/react";
 import { FaCheck } from "react-icons/fa";
 import { HiChevronUpDown } from "react-icons/hi2";
-import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
 
-type OptionType = {
-	value: any;
+export type OptionType<T> = {
+	value: T;
 	displayValue: string;
 };
 // TODO: Change Name
-function ListBox({
+function ListBox<T>({
 	selectedOption,
 	onChange,
 	allOptions,
 	className = "",
 	openingDirection = "down",
 	CustomButton,
+	optionsPosition = "middle",
 }: {
 	onChange: (option: typeof selectedOption.value) => void;
-	selectedOption: OptionType;
-	allOptions: OptionType[];
+	selectedOption: OptionType<T>;
+	allOptions: OptionType<T>[];
 	className?: string;
 	CustomButton?: React.ReactNode;
 	openingDirection?: "down" | "up";
+	optionsPosition?: "left-aligned" | "middle" | "right-aligned";
 }) {
 	return (
 		<div
@@ -46,13 +47,19 @@ function ListBox({
 				<Listbox.Options
 					className={`absolute z-10 ${
 						openingDirection === "down" ? `top-full` : "bottom-full"
-					} left-[50%] translate-x-[-50%] w-30 h-fit focus:outline-none rounded-md border-[1px] border-baseBlack overflow-hidden`}
+					} ${
+						optionsPosition === "middle"
+							? "left-[50%] translate-x-[-50%]"
+							: optionsPosition === "left-aligned"
+							? "left-0 translate-x-0"
+							: "right-0 translate-x-0"
+					} w-max h-fit focus:outline-none rounded-md border-[1px] border-baseBlack overflow-hidden`}
 				>
 					{allOptions.map((option) => (
 						<ListBoxOption
 							displayValue={option.displayValue}
 							value={option.value}
-							key={option.value}
+							key={JSON.stringify(option.value)}
 						/>
 					))}
 				</Listbox.Options>
@@ -63,12 +70,12 @@ function ListBox({
 
 export default ListBox;
 
-function ListBoxOption({
+function ListBoxOption<T>({
 	value,
 	displayValue,
 	className = "",
 }: {
-	value: PopularBookPeriod;
+	value: T;
 	displayValue: string;
 	className?: string;
 }) {
