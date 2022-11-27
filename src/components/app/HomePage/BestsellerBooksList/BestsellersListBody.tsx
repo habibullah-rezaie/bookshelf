@@ -83,7 +83,7 @@ function BestsellersListBody({
 	return (
 		<ul
 			ref={selfRef}
-			className={`bestseller-list h-[20rem] px-7 full no-scrollbar scroll-smooth ${className}`}
+			className={`bestseller-list px-7 full no-scrollbar scroll-smooth ${className}`}
 		>
 			<>
 				{books && books.length > 0
