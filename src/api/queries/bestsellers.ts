@@ -1,8 +1,9 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 import {
 	BestsellerBook,
+	BestsellerFilters,
 	BestsellerType,
-	selectAndFilterBaseBestsellerBooks,
+	searchBestsellers,
 	selectAndFilterBestsellerBooks,
 } from "src/database/tables/BestsellerBook";
 import queryKeys from "./queryKeys";
@@ -52,13 +53,8 @@ export function bestsellersListQueryBuilder(
 	};
 }
 
-function bestsellerQueryFn(kind: BestsellerType) {
+function bestsellerQueryFn(query = "", filters: BestsellerFilters, page = 1) {
 	return async () => {
-		return await selectAndFilterBaseBestsellerBooks(
-			(filterBuilder) => {
-				return filterBuilder.eq("type", kind).order("rank").range(0, 10);
-			},
-			{ count: "exact" }
-		);
+		return searchBestsellers(query, filters, page);
 	};
 }
