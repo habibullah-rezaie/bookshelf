@@ -1,4 +1,5 @@
 import config from "src/appConfig";
+import { useScrollIntoView } from "src/components/lib/Buttons/ScroolToTop";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import { MostPopularFilters } from "src/database/tables/MostPopularBook";
 import { useSearchPopularsByParam } from "src/hooks/search";
@@ -26,6 +27,7 @@ function PopularsScreenMain() {
 		},
 	} = useSearchPopularsByParam();
 
+	const { parentRef, ScrollIntoViewBtn } = useScrollIntoView();
 	const books =
 		searchResult == null
 			? []
@@ -35,7 +37,7 @@ function PopularsScreenMain() {
 
 	return (
 		<div>
-			<main className="mt-16 px-7">
+			<main className="mt-16 px-7" ref={parentRef}>
 				<SectionWithLoaderAndErrorBoundary
 					className="pt-7"
 					header={<ListHeading className="">Popular Books</ListHeading>}
@@ -69,6 +71,10 @@ function PopularsScreenMain() {
 						fetchNextPage={fetchNextPage}
 						isLoading={isLoading}
 					/>
+
+					{books.length > 3 ? (
+						<ScrollIntoViewBtn bottom={"bottom-[3.85rem]"} />
+					) : null}
 				</SectionWithLoaderAndErrorBoundary>
 			</main>
 		</div>

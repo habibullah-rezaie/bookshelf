@@ -1,10 +1,21 @@
 import { useScrollIntoView } from "src/components/lib/Buttons/ScroolToTop";
+import ListBox from "src/components/lib/Lists/ListBox";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
-import { BestsellerFilters } from "src/database/tables/BestsellerBook";
+import {
+	BestsellerFilters,
+	BestsellerType,
+} from "src/database/tables/BestsellerBook";
 import { useSearchBestsellerByParam } from "src/hooks/search";
 import ListHeading from "../HomePage/ListHeader";
 import BooksListWithLoadMore from "../other/BooksListWithLoadMore";
 import SearchBox from "../other/SearchBox";
+import SortByNewestOrRank from "../other/SortByRankOrNewest";
+
+const bestsellerTypeOptions = {
+	ALL: "All",
+	FICTION: "Fiction",
+	NON_FICTION: "Non-Fiction",
+};
 
 function BestsellersScreenMain() {
 	const { parentRef, ScrollIntoViewBtn } = useScrollIntoView();
@@ -51,6 +62,29 @@ function BestsellersScreenMain() {
 						/>
 					</div>
 					<div className="w-full flex flex-row justify-between">
+						<div className="text-xs">
+							<ListBox<BestsellerType | "ALL">
+								allOptions={Object.entries(bestsellerTypeOptions).map(
+									(entry) => ({
+										value: entry[0] as BestsellerType | "ALL",
+										displayValue: entry[1],
+									})
+								)}
+								onChange={(bestsellerType) =>
+									search(query, {
+										...filters,
+										type: bestsellerType === "ALL" ? undefined : bestsellerType,
+									})
+								}
+								selectedOption={{
+									value: filters.type ?? "ALL",
+									displayValue: filters.type
+										? bestsellerTypeOptions[filters.type]
+										: "All",
+								}}
+								optionsPosition={"left-aligned"}
+							/>
+						</div>
 						<SortByNewestOrRank
 							onChange={(sortBy) => search(query, { ...filters, sortBy })}
 							selectedSorting={filters.sortBy}
