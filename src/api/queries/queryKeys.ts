@@ -1,5 +1,8 @@
-import { BestsellerType } from "src/database/tables/BestsellerBook";
 import { ReviewFilters } from "src/components/app/AllReviews/BookAllReviewsMain";
+import {
+	BestsellerFilters,
+	BestsellerType,
+} from "src/database/tables/BestsellerBook";
 import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 
@@ -7,8 +10,8 @@ const keys = {
 	books: ["books"] as const,
 
 	bestsellers: () => [...keys.books, "bestsellers"] as const,
-	bestsellersOfType: (kind: BestsellerType) =>
-		[...keys.bestsellers(), kind] as const,
+	bestsellersOfType: (query: string, filters: BestsellerFilters) =>
+		[...keys.bestsellers(), { query, filters }] as const,
 	bestsellersFullListOfType: (kind: BestsellerType) =>
 		[...keys.bestsellers(), `list of ${kind}`] as const,
 
