@@ -1,4 +1,6 @@
 import { UseQueryOptions } from "@tanstack/react-query";
+import config from "src/appConfig";
+import { DbFetchResult } from "src/database/methods";
 import {
 	BestsellerBook,
 	BestsellerFilters,
@@ -6,6 +8,7 @@ import {
 	searchBestsellers,
 	selectAndFilterBestsellerBooks,
 } from "src/database/tables/BestsellerBook";
+import { default as keys, default as queryKeys } from "./queryKeys";
 
 export function bestsellerQueryBuilder(kind: BestsellerType) {
 	return {
@@ -14,6 +17,27 @@ export function bestsellerQueryBuilder(kind: BestsellerType) {
 	};
 }
 
+export function bestsellerSearchQueryOptions(
+	query: string,
+	filters: BestsellerFilters
+) {
+	return {
+		queryKey: keys.bestsellersOfType(query, filters),
+		queryFn: async ({ pageParam = 1 }) => {
+			return searchBestsellers(query, filters, pageParam);
+		},
+		staleTime: 1000 * 60 * 60,
+		getNextPageParam: (
+			lastPage: DbFetchResult<BestsellerBook>,
+			allPages: DbFetchResult<BestsellerBook>[]
+		) => {
+			console.log(allPages, "page");
+			return lastPage.data &&
+				lastPage.count &&
+				lastPage.count > allPages.length * config.DEFAULT_BESTSELLER_BOOKS_LIMIT
+				? allPages.length + 1
+				: undefined;
+		},
 	};
 }
 
