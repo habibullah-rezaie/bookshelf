@@ -11,6 +11,7 @@ import BookAllReviews from "./screens/BookAllReview";
 import BookDetailsScreen from "./screens/BookDetailsScreen";
 import DiscoverBooksScreen from "./screens/DiscoverBooksScreen";
 import NotesScreen from "./screens/NotesScreen";
+import PopularsScreen from "./screens/PopularsScreen";
 import ReviewFormScreen from "./screens/ReviewFormScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import StandardPage from "./screens/StandardPage";
@@ -45,6 +46,7 @@ function AppRoutes() {
 				<Route path="/notes" element={<NotesScreen />} />
 				<Route path="/settings" element={<SettingsScreen />} />
 				<Route path="/bestsellers" element={<BestsellersScreen />} />
+				<Route path="/populars" element={<PopularsScreen />} />
 				<Route path="/book/:bookId" element={<BookDetailsScreen />} />
 				<Route path="/review-form/:bookId" element={<ReviewFormScreen />} />
 				<Route path="/review/book/:bookId" element={<BookAllReviews />} />
