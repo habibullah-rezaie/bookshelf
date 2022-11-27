@@ -63,3 +63,38 @@ export function selectAndFilterBaseBestsellerBooks(
 		options
 	);
 }
+
+export type BestsellerFilters = {
+	type?: BestsellerType;
+};
+export function searchBestsellers(
+	query: string,
+	filters: BestsellerFilters,
+	page: number = 1
+) {
+	const pageSize = 10;
+	return selectAndFilterBaseBestsellerBooks(
+		(filterer) => {
+			let filter = filterer;
+
+			if (filters.type) {
+				filter = filter.eq("type", filters.type);
+			}
+
+			if (query !== "") {
+				// filter = filter.ilike("content", `%${query}%`);
+				filter = filter.or(
+					`title.ilike.%${query}%,description.ilike.%${query}%`
+				);
+			}
+
+			// TODO: work on other filters
+
+			const start = (page - 1) * pageSize;
+			const end = start + pageSize - 1;
+			console.log(start, end, "startend");
+			return filter.range(start, end);
+		},
+		{ count: "exact" }
+	);
+}
