@@ -1,29 +1,19 @@
-import { QueryClient, UseQueryOptions } from "@tanstack/react-query";
+import { UseQueryOptions } from "@tanstack/react-query";
 import {
 	MostPopularBook,
 	PopularBookPeriod,
-	selectAndFilterBasePopularBook,
+	searchMostPopular,
 	selectAndFilterPopularBooks,
 } from "src/database/tables/MostPopularBook";
 import queryKeys from "./queryKeys";
 
-export function popularBookQueryBuilder(
-	period: PopularBookPeriod,
-	queryClient: QueryClient,
-	page: number,
-	pageSize: number
-) {
+export function popularBookQueryBuilder(period: PopularBookPeriod) {
 	return {
-		queryKey: queryKeys.popularOfPeriod(period),
+		// TODO: put a consistent staletime for query
+		queryKey: queryKeys.popularOfPeriod("", { period }),
 		queryFn: async () => {
-			return await selectAndFilterBasePopularBook(
-				(filterBuilder) => {
-					return filterBuilder.eq("period", period).order("rank").range(0, 10);
-				},
-				{ count: "exact" }
-			);
+			return await searchMostPopular("", { period }, 1);
 		},
-		refetchOnWindowFocus: false,
 	};
 }
 
