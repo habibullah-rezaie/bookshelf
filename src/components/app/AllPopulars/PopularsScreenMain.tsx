@@ -1,10 +1,7 @@
-import { Button } from "src/components/lib/Buttons/Buttons";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import { MostPopularFilters } from "src/database/tables/MostPopularBook";
 import { useSearchPopularsByParam } from "src/hooks/search";
-import { getBookDetailLink } from "src/utils/book";
-import HorizontalBookCard from "../BookCards/HorizontalBookCard";
-import HorizontalBookLoader from "../BookCards/HorizontalBookLoader";
+import BooksListWithLoadMore from "../BooksListWithLoadMore";
 import ListHeading from "../HomePage/ListHeader";
 import SearchBox from "../SearchBox";
 
@@ -52,32 +49,13 @@ function PopularsScreenMain() {
 						/>
 					</div>
 
-					<div></div>
-					<ul className="grid grid-cols-1 gap-y-4">
-						{books.map((book) => (
-							<HorizontalBookCard
-								book={book}
-								link={{ to: getBookDetailLink(book.bookId) }}
-							/>
-						))}
-						{!isFetchingNextPage && hasNextPage ? (
-							<div className="w-full flex items-center justify-center ">
-								<Button
-									onClick={() => {
-										fetchNextPage();
-									}}
-								>
-									Load More
-								</Button>
-							</div>
-						) : isFetchingNextPage ? (
-							<HorizontalBookLoader />
-						) : (
-							!isLoading &&
-							!hasNextPage &&
-							books.length === 0 && <div>No reviews found :(</div>
-						)}
-					</ul>
+					<BooksListWithLoadMore
+						books={books}
+						isFetchingNextPage={isFetchingNextPage}
+						hasNextPage={hasNextPage}
+						fetchNextPage={fetchNextPage}
+						isLoading={isLoading}
+					/>
 				</SectionWithLoaderAndErrorBoundary>
 			</main>
 		</div>
