@@ -7,6 +7,7 @@ import BooksListWithLoadMore from "../other/BooksListWithLoadMore";
 import SearchBox from "../other/SearchBox";
 
 function BestsellersScreenMain() {
+	const { parentRef, ScrollIntoViewBtn } = useScrollIntoView();
 	const {
 		filters,
 		parseError,
@@ -33,7 +34,7 @@ function BestsellersScreenMain() {
 
 	return (
 		<div>
-			<main className="mt-16 px-7">
+			<main className="mt-16 px-7" ref={parentRef}>
 				<SectionWithLoaderAndErrorBoundary
 					className="pt-7"
 					header={<ListHeading className="">Bestsellers</ListHeading>}
@@ -62,6 +63,10 @@ function BestsellersScreenMain() {
 						fetchNextPage={fetchNextPage}
 						isLoading={isLoading}
 					/>
+
+					{books.length > 3 ? (
+						<ScrollIntoViewBtn bottom={"bottom-[3.85rem]"} />
+					) : null}
 				</SectionWithLoaderAndErrorBoundary>
 			</main>
 		</div>
