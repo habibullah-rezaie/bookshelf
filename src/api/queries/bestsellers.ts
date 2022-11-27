@@ -12,7 +12,6 @@ export function bestsellerQueryBuilder(kind: BestsellerType) {
 	return {
 		queryKey: queryKeys.bestsellersOfType(kind),
 		queryFn: bestsellerQueryFn(kind),
-		refetchOnWindowFocus: false,
 	};
 }
 
