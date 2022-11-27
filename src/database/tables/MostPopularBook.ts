@@ -52,3 +52,34 @@ export function selectAndFilterBasePopularBook(
 		options
 	);
 }
+
+export type MostPopularFilters = {
+	period: PopularBookPeriod;
+};
+
+export function searchMostPopular(
+	query: string,
+	filters: MostPopularFilters,
+	page: number = 1
+) {
+	const pageSize = 10;
+	return selectAndFilterBasePopularBook(
+		(filterer) => {
+			let filter = filterer.eq("period", filters.period);
+
+			if (query !== "") {
+				// filter = filter.ilike("content", `%${query}%`);
+				filter = filter.or(
+					`title.ilike.%${query}%,description.ilike.%${query}%`
+				);
+			}
+
+			// TODO: work on other filters
+
+			const start = (page - 1) * pageSize;
+			const end = start + pageSize - 1;
+			return filter.range(start, end);
+		},
+		{ count: "exact" }
+	);
+}
