@@ -89,7 +89,7 @@ function BestsellersListBody({
 				{books && books.length > 0
 					? books.map((book) => {
 							return (
-								<li className={`inline-block`} key={`${book.bookId}`}>
+								<li className={`inline-block mb-2`} key={`${book.bookId}`}>
 									<BestsellerCard
 										book={{
 											...book,
