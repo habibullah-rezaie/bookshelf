@@ -12,8 +12,8 @@ import { default as keys, default as queryKeys } from "./queryKeys";
 
 export function bestsellerQueryBuilder(kind: BestsellerType) {
 	return {
-		queryKey: queryKeys.bestsellersOfType("", { type: kind }),
-		queryFn: bestsellerQueryFn("", { type: kind }, 1),
+		queryKey: queryKeys.bestsellersOfType("", { type: kind, sortBy: "rank" }),
+		queryFn: bestsellerQueryFn("", { type: kind, sortBy: "rank" }, 1),
 	};
 }
 

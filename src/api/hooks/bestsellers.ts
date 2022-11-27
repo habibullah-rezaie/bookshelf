@@ -30,7 +30,9 @@ export function usePrefetchBestsellers(kind: BestsellerType) {
 
 export function useBestsellerSearch() {
 	const [query, setQuery] = React.useState("");
-	const [filters, setFitlers] = React.useState<BestsellerFilters>({});
+	const [filters, setFitlers] = React.useState<BestsellerFilters>({
+		sortBy: "rank",
+	});
 
 	const options = bestsellerSearchQueryOptions(query, filters);
 	const queryObj = useInfiniteQuery(options.queryKey, options.queryFn, options);

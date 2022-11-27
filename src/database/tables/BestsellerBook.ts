@@ -66,6 +66,7 @@ export function selectAndFilterBaseBestsellerBooks(
 
 export type BestsellerFilters = {
 	type?: BestsellerType;
+	sortBy: "rank" | "newest";
 };
 export function searchBestsellers(
 	query: string,
@@ -86,6 +87,12 @@ export function searchBestsellers(
 				filter = filter.or(
 					`title.ilike.%${query}%,description.ilike.%${query}%`
 				);
+			}
+
+			if (filters.sortBy === "newest") {
+				filter = filter.order("publishedDate", { ascending: false });
+			} else {
+				filter = filter.order("rank");
 			}
 
 			// TODO: work on other filters

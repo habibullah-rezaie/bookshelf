@@ -78,7 +78,10 @@ const getCachedBestseller = (
 	if (metaData.exactPosition?.bestsellerType == null) return null;
 
 	const queryData = queryClient.getQueryData<DbFetchResult<BestsellerBook>>(
-		keys.bestsellersOfType("", { type: metaData.exactPosition?.bestsellerType })
+		keys.bestsellersOfType("", {
+			type: metaData.exactPosition?.bestsellerType,
+			sortBy: "rank",
+		})
 	);
 
 	if (queryData) {

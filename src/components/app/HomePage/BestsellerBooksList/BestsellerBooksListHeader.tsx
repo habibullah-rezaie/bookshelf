@@ -28,6 +28,7 @@ function BestsellerListHeader({
 						"/bestsellers?" +
 						generateSearchParams<BestsellerFilters>("", {
 							type: bestsellerType,
+							sortBy: "rank",
 						}).toString()
 					}
 					className="flex flex-row items-center text-sm text-[#065D94] visited:text-[#065D94]"
