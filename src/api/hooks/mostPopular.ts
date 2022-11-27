@@ -59,6 +59,7 @@ export function usePopularsSearch(period?: PopularBookPeriod) {
 	const [query, setQuery] = React.useState("");
 	const [filters, setFitlers] = React.useState<MostPopularFilters>({
 		period: period ?? undefined,
+		sortBy: "rank",
 	});
 
 	const options = searchPopularsQueryOptions(query, filters);

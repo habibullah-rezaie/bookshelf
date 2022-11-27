@@ -55,6 +55,7 @@ export function selectAndFilterBasePopularBook(
 
 export type MostPopularFilters = {
 	period?: PopularBookPeriod;
+	sortBy: "rank" | "newest";
 };
 
 export function searchMostPopular(
@@ -72,6 +73,12 @@ export function searchMostPopular(
 				filter = filter.or(
 					`title.ilike.%${query}%,description.ilike.%${query}%`
 				);
+			}
+
+			if (filters.sortBy === "newest") {
+				filter = filter.order("publishedDate", { ascending: false });
+			} else {
+				filter = filter.order("rank");
 			}
 
 			// TODO: work on other filters

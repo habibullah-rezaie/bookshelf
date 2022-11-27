@@ -30,6 +30,7 @@ function ListHeader({ onPeriodChange, period }: ListProps) {
 						"/populars?" +
 						generateSearchParams<MostPopularFilters>("", {
 							period: period,
+							sortBy: "rank",
 						}).toString()
 					}
 					className="flex flex-row items-center text-xs text-[#065D94] visited:text-[#065D94]"

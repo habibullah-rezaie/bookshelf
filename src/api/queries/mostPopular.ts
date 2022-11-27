@@ -13,9 +13,9 @@ import queryKeys from "./queryKeys";
 export function popularBookQueryBuilder(period: PopularBookPeriod) {
 	return {
 		// TODO: put a consistent staletime for query
-		queryKey: queryKeys.popularOfPeriod("", { period }),
+		queryKey: queryKeys.popularOfPeriod("", { period, sortBy: "rank" }),
 		queryFn: async () => {
-			return await searchMostPopular("", { period }, 1);
+			return await searchMostPopular("", { period, sortBy: "rank" }, 1);
 		},
 	};
 }
