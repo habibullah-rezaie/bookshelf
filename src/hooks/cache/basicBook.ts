@@ -1,8 +1,4 @@
-import {
-	InfiniteData,
-	QueryClient,
-	useQueryClient,
-} from "@tanstack/react-query";
+import { InfiniteData, QueryClient } from "@tanstack/react-query";
 import React from "react";
 import keys from "src/api/queries/queryKeys";
 import { SearchResult } from "src/api/types";
@@ -70,6 +66,7 @@ const getCachedPopularBook = (
 	}
 	return null;
 };
+
 const getCachedBestseller = (
 	queryClient: QueryClient,
 	bookId: string,
@@ -78,7 +75,7 @@ const getCachedBestseller = (
 	if (metaData.exactPosition?.bestsellerType == null) return null;
 
 	const queryData = queryClient.getQueryData<DbFetchResult<BestsellerBook>>(
-		keys.bestsellersOfType(metaData.exactPosition?.bestsellerType)
+		keys.bestsellersOfType("", { type: metaData.exactPosition?.bestsellerType })
 	);
 
 	if (queryData) {

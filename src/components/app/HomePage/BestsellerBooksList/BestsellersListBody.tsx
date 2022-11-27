@@ -47,7 +47,10 @@ function BestsellersListBody({
 	if (isError) throw error;
 	if (isLoading) return <div>Loading...</div>;
 
-	const books = data.data;
+	const books =
+		data?.pages instanceof Array && data.pages.length > 0
+			? data.pages[0].data ?? []
+			: [];
 
 	const handleScrollLeft = () => {
 		const bestsellersList = selfRef.current;
