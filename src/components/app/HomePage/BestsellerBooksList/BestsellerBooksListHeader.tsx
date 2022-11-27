@@ -1,6 +1,10 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { BestsellerType } from "src/database/tables/BestsellerBook";
+import {
+	BestsellerFilters,
+	BestsellerType,
+} from "src/database/tables/BestsellerBook";
+import { generateSearchParams } from "src/utils/list";
 import ListHeading from "../ListHeader";
 
 function BestsellerListHeader({
@@ -20,7 +24,12 @@ function BestsellerListHeader({
 			</div>
 			<div className="">
 				<Link
-					to={"/"}
+					to={
+						"/bestsellers?" +
+						generateSearchParams<BestsellerFilters>("", {
+							type: bestsellerType,
+						}).toString()
+					}
 					className="flex flex-row items-center text-sm text-[#065D94] visited:text-[#065D94]"
 				>
 					<div>See All</div>
