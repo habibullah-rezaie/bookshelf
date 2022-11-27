@@ -6,13 +6,14 @@ import LoginRegisterScreen from "src/screens/LoginRegisterScreen";
 import SignInPage from "./components/app/LoginRegisterScreen/SignInPage";
 import SignUpPage from "./components/app/LoginRegisterScreen/SignUpPage";
 import ReactQueryProvider from "./context/QueryClient";
-import StandardPage from "./screens/StandardPage";
+import BestsellersScreen from "./screens/BestsellersScreen";
 import BookAllReviews from "./screens/BookAllReview";
 import BookDetailsScreen from "./screens/BookDetailsScreen";
 import DiscoverBooksScreen from "./screens/DiscoverBooksScreen";
 import NotesScreen from "./screens/NotesScreen";
 import ReviewFormScreen from "./screens/ReviewFormScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import StandardPage from "./screens/StandardPage";
 
 function App() {
 	// const user = { password: "mypassword", username: "GUEST" };
@@ -43,10 +44,10 @@ function AppRoutes() {
 				<Route path="/search" element={<DiscoverBooksScreen />} />
 				<Route path="/notes" element={<NotesScreen />} />
 				<Route path="/settings" element={<SettingsScreen />} />
+				<Route path="/bestsellers" element={<BestsellersScreen />} />
 				<Route path="/book/:bookId" element={<BookDetailsScreen />} />
 				<Route path="/review-form/:bookId" element={<ReviewFormScreen />} />
 				<Route path="/review/book/:bookId" element={<BookAllReviews />} />
-				// <Route path="/review/user/:userId" element={<ReviewFormScreen />} />
 				<Route path="/" element={<HomeScreen />} />
 			</Route>
 		</Routes>
