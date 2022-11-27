@@ -1,21 +1,24 @@
-import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BestsellerType } from "src/database/tables/BestsellerBook";
+import {
+	useInfiniteQuery,
+	useQueries,
+	useQueryClient,
+} from "@tanstack/react-query";
 import {
 	bestsellerQueryBuilder,
 	bestsellersListQueryBuilder,
 } from "../queries/bestsellers";
 
 export function useBestsellerBooks(kind: BestsellerType) {
-	return useQuery({
+	return useInfiniteQuery({
 		...bestsellerQueryBuilder(kind),
-		staleTime: 1000 * 30,
 	});
 }
 
 export function usePrefetchBestsellers(kind: BestsellerType) {
 	let queryClient = useQueryClient();
 
-	queryClient.prefetchQuery({
+	queryClient.prefetchInfiniteQuery({
 		...bestsellerQueryBuilder(kind),
 	});
 }
