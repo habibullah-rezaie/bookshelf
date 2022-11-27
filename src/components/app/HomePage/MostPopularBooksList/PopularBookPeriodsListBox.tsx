@@ -22,7 +22,7 @@ function PopularBookPeriodsListBox({ onPeriodChange, period }: Props) {
 					/>
 				</Listbox.Button>
 				<Listbox.Options
-					className={`absolute z-10 top-full left-[50%] translate-x-[-50%] w-40 h-fit focus:outline-none rounded-md border-[1px] border-baseBlack overflow-hidden`}
+					className={`absolute z-10 top-full left-0 w-40 h-fit focus:outline-none rounded-md border-[1px] border-baseBlack overflow-hidden`}
 				>
 					<PopularBookPeriodOption period={"YEAR"} />
 					<PopularBookPeriodOption period={"MONTH"} />
