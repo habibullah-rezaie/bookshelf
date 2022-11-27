@@ -54,7 +54,7 @@ export function selectAndFilterBasePopularBook(
 }
 
 export type MostPopularFilters = {
-	period: PopularBookPeriod;
+	period?: PopularBookPeriod;
 };
 
 export function searchMostPopular(
