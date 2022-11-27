@@ -1,3 +1,4 @@
+import { useScrollIntoView } from "src/components/lib/Buttons/ScroolToTop";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import { BestsellerFilters } from "src/database/tables/BestsellerBook";
 import { useSearchBestsellerByParam } from "src/hooks/search";
@@ -46,6 +47,12 @@ function BestsellersScreenMain() {
 							onSearch={search}
 							query={query}
 							shouldSearch={shouldSearch}
+						/>
+					</div>
+					<div className="w-full flex flex-row justify-between">
+						<SortByNewestOrRank
+							onChange={(sortBy) => search(query, { ...filters, sortBy })}
+							selectedSorting={filters.sortBy}
 						/>
 					</div>
 					<BooksListWithLoadMore
