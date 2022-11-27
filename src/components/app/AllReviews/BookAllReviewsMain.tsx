@@ -4,11 +4,16 @@ import { Button } from "src/components/lib/Buttons/Buttons";
 import { WhiteShadowedContiainer } from "src/components/lib/Header/Container";
 import SquareLoader from "src/components/lib/Loaders/SquareLoader";
 import { useSearchReviewByParam } from "src/hooks/search";
-import ReviewSearchBox from "src/screens/ReviewSearchBox";
 import { getBookDetailLink } from "src/utils/book";
 import HorizontalBookCard from "../BookCards/HorizontalBookCard";
 import HorizontalBookLoader from "../BookCards/HorizontalBookLoader";
 import { ReviewsListBody } from "../BookDetailsScreen/ReviewsList";
+import SearchBox from "../SearchBox";
+
+export type ReviewFilters = {
+	rating?: number;
+	sortBy?: "popular" | "newest" | "relevance";
+};
 
 function BookAllReviewsMain() {
 	const { bookId } = useParams();
@@ -22,7 +27,6 @@ function BookAllReviewsMain() {
 		queryObj: {
 			isError,
 			isLoading,
-			isFetching,
 			data: searchResult,
 			hasNextPage,
 			fetchNextPage,
@@ -62,13 +66,14 @@ function BookAllReviewsMain() {
 					link={{ to: getBookDetailLink(bookId) }}
 				/>
 			)}
-			<ReviewSearchBox
+			<SearchBox
 				filters={filters}
 				isError={isError}
 				isLoading={isLoading}
 				isQueried={queryEnabled}
 				onSearch={search}
 				query={query}
+				shouldSearch={shouldSearch}
 			/>
 
 			<ReviewsListBody bookReviews={reviews}>
@@ -128,4 +133,9 @@ export function ReviewLoader() {
 			</div>
 		</WhiteShadowedContiainer>
 	);
+}
+function shouldSearch(filters: ReviewFilters, prevFilters: ReviewFilters) {
+	return filters.rating != null || filters.sortBy !== prevFilters.sortBy
+		? true
+		: false;
 }
