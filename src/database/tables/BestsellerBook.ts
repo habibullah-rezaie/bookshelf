@@ -1,4 +1,5 @@
 import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
+import { GoogleBook } from "src/api/types";
 import supabase from "../db";
 import {
 	DbFetchResult,
@@ -10,11 +11,13 @@ import {
 export type BestsellerBook = {
 	bookId: string;
 	title: string;
-	authors: string[] | null;
-	bookImage: string | null;
+	authors: string[];
+	bookImage: string;
 	createdAt: string;
 	primaryISBN13: string;
 	weeksOnList: number;
+	averageRating: GoogleBook["volumeInfo"]["averageRating"];
+	publishedDate: GoogleBook["volumeInfo"]["publishedDate"];
 	rank: number;
 	type: BestsellerType;
 };
@@ -55,7 +58,7 @@ export function selectAndFilterBaseBestsellerBooks(
 
 	return selectAndFilter<BestsellerBook>(
 		TABLE_NAME,
-		"bookId, title, authors, bookImage, createdAt, primaryISBN13, weeksOnList, rank, type",
+		"bookId, title, authors, bookImage, createdAt, primaryISBN13, weeksOnList, rank, type, averageRating, publishedDate",
 		filterer,
 		options
 	);
