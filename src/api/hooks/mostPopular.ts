@@ -6,7 +6,7 @@ import {
 } from "../queries/mostPopular";
 
 export function useMostPopularBooks(period: PopularBookPeriod) {
-	return useQuery(popularBookQueryBuilder(period));
+	return useInfiniteQuery(popularBookQueryBuilder(period));
 }
 
 export function usePrefetchMostPopular(period: PopularBookPeriod) {

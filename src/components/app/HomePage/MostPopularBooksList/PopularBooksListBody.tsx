@@ -1,8 +1,5 @@
 import { useMostPopularBooks } from "src/api/hooks/mostPopular";
-import {
-	MostPopularBook,
-	PopularBookPeriod,
-} from "src/database/tables/MostPopularBook";
+import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
 import { createStateFromHomePopularBook } from "src/utils/book";
 import HorizontalBookCard from "../../BookCards/HorizontalBookCard";
 interface Props {
@@ -18,7 +15,11 @@ function PopularBooksListBody({ period }: Props) {
 
 	if (!isSuccess) throw new Error("Fetching popular books failed :(");
 
-	const books = data?.data ?? [];
+	const books =
+		data?.pages instanceof Array && data.pages.length > 0
+			? data.pages[0].data ?? []
+			: [];
+
 	return (
 		<>
 			<ul className={`flex flex-col space-y-6`}>
