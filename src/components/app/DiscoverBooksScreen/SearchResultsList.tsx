@@ -4,6 +4,7 @@ import React from "react";
 import { useSearchParams } from "react-router-dom";
 import "src/components/app/HomePage/BestsellerBooksList/BestsellersBooksList.css";
 import { Button } from "src/components/lib/Buttons/Buttons";
+import ScrollToTop from "src/components/lib/Buttons/ScroolToTop";
 import ScrollDirection from "src/components/lib/Icons/ScrollDirection";
 import ListSortByBar from "src/components/lib/Lists/ListSortByBar";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
@@ -199,20 +200,12 @@ function SearchResultsSection({
 				</ul>
 			</div>
 
-			<Button
-				variant="plain"
-				className="fixed bottom-28 right-10 w-10 h-10 z-10 flex items-center justify-center rounded-[100%] bg-baseBlack text-white"
-				title="Scroll to Search"
+			<ScrollToTop
 				onClick={() => {
-					// scroll to the first element
-					parentRef.current?.scroll({
-						top: 0,
-						behavior: "smooth",
-					});
+					parentRef.current &&
+						parentRef.current.scroll({ top: 0, behavior: "smooth" });
 				}}
-			>
-				<ScrollDirection direction="UP" className="w-8 h-8" />
-			</Button>
+			/>
 		</div>
 	);
 }
