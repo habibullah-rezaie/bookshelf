@@ -16,19 +16,15 @@ interface ListProps {
 
 function ListHeader({ onPeriodChange, period }: ListProps) {
 	return (
-		<ListHeading className="flex flex-row items-center justify-between">
-			<div>
-				<h1 className="flex flex-row items-center">
-					<span>Popular Books</span>
-					<span className="">
-						<PopularBookPeriodsListBox
-							onPeriodChange={onPeriodChange}
-							period={period}
-						/>
-					</span>
-				</h1>
+		<ListHeading className="w-full flex flex-col items-center justify-between">
+			<div className="w-full flex flex-row items-center">
+				<h1 className="">Popular Books</h1>
 			</div>
-			<div className="">
+			<div className=" w-full flex flex-row justify-between">
+				<PopularBookPeriodsListBox
+					onPeriodChange={onPeriodChange}
+					period={period}
+				/>
 				<Link
 					to={
 						"/populars?" +
