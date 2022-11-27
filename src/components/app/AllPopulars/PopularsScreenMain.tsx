@@ -1,9 +1,11 @@
+import config from "src/appConfig";
 import ListBox from "src/components/lib/Lists/ListBox";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import { MostPopularFilters } from "src/database/tables/MostPopularBook";
 import { useSearchPopularsByParam } from "src/hooks/search";
 import BooksListWithLoadMore from "../BooksListWithLoadMore";
 import ListHeading from "../HomePage/ListHeader";
+import PopularBookPeriodsListBox from "../HomePage/MostPopularBooksList/PopularBookPeriodsListBox";
 import SearchBox from "../SearchBox";
 
 function PopularsScreenMain() {
@@ -51,6 +53,10 @@ function PopularsScreenMain() {
 					</div>
 
 					<div className="w-full flex flex-row justify-between">
+						<PopularBookPeriodsListBox
+							onPeriodChange={(period) => search(query, { ...filters, period })}
+							period={filters.period ?? config.DEFAULT_POPULAR_BOOKS_PERIOD}
+						/>
 						<div className="text-xs">
 							<ListBox
 								allOptions={[
