@@ -1,65 +1,17 @@
 import {
 	InfiniteData,
 	useInfiniteQuery,
-	useQuery,
 	useQueryClient,
 } from "@tanstack/react-query";
 import React, { useMemo } from "react";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 import { BasicBookInfo } from "src/types/types";
-import {
-	changeIncommingBooktoBasic,
-	infiniteSearchResultMapper,
-} from "src/utils/list";
+import { infiniteSearchResultMapper } from "src/utils/list";
 import keys from "../queries/queryKeys";
-import {
-	infiniteLoadingSearchQueryBuilder,
-	useSearchQueryBuilder,
-} from "../queries/searchBooks";
+import { infiniteLoadingSearchQueryBuilder } from "../queries/searchBooks";
 import { SearchResult } from "../types";
 
 export type SearchHandler = (query: string, filters: SearchFilters) => void;
-
-export function useSearchBookBox(pageSize: number) {
-	const [query, setQuery] = React.useState<string>("");
-	const [filters, setFilters] = React.useState<SearchFilters>({});
-	const [page, setPage] = React.useState<number>(1);
-
-	const useQueryResult = useQuery({
-		...useSearchQueryBuilder(query, filters, pageSize, page),
-		select: changeSearchResultToUseableBook,
-	});
-
-	const search = React.useCallback((query: string, filters: SearchFilters) => {
-		setFilters(filters);
-		setQuery(query);
-	}, []);
-
-	return {
-		...useQueryResult,
-		query,
-		filters,
-		search,
-		page,
-		setPage,
-		hasNextPage:
-			useQueryResult && useQueryResult?.data?.totalItems
-				? useQueryResult.data.totalItems / 10 > 1
-				: false,
-	};
-}
-
-function changeSearchResultToUseableBook(data: SearchResult) {
-	let newBooks: BasicBookInfo[] = [];
-	if (data.totalItems != null && data?.items instanceof Array) {
-		for (const book of data.items) {
-			newBooks.push(changeIncommingBooktoBasic(book));
-		}
-		return { totalItems: data.totalItems, items: newBooks };
-	}
-
-	return { items: newBooks, totalItems: NaN };
-}
 
 export function useSearchBookInfiniteLoading(
 	pageSize: number,

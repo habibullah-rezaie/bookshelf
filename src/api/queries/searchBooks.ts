@@ -3,20 +3,6 @@ import { searchBook } from "../fetchers/searchBooks";
 import { SearchResult } from "../types";
 import keys from "./queryKeys";
 
-export function useSearchQueryBuilder(
-	query: string,
-	filters: SearchFilters,
-	pageSize: number = 10,
-	page: number = 1
-) {
-	return {
-		queryKey: keys.searchBooks(query, filters, pageSize, page),
-		queryFn: () => {
-			return searchBook(query, filters, { pageSize, page });
-		},
-	};
-}
-
 export function infiniteLoadingSearchQueryBuilder(
 	query: string,
 	filters: SearchFilters,
