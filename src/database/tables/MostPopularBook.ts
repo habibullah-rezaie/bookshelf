@@ -69,7 +69,6 @@ export function searchMostPopular(
 			let filter = filterer.eq("period", filters.period);
 
 			if (query !== "") {
-				// filter = filter.ilike("content", `%${query}%`);
 				filter = filter.or(
 					`title.ilike.%${query}%,description.ilike.%${query}%`
 				);

@@ -1,6 +1,5 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { BestsellerFilters } from "src/database/tables/BestsellerBook";
 import {
 	MostPopularFilters,
 	PopularBookPeriod,
