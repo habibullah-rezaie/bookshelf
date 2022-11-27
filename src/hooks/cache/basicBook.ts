@@ -54,7 +54,7 @@ const getCachedPopularBook = (
 	if (metaData.exactPosition?.popularPeriod == null) return null;
 
 	const queryData = queryClient.getQueryData<DbFetchResult<MostPopularBook>>(
-		keys.popularOfPeriod(metaData.exactPosition?.popularPeriod)
+		keys.popularOfPeriod("", { period: metaData.exactPosition?.popularPeriod })
 	);
 
 	if (queryData) {
