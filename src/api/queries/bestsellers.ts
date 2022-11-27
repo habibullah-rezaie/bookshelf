@@ -6,12 +6,14 @@ import {
 	searchBestsellers,
 	selectAndFilterBestsellerBooks,
 } from "src/database/tables/BestsellerBook";
-import queryKeys from "./queryKeys";
 
 export function bestsellerQueryBuilder(kind: BestsellerType) {
 	return {
-		queryKey: queryKeys.bestsellersOfType(kind),
-		queryFn: bestsellerQueryFn(kind),
+		queryKey: queryKeys.bestsellersOfType("", { type: kind }),
+		queryFn: bestsellerQueryFn("", { type: kind }, 1),
+	};
+}
+
 	};
 }
 
