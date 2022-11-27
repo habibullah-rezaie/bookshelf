@@ -1,6 +1,9 @@
 import { UseQueryOptions } from "@tanstack/react-query";
+import config from "src/appConfig";
+import { DbFetchResult } from "src/database/methods";
 import {
 	MostPopularBook,
+	MostPopularFilters,
 	PopularBookPeriod,
 	searchMostPopular,
 	selectAndFilterPopularBooks,
@@ -46,5 +49,29 @@ export function popularBooksListQueryBuilder(
 		},
 		// 1 day
 		staleTime: 86400 * 1000,
+	};
+}
+
+export function searchPopularsQueryOptions(
+	query: string,
+	filters: MostPopularFilters
+) {
+	return {
+		queryKey: queryKeys.popularOfPeriod(query, filters),
+		queryFn: async ({ pageParam = 1 }) => {
+			return await searchMostPopular(query, filters, pageParam);
+		},
+		staleTime: 1000 * 60 * 60,
+		getNextPageParam: (
+			lastPage: DbFetchResult<MostPopularBook>,
+			allPages: DbFetchResult<MostPopularBook>[]
+		) => {
+			console.log(allPages, "page");
+			return lastPage.data &&
+				lastPage.count &&
+				lastPage.count > allPages.length * config.DEFAULT_POPULAR_BOOKS_LIMIT
+				? allPages.length + 1
+				: undefined;
+		},
 	};
 }
