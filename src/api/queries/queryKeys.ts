@@ -3,7 +3,10 @@ import {
 	BestsellerFilters,
 	BestsellerType,
 } from "src/database/tables/BestsellerBook";
-import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
+import {
+	MostPopularFilters,
+	PopularBookPeriod,
+} from "src/database/tables/MostPopularBook";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 
 const keys = {
@@ -16,10 +19,10 @@ const keys = {
 		[...keys.bestsellers(), `list of ${kind}`] as const,
 
 	popular: () => [...keys.books, "popular books"] as const,
-	popularOfPeriod: (period: PopularBookPeriod) =>
-		[...keys.popular(), period] as const,
+	popularOfPeriod: (query: string, filters: MostPopularFilters) =>
+		[...keys.popular(), { query, filters }] as const,
 	popularFullListOfPeriod: (period: PopularBookPeriod) =>
-		[...keys.bestsellers(), `list of ${period}`] as const,
+		[...keys.popular(), `list of ${period}`] as const,
 
 	// Search Query Keys
 	searchBooks: (
