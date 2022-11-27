@@ -1,4 +1,4 @@
-import { useScrollIntoView } from "src/components/lib/Buttons/ScroolToTop";
+import { useScrollIntoView } from "src/components/lib/Buttons/ScrollToTop";
 import ListBox from "src/components/lib/Lists/ListBox";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import {

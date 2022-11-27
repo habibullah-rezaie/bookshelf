@@ -1,5 +1,5 @@
 import config from "src/appConfig";
-import { useScrollIntoView } from "src/components/lib/Buttons/ScroolToTop";
+import { useScrollIntoView } from "src/components/lib/Buttons/ScrollToTop";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import { MostPopularFilters } from "src/database/tables/MostPopularBook";
 import { useSearchPopularsByParam } from "src/hooks/search";
