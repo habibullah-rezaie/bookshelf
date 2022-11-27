@@ -1,6 +1,6 @@
 import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
 import config from "src/appConfig";
-import { ReviewFilters } from "src/screens/ReviewSearchBox";
+import { ReviewFilters } from "src/components/app/AllReviews/BookAllReviewsMain";
 import {
 	DbFetchResult,
 	insert,
@@ -133,4 +133,5 @@ export function searchReviewsOnBook(
 	);
 }
 
+// TODO: remove this
 (window as any).searchReview = searchReviewsOnBook;

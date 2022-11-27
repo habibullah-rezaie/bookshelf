@@ -1,6 +1,6 @@
 import { BestsellerType } from "src/database/tables/BestsellerBook";
+import { ReviewFilters } from "src/components/app/AllReviews/BookAllReviewsMain";
 import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
-import { ReviewFilters } from "src/screens/ReviewSearchBox";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 
 const keys = {

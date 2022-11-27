@@ -1,5 +1,6 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 import config from "src/appConfig";
+import { ReviewFilters } from "src/components/app/AllReviews/BookAllReviewsMain";
 import { DbFetchResult } from "src/database/methods";
 import {
 	getReviewsOnBook,
@@ -8,7 +9,6 @@ import {
 	searchReviewsOnBook,
 	UserReview,
 } from "src/database/tables/userReview";
-import { ReviewFilters } from "src/screens/ReviewSearchBox";
 import keys from "./queryKeys";
 
 export type UserReviewCache = {

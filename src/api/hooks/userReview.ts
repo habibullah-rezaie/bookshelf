@@ -6,13 +6,13 @@ import {
 	useQueryClient,
 } from "@tanstack/react-query";
 import React from "react";
+import { ReviewFilters } from "src/components/app/AllReviews/BookAllReviewsMain";
 import { insertUserBook, UserBook } from "src/database/tables/UserBook";
 import {
 	insertUserReview,
 	updateUserReview,
 	UserReview,
 } from "src/database/tables/userReview";
-import { ReviewFilters } from "src/screens/ReviewSearchBox";
 import keys from "../queries/queryKeys";
 import { UserBookCache } from "../queries/userBook";
 import {

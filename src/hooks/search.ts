@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useSearchBookInfiniteLoading } from "src/api/hooks/searchBooks";
 import { useBookReviewSearch } from "src/api/hooks/userReview";
-import { ReviewFilters } from "src/screens/ReviewSearchBox";
+import { ReviewFilters } from "src/components/app/AllReviews/BookAllReviewsMain";
 import { SearchFilters } from "src/types/DiscoverBooksScreenTypes";
 import { generateSearchParams } from "src/utils/list";
 
