@@ -1,9 +1,9 @@
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import { BestsellerFilters } from "src/database/tables/BestsellerBook";
 import { useSearchBestsellerByParam } from "src/hooks/search";
-import BooksListWithLoadMore from "../BooksListWithLoadMore";
 import ListHeading from "../HomePage/ListHeader";
-import SearchBox from "../SearchBox";
+import BooksListWithLoadMore from "../other/BooksListWithLoadMore";
+import SearchBox from "../other/SearchBox";
 
 function BestsellersScreenMain() {
 	const {

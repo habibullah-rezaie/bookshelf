@@ -1,8 +1,9 @@
+import React from "react";
 import { BasicBookInfo } from "src/types/types";
 import { getBookDetailLink } from "src/utils/book";
-import { Button } from "../lib/Buttons/Buttons";
-import HorizontalBookCard from "./BookCards/HorizontalBookCard";
-import HorizontalBookLoader from "./BookCards/HorizontalBookLoader";
+import { Button } from "../../lib/Buttons/Buttons";
+import HorizontalBookCard from "../BookCards/HorizontalBookCard";
+import HorizontalBookLoader from "../BookCards/HorizontalBookLoader";
 
 function BooksListWithLoadMore({
 	books,

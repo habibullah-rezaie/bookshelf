@@ -8,7 +8,7 @@ import { getBookDetailLink } from "src/utils/book";
 import HorizontalBookCard from "../BookCards/HorizontalBookCard";
 import HorizontalBookLoader from "../BookCards/HorizontalBookLoader";
 import { ReviewsListBody } from "../BookDetailsScreen/ReviewsList";
-import SearchBox from "../SearchBox";
+import SearchBox from "../other/SearchBox";
 
 export type ReviewFilters = {
 	rating?: number;

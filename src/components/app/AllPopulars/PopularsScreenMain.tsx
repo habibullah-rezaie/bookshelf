@@ -3,10 +3,10 @@ import ListBox from "src/components/lib/Lists/ListBox";
 import { SectionWithLoaderAndErrorBoundary } from "src/components/lib/Section";
 import { MostPopularFilters } from "src/database/tables/MostPopularBook";
 import { useSearchPopularsByParam } from "src/hooks/search";
-import BooksListWithLoadMore from "../BooksListWithLoadMore";
 import ListHeading from "../HomePage/ListHeader";
 import PopularBookPeriodsListBox from "../HomePage/MostPopularBooksList/PopularBookPeriodsListBox";
-import SearchBox from "../SearchBox";
+import BooksListWithLoadMore from "../other/BooksListWithLoadMore";
+import SearchBox from "../other/SearchBox";
 
 function PopularsScreenMain() {
 	const {
