@@ -1,19 +1,20 @@
 import ListHeading from "src/components/app/HomePage/ListHeader";
 import ListBox from "./ListBox";
 
+type SortBy = "relevance" | "newest";
 function ListSortByBar({
 	onSortChange,
 	selectedSorting,
 	Heading,
 }: {
-	onSortChange: (sortBy: "relevance" | "newest") => void;
-	selectedSorting: string;
+	onSortChange: (sortBy: SortBy) => void;
+	selectedSorting: SortBy;
 	Heading: React.ReactNode;
 }) {
 	return (
 		<div className="flex flex-row justify-between items-center w-full text-xs">
 			<ListHeading className="flex items-center">{Heading}</ListHeading>
-			<ListBox
+			<ListBox<SortBy>
 				allOptions={[
 					{ value: "newest", displayValue: "Newest" },
 					{ value: "relevance", displayValue: "Relevance" },
