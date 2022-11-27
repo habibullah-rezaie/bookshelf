@@ -1,11 +1,16 @@
-import { BestsellerType } from "src/database/tables/BestsellerBook";
 import {
 	useInfiniteQuery,
 	useQueries,
 	useQueryClient,
 } from "@tanstack/react-query";
+import React from "react";
+import {
+	BestsellerFilters,
+	BestsellerType,
+} from "src/database/tables/BestsellerBook";
 import {
 	bestsellerQueryBuilder,
+	bestsellerSearchQueryOptions,
 	bestsellersListQueryBuilder,
 } from "../queries/bestsellers";
 
@@ -21,6 +26,24 @@ export function usePrefetchBestsellers(kind: BestsellerType) {
 	queryClient.prefetchInfiniteQuery({
 		...bestsellerQueryBuilder(kind),
 	});
+}
+
+export function useBestsellerSearch() {
+	const [query, setQuery] = React.useState("");
+	const [filters, setFitlers] = React.useState<BestsellerFilters>({});
+
+	const options = bestsellerSearchQueryOptions(query, filters);
+	const queryObj = useInfiniteQuery(options.queryKey, options.queryFn, options);
+
+	const search = React.useCallback(
+		(query: string, filters: BestsellerFilters) => {
+			setQuery(query);
+			setFitlers(filters);
+		},
+		[]
+	);
+
+	return { queryObj, search, query, filters };
 }
 
 export function useBestsellersAllList() {
