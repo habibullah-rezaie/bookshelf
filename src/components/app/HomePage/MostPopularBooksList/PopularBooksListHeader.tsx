@@ -1,6 +1,11 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { PopularBookPeriod } from "src/database/tables/MostPopularBook";
+import { BestsellerFilters } from "src/database/tables/BestsellerBook";
+import {
+	MostPopularFilters,
+	PopularBookPeriod,
+} from "src/database/tables/MostPopularBook";
+import { generateSearchParams } from "src/utils/list";
 import ListHeading from "../ListHeader";
 import PopularBookPeriodsListBox from "./PopularBookPeriodsListBox";
 
@@ -25,7 +30,12 @@ function ListHeader({ onPeriodChange, period }: ListProps) {
 			</div>
 			<div className="">
 				<Link
-					to={"/"}
+					to={
+						"/populars?" +
+						generateSearchParams<MostPopularFilters>("", {
+							period: period,
+						}).toString()
+					}
 					className="flex flex-row items-center text-xs text-[#065D94] visited:text-[#065D94]"
 				>
 					<div>See All</div>
